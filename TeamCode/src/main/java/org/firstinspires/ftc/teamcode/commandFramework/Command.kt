@@ -4,6 +4,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.Constants
 
 @Suppress("PropertyName")
 abstract class Command {
+
     var isDone = false
         get() = field || _isDone
     open val _isDone = false

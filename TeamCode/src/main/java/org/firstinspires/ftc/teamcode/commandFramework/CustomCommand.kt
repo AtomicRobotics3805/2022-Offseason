@@ -7,12 +7,12 @@ open class CustomCommand(
     private val _execute: () -> Unit = { },
     private val _start: () -> Unit = { },
     private val _done: (interrupted: Boolean) -> Unit = { },
-    private val endTime: Double = -1.0
+    private val endTime: Double = 0.0
 ): Command() {
-    private val timer = ElapsedTime()
 
     override val _isDone: Boolean
-        get() = getDone.invoke() && (timer.seconds() > endTime || endTime >= 0)
+        get() = getDone.invoke() && timer.seconds() > endTime
+    private val timer = ElapsedTime()
 
     override fun start() {
         timer.reset()
