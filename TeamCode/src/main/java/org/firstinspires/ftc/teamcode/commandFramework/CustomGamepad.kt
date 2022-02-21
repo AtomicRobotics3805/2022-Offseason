@@ -80,15 +80,12 @@ class CustomGamepad(private val gamepad: Gamepad) {
             pressed = value && !down
             released = !value && down
             down = value
-
             // Run the associated commands
-            pressedCommand.update(value)
-            releasedCommand.update(value)
             if (pressed && startCommand != null) {
-                CommandScheduler.scheduleCommand(startCommand)
+                CommandScheduler.scheduleCommand(startCommand!!.invoke())
             }
             if (released && releasedCommand != null) {
-                CommandScheduler.scheduleCommand(releaseCommand)
+                CommandScheduler.scheduleCommand(releasedCommand!!.invoke())
             }
         }
 
@@ -114,11 +111,12 @@ class CustomGamepad(private val gamepad: Gamepad) {
             pressed = value != 0.0f && !down
             released = value == 0.0f && down
             amount = value
+            // Run the associated commands
             if (pressed && startCommand != null) {
-                CommandScheduler.scheduleCommand(startCommand)
+                CommandScheduler.scheduleCommand(startCommand!!.invoke())
             }
             if (released && releasedCommand != null) {
-                CommandScheduler.scheduleCommand(releaseCommand)
+                CommandScheduler.scheduleCommand(releasedCommand!!.invoke())
             }
         }
 
