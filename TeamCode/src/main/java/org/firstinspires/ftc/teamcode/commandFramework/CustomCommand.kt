@@ -15,18 +15,23 @@ import com.qualcomm.robotcore.util.ElapsedTime
  * @param endTime the amount of time required for the command to finish (in addition to getDone
  *                being true). This is 0.0 by default, meaning that unless you set this, getDone is
  *                the only thing used to determine if the command is finished
+ * @param requirements a list of subsystems used by this command
+ * @param interruptible whether or not this command can be interrupted by other commands using the
+ *                      same subsystem(s)
  */
 open class CustomCommand(
     private val getDone: () -> Boolean = { true },
     private val _execute: () -> Unit = { },
     private val _start: () -> Unit = { },
     private val _done: (interrupted: Boolean) -> Unit = { },
-    private val endTime: Double = 0.0
+    private val endTime: Double = 0.0,
+    override val requirements: List<Subsystem> = arrayListOf(),
+    override val interruptible: Boolean = true
 ): Command() {
 
+    private val timer = ElapsedTime()
     override val _isDone: Boolean
         get() = getDone.invoke() && timer.seconds() > endTime
-    private val timer = ElapsedTime()
 
     /**
      * Resets the timer and invokes the _start lambda

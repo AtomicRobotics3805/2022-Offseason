@@ -15,7 +15,7 @@ abstract class Command {
         get() = field || _isDone
     open val _isDone = false
     var isStarted = false
-    val requirements: ArrayList<Subsystem> = arrayListOf()
+    open val requirements: List<Subsystem> = arrayListOf()
     open val interruptible = true
 
     /**
