@@ -34,14 +34,36 @@ object CommandScheduler {
         }
     }
 
-    fun scheduleCommands() {
+    fun scheduleCommand(command: Command) {
+        commandsToSchedule += command
+    }
+
+    fun registerSubsystems(vararg subsystems: Subsystem) {
+        for (subsystem in subsystems)
+            this.subsystems += subsystem
+    }
+
+    fun registerGamepads(vararg gamepads: CustomGamepad) {
+        for (gamepad in gamepads)
+            this.gamepads += gamepad
+    }
+
+    fun cancelAll() {
+        for (command in runningCommands) {
+            commandsToCancel += Pair(command, true)
+        }
+        cancelCommands()
+        commandsToSchedule.clear()
+    }
+
+    private fun scheduleCommands() {
         for(command in commandsToSchedule) {
             initCommand(command)
         }
         commandsToSchedule.clear()
     }
 
-    fun cancelCommands() {
+    private fun cancelCommands() {
         for(pair in commandsToCancel) {
             cancel(pair.key, pair.value)
         }
@@ -70,20 +92,12 @@ object CommandScheduler {
         runningCommands -= command
     }
 
-    fun cancelAll() {
-        for (command in runningCommands) {
-            commandsToCancel += Pair(command, true)
-        }
-        cancelCommands()
-        commandsToSchedule.clear()
-    }
-    
-    fun updateGamepads() {
+    private fun updateGamepads() {
         for (gamepad in gamepads)
             gamepad.update()
     }
 
-    fun updateSubsystems() {
+    private fun updateSubsystems() {
         for (subsystem in subsystems) {
             subsystem.periodic()
             if (findCommand({ it.requirements.contains(subsystem) }) != null)
@@ -91,24 +105,10 @@ object CommandScheduler {
         }
     }
 
-    fun registerSubsystems(vararg subsystems: Subsystem) {
-        for (subsystem in subsystems)
-            this.subsystems += subsystem
-    }
-
-    fun registerGamepads(vararg gamepads: CustomGamepad) {
-        for (gamepad in gamepads)
-            this.gamepads += gamepad
-    }
-
-    fun scheduleCommand(command: Command) {
-        commandsToSchedule += command
-    }
-    
-    fun findCommand(check: (Command) -> Boolean, commands : List<Command> = runningCommands) =
+    private fun findCommand(check: (Command) -> Boolean, commands : List<Command> = runningCommands) =
         findCommands(check, commands).firstOrNull()
-    
-    fun findCommands(check: (Command) -> Boolean, commands : List<Command> = runningCommands):
+
+    private fun findCommands(check: (Command) -> Boolean, commands : List<Command> = runningCommands):
             List<Command> {
         val foundCommands = mutableListOf<Command>()
         for (command in commands) {
