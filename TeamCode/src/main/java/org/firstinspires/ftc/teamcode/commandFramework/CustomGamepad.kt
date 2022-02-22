@@ -3,14 +3,14 @@ package org.firstinspires.ftc.teamcode.commandFramework
 import com.qualcomm.robotcore.hardware.Gamepad
 
 /**
-    CustomGamepad makes it much easier to detect when a button has just been pressed or released
-    To use the program, call update(gamepad1) or update(gamepad2) every frame
-    Check whether a button is being pressed down using button.down
-    Check whether it's just been pressed this frame using button.pressed
-    Check whether it's just been released this frame using button.released
+ * By default, the Qualcomm Gamepad class has very little functionality. It tells you whether each
+ * button is being pressed, but not whether it was just pressed or just released. This class adds
+ * that for each button, and also allows you to set commands that will be automatically scheduled
+ * whenever a button is pressed or released. You should create an instance of this class for both
+ * gamepads and then register them in the CommandScheduler using the registerGamepads() function.
+ *
+ * @param gamepad the Qualcomm gamepad used. Should be gamepad1 or gamepad2
  */
-
-
 @Suppress("MemberVisibilityCanBePrivate")
 class CustomGamepad(private val gamepad: Gamepad) {
     val a = Button("A")
@@ -35,6 +35,13 @@ class CustomGamepad(private val gamepad: Gamepad) {
     val controls = listOf(a, b, x, y, dpadUp, dpadDown, dpadLeft, dpadRight,
         leftBumper, rightBumper, leftTrigger, rightTrigger, leftStick, rightStick)
 
+    /**
+     * Updates each of the buttons with their corresponding values from the Qualcomm gamepad. The
+     * reason why we cannot loop through the controls list and update them that way is because each
+     * control needs its own value from the Qualcomm gamepad.
+     * @param gamepad the Qualcomm gamepad to use,  by default this is the gamepad given as a
+     *                constructor parameter
+     */
     fun update(gamepad: Gamepad = this.gamepad) {
         a.update(gamepad.a)
         b.update(gamepad.b)
@@ -56,6 +63,11 @@ class CustomGamepad(private val gamepad: Gamepad) {
         rightStick.update(gamepad.right_stick_x, gamepad.right_stick_y, gamepad.right_stick_button)
     }
 
+    /**
+     * Combines the toString() functions of each individual control and places a line between them.
+     * Essentially creates a list of which buttons are being pressed.
+     * @return the toString() functions of each control
+     */
     override fun toString(): String {
         val set = mutableSetOf<String>()
 
@@ -67,6 +79,15 @@ class CustomGamepad(private val gamepad: Gamepad) {
         return set.joinToString("\n")
     }
 
+    /**
+     * This class represents a button with two possible states (pressed or not pressed). It should
+     * not be used for triggers, since those have more than two states.
+     * Each button has variables representing whether the button is currently down, whether it was
+     * just pressed, and whether it was released. It also has a startCommand and a releasedCommand,
+     * which are automatically scheduled when a button is pressed or released (respectively). If
+     * @param name this name is used in the toString() function and is set to UnknownButton by
+     *             default.
+     */
     class Button(private val name: String = "Unknown Button") {
 
         var down = false
@@ -75,6 +96,12 @@ class CustomGamepad(private val gamepad: Gamepad) {
         var startCommand: (() -> Command)? = null
         var releasedCommand: (() -> Command)? = null
 
+        /**
+         * Updates whether the trigger was just pressed, just released, and whether it's being held
+         * down, and then runs the startCommand or releasedCommand if the trigger was just pressed
+         * or released.
+         * @param value whether the button is being held down right now
+         */
         fun update(value: Boolean) {
             // Update whether or not the button is pressed, released, or down
             pressed = value && !down
@@ -89,6 +116,11 @@ class CustomGamepad(private val gamepad: Gamepad) {
             }
         }
 
+        /**
+         * Returns a string showing whether the button is down, was just pressed, and/or was just
+         * released.
+         * @return whether the button is down, was just pressed, and/or was just released.
+         */
         override fun toString(): String {
             val set = mutableSetOf<String>()
             if (down) set.add("Down")
@@ -98,6 +130,14 @@ class CustomGamepad(private val gamepad: Gamepad) {
         }
     }
 
+    /**
+     * This class is very similar to the button class. The only difference is that it also has a
+     * variable called amount, which is how much the trigger is currently being pressed. The pressed
+     * variable is true if the trigger went from not being pressed at all to being pressed at least
+     * somewhat, and the released variable is the opposite.
+     * @param name this name is used in the toString() function and is set to UnknownTrigger by
+     *             default.
+     */
     class Trigger(private val name: String = "Unknown Trigger") {
         val down: Boolean
             get() = amount != 0.0f
@@ -107,6 +147,12 @@ class CustomGamepad(private val gamepad: Gamepad) {
         var startCommand: (() -> Command)? = null
         var releasedCommand: (() -> Command)? = null
 
+        /**
+         * Updates whether the trigger was just pressed, just released, and how much it's being held
+         * down, and then runs the startCommand or releasedCommand if the trigger was just pressed
+         * or released.
+         * @param value how much the trigger is being pressed down
+         */
         fun update(value: Float) {
             pressed = value != 0.0f && !down
             released = value == 0.0f && down
@@ -120,6 +166,12 @@ class CustomGamepad(private val gamepad: Gamepad) {
             }
         }
 
+        /**
+         * Returns a string showing whether the trigger was just pressed, was just released, and/or
+         * how much it's being pressed down.
+         * @return whether the trigger was just pressed, was just released, and/or how much it's
+         * being pressed down.
+         */
         override fun toString(): String {
             val set = mutableSetOf<String>()
             if (pressed) set.add("Just Pressed")
@@ -129,6 +181,13 @@ class CustomGamepad(private val gamepad: Gamepad) {
         }
     }
 
+    /**
+     * This is the most complicated of the controls. It has justMoved and justStopped variables,
+     * like the pressed and released variables in the Button class, and also has its own instance of
+     * the button class that corresponds to the Joystick button.
+     * @param name this name is used in the toString() function and is set to UnknownJoystick by
+     *             default.
+     */
     class JoyStick(private val name: String = "Unknown Joystick") {
         val moved: Boolean
             get() = x != 0.0f || y != 0.0f
@@ -138,6 +197,15 @@ class CustomGamepad(private val gamepad: Gamepad) {
         var y = 0.0f
         val button = Button()
 
+        /**
+         * Updates the x and y values of the joystick, whether it just moved or just stopped, and
+         * also runs the update function for the trigger button.
+         * @param x the x (left-right) coordinate of the joystick. Left is negative, and right is
+         *          positive.
+         * @param y the y (up-down) coordinate of the joystick. Up is negative, and down is
+         *          positive.
+         * @param buttonValue whether the joystick button is being held down or not.
+         */
         fun update(x: Float, y: Float, buttonValue: Boolean) {
             justMoved = x != 0.0f || y != 0.0f && !moved
             justStopped = x == 0.0f && y == 0.0f && moved
@@ -146,6 +214,12 @@ class CustomGamepad(private val gamepad: Gamepad) {
             button.update(buttonValue)
         }
 
+        /**
+         * Returns a string showing whether the button was just pressed, was just released, and/or
+         * how much it's being pressed down, as well as whether the joystick just started or
+         * stopped moving, and its x and y coordinates (if they aren't 0).
+         * @return information about the joystick's current state
+         */
         override fun toString(): String {
             val set = mutableSetOf<String>()
             if (button.down) set.add("Button Down")

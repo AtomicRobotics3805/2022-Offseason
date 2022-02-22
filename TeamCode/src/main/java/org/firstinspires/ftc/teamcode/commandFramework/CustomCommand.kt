@@ -2,6 +2,20 @@ package org.firstinspires.ftc.teamcode.commandFramework
 
 import com.qualcomm.robotcore.util.ElapsedTime
 
+/**
+ * Sometimes, you may want to use a very simple command and don't want to create a whole class for
+ * it. To avoid that, you can use this class and pass in any necessary functionality as constructor
+ * parameters.
+ * @param getDone equivalent of _isDone, determines whether the command is done. Always true by
+ *                default, meaning that if this isn't set, the command will run start() and then
+ *                finish immediately
+ * @param _execute equivalent of execute(), run every loop, does nothing by default
+ * @param _start equivalent of start(), runs once at the command's start, does nothing by default
+ * @param _done equivalent of end(), runs once at the command's end, does nothing by default
+ * @param endTime the amount of time required for the command to finish (in addition to getDone
+ *                being true). This is 0.0 by default, meaning that unless you set this, getDone is
+ *                the only thing used to determine if the command is finished
+ */
 open class CustomCommand(
     private val getDone: () -> Boolean = { true },
     private val _execute: () -> Unit = { },
@@ -14,15 +28,24 @@ open class CustomCommand(
         get() = getDone.invoke() && timer.seconds() > endTime
     private val timer = ElapsedTime()
 
+    /**
+     * Resets the timer and invokes the _start lambda
+     */
     override fun start() {
         timer.reset()
         _start.invoke()
     }
 
+    /**
+     * Invokes the _execute lambda
+     */
     override fun execute() {
         _execute.invoke()
     }
 
+    /**
+     * Invokes the _end lambda
+     */
     override fun end(interrupted: Boolean) {
         _done.invoke(interrupted)
     }
