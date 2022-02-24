@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.commandFramework
 
+import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
+
 /**
  * This class runs commands, updates subsystems, and manages Gamepad-related commands. The important
  * functions to use are scheduleCommand(), registerGamepads(), registerSubsystems(), and run().

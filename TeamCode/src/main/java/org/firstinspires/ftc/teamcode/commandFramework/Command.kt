@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.commandFramework
 
-import org.firstinspires.ftc.teamcode.commandFramework.Constants
+import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
 
 /**
  * This class represents a command. These commands should be scheduled using

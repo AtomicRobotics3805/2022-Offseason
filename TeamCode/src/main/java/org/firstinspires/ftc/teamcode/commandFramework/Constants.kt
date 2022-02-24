@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.commandFramework
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import com.qualcomm.robotcore.eventloop.opmode.OpMode
+import org.firstinspires.ftc.teamcode.commandFramework.driving.Driver
 
 /**
  * This object contains various "constant" values used by other classes. This object is not strictly

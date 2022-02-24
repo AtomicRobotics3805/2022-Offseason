@@ -1,6 +1,8 @@
-package org.firstinspires.ftc.teamcode.commandFramework
+package org.firstinspires.ftc.teamcode.commandFramework.utilCommands
 
 import com.qualcomm.robotcore.util.ElapsedTime
+import org.firstinspires.ftc.teamcode.commandFramework.Command
+import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
 
 /**
  * Sometimes, you may want to use a very simple command and don't want to create a whole class for

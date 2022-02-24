@@ -8,7 +8,8 @@ import org.firstinspires.ftc.teamcode.commandFramework.Command
 /**
  * This class is a delay that waits until the robot has driven either a certain number of inches or
  * a certain number of trajectory segments. Like other delays, it should be put in a sequential
- * command group before the command that needs to be delayed.
+ * command group before the command that needs to be delayed. A delay in a parallel command group will accomplish
+ * nothing except taking up memory on the device.
  *
  * @param displacement the distance the robot needs to travel along its current trajectory in inches
  */

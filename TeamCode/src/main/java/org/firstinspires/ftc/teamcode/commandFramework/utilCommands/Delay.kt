@@ -5,7 +5,8 @@ import org.firstinspires.ftc.teamcode.commandFramework.Command
 
 /**
  * This class is a simple delay that waits for a certain amount of time. Like other delays, it
- * should be put in a sequential command group before the command that needs to be delayed.
+ * should be put in a sequential command group before the command that needs to be delayed. A delay in a parallel 
+ * command group will accomplish nothing except taking up memory on the device.
  */
 @SuppressWarnings("unused")
 class Delay(private val time: Double): Command() {
