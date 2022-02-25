@@ -7,7 +7,9 @@ import org.firstinspires.ftc.teamcode.commandFramework.Command
 class PowerMotor(
     private val motor: DcMotorSimple,
     private val power: Double,
-    private val mode: DcMotor.RunMode? = null
+    private val mode: DcMotor.RunMode? = null,
+    override val requirements: List<Subsystem> = arrayListOf(),
+    override val interruptible: Boolean = true
 ) : Command() {
 
     override fun start() {

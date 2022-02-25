@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.util.ElapsedTime
 import com.qualcomm.robotcore.util.Range
 import org.firstinspires.ftc.teamcode.commandFramework.Command
 import org.firstinspires.ftc.teamcode.commandFramework.CommandScheduler
+import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
 import org.firstinspires.ftc.teamcode.commandFramework.utilCommands.TelemetryCommand
 import kotlin.math.abs
 import kotlin.math.min
@@ -22,9 +23,15 @@ import kotlin.math.sign
  * @param kP multiplied by the error and speed to get the power
  */
 @Suppress("MemberVisibilityCanBePrivate")
-open class MotorToPosition(protected val motor: DcMotor, protected val targetPosition: Int,
-                           protected var speed: Double, protected val minError: Int = 15,
-                           protected val kP: Double = 0.005): Command() {
+open class MotorToPosition(
+    protected val motor: DcMotor,
+    protected val targetPosition: Int,
+    protected var speed: Double,
+    override val requirements: List<Subsystem> = arrayListOf(),
+    override val interruptible: Boolean = true,
+    protected val minError: Int = 15,
+    protected val kP: Double = 0.005
+) : Command() {
 
     protected val timer = ElapsedTime()
     protected val positions: MutableList<Int> = mutableListOf()
