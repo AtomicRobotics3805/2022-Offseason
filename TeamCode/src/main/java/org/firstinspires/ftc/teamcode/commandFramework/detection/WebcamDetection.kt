@@ -1,19 +1,19 @@
 package org.firstinspires.ftc.teamcode.commandFramework.detection
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion
-import org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap
-import org.openftc.easyopencv.OpenCvInternalCamera
-import org.openftc.easyopencv.OpenCvCameraFactory
-import org.openftc.easyopencv.OpenCvCamera
+import org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.*
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.teamcode.commandFramework.Command
-import org.firstinspires.ftc.teamcode.commandFramework.example.mechanisms.Intake
 import org.firstinspires.ftc.teamcode.commandFramework.utilCommands.CustomCommand
 import org.openftc.easyopencv.OpenCvCamera.AsyncCameraOpenListener
-import org.openftc.easyopencv.OpenCvCameraRotation
 import org.opencv.core.Mat
+import org.openftc.easyopencv.*
+import org.openftc.easyopencv.OpenCvCameraFactory
 
-import org.openftc.easyopencv.OpenCvPipeline
+
+
 
 class WebcamDetection {
     var cameraMonitorViewId = hardwareMap.appContext.resources.getIdentifier(
@@ -32,32 +32,27 @@ class WebcamDetection {
     val resume: Command
         get() = streamControl("resume")
 
-    private lateinit var camera: OpenCvCamera
+    private lateinit var camera: OpenCvWebcam
 
     fun initialize(){
-        // With live preview
-        camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId)
-
-        // Without live preview
-        //camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK)
-
-        camera.openCameraDeviceAsync(object : AsyncCameraOpenListener {
-            override fun onOpened() {
-                // Usually this is where you'll want to start streaming from the camera (see section 4)
-            }
-
-            override fun onError(errorCode: Int) {
-                /*
-       * This will be called if the camera could not be opened
-       */
-            }
-        })
-
+        camera = OpenCvCameraFactory.getInstance().createWebcam(
+            hardwareMap.get(
+                WebcamName::class.java, "Webcam 1"
+            ), cameraMonitorViewId
+        )
         camera.setPipeline(Pipeline)
     }
 
     fun startStream() = CustomCommand(_start ={
-        camera.startStreaming(VERTICAL_RESOLUTION,HORIZONTAL_RESOLUTION, OpenCvCameraRotation.UPRIGHT)
+        camera.openCameraDeviceAsync(object : AsyncCameraOpenListener {
+            override fun onOpened() {
+                camera.startStreaming(VERTICAL_RESOLUTION,HORIZONTAL_RESOLUTION, OpenCvCameraRotation.UPRIGHT)
+            }
+
+            override fun onError(errorCode: Int) {
+                // This will be called if the camera could not be opened
+            }
+        })
     })
 
     fun streamControl(request:String) = CustomCommand(_start = {
