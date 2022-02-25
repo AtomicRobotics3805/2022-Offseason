@@ -29,9 +29,9 @@ object Intake : Subsystem {
 
     // commands
     val start: Command
-        get() = PowerMotor(intakeMotor, SPEED)
+        get() = PowerMotor(intakeMotor, SPEED, requirements = listOf(this))
     val stop: Command
-        get() = PowerMotor(intakeMotor, 0.0)
+        get() = PowerMotor(intakeMotor, 0.0, requirements = listOf(this))
     val switch: Command
         get() = if (SPEED == 0.0) start else stop
 

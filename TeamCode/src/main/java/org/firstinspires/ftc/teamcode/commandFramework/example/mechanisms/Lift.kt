@@ -40,15 +40,15 @@ object Lift : Subsystem {
 
     // commands
     val toLow: Command
-        get() = MotorToPosition(liftMotor, (LOW_POSITION * COUNTS_PER_INCH).toInt(), SPEED)
+        get() = MotorToPosition(liftMotor, (LOW_POSITION * COUNTS_PER_INCH).toInt(), SPEED, listOf(this))
     val toHigh: Command
-        get() = MotorToPosition(liftMotor, (HIGH_POSITION * COUNTS_PER_INCH).toInt(), SPEED)
+        get() = MotorToPosition(liftMotor, (HIGH_POSITION * COUNTS_PER_INCH).toInt(), SPEED, listOf(this))
     val start: Command
-        get() = PowerMotor(liftMotor, SPEED)
+        get() = PowerMotor(liftMotor, SPEED, requirements = listOf(this))
     val reverse: Command
-        get() = PowerMotor(liftMotor, -SPEED)
+        get() = PowerMotor(liftMotor, -SPEED, requirements = listOf(this))
     val stop: Command
-        get() = PowerMotor(liftMotor, 0.0)
+        get() = PowerMotor(liftMotor, 0.0, requirements = listOf(this))
 
     // motor
     lateinit var liftMotor: DcMotorEx
