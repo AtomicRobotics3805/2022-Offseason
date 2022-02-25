@@ -8,6 +8,7 @@ import com.acmerobotics.roadrunner.profile.MotionState
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.commandFramework.Command
 import org.firstinspires.ftc.teamcode.commandFramework.Constants.drive
+import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.toRadians
 
 /**
@@ -18,9 +19,18 @@ import org.firstinspires.ftc.teamcode.commandFramework.trajectories.toRadians
  * @param MAX_VEL the maximum velocity in radians/second that the robot can turn at
  * @param MAX_ACCEL the maximum acceleration in radians/second^2 that the robot can turn at
  * @param turnType the type of turn, either relative or absolute
+ * @param requirements any Subsystems used by this command
+ * @param interruptible whether this command can be interrupted or not
  */
 @Suppress("unused")
-open class Turn(private var angle: Double, private val MAX_VEL: Double, private val MAX_ACCEL: Double, private val turnType: TurnType): Command() {
+open class Turn(
+    private var angle: Double,
+    private val MAX_VEL: Double,
+    private val MAX_ACCEL: Double,
+    private val turnType: TurnType,
+    override val requirements: List<Subsystem> = arrayListOf(),
+    override val interruptible: Boolean = true
+) : Command() {
 
     enum class TurnType {
         ABSOLUTE,
