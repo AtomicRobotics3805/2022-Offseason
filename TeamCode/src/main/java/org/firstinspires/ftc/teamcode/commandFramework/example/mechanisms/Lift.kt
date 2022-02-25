@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.commandFramework.example.mechanisms
 
+import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple
@@ -17,6 +18,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.subsystems.MotorToPositio
  * To use this class, copy it into the proper package and change the first eight constants (COUNTS_PER_INCH is fine as
  * is).
  */
+@Config
 @Suppress("Unused", "MemberVisibilityCanBePrivate")
 object Lift : Subsystem {
 

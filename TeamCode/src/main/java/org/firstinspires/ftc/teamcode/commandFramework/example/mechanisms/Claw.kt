@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.commandFramework.example.mechanisms
 
+import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.commandFramework.Command
 import org.firstinspires.ftc.teamcode.commandFramework.Constants
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
  * If you want, you can also use this class for other mechanisms that also involve one servo, like a delivery bucket.
  * To use this class, copy it into the proper package and change the four constants.
  */
+@Config
 @Suppress("PropertyName", "MemberVisibilityCanBePrivate", "unused")
 class Claw : Subsystem {
 

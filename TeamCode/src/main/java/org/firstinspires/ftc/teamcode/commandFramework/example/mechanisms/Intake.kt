@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.commandFramework.example.mechanisms
 
+import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple
@@ -16,6 +17,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
  * don't require encoders.
  * To use this class, copy it into the proper package and change the two constants.
  */
+@Config
 @Suppress("Unused", "MemberVisibilityCanBePrivate")
 object Intake : Subsystem {
 
