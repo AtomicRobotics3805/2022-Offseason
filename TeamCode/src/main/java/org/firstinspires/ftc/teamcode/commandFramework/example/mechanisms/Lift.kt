@@ -2,70 +2,65 @@ package org.firstinspires.ftc.teamcode.commandFramework.example.mechanisms
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorEx
+import com.qualcomm.robotcore.hardware.DcMotorSimple
 import org.firstinspires.ftc.teamcode.commandFramework.Constants.opMode
 import org.firstinspires.ftc.teamcode.commandFramework.Command
-import org.firstinspires.ftc.teamcode.commandFramework.utilCommands.CustomCommand
+import org.firstinspires.ftc.teamcode.commandFramework.subsystems.PowerMotor
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
-import kotlin.math.abs
+import org.firstinspires.ftc.teamcode.util.commands.subsystems.MotorToPosition
 
+/**
+ * This class is an example of a lift controlled by a single motor. Unlike the Intake example object, it can use
+ * encoders to go to a set position. Its first two commands, toLow and toHigh, do just that. The start command turns
+ * the motor on and lets it spin freely, and the reverse command does the same but in the opposite direction. The stop
+ * command stops the motor. These last three are meant for use during the TeleOp period to control the lift manually.
+ * To use this class, copy it into the proper package and change the first eight constants (COUNTS_PER_INCH is fine as
+ * is).
+ */
 @Suppress("Unused", "MemberVisibilityCanBePrivate")
-object Arm : Subsystem {
-    @JvmField
-    var ARM_NAME = "lift"
-    @JvmField
-    var ARM_SPEED = 1.0
-    @JvmField
-    var ARM_POSITION_HIGH = 0.0 // in
-    @JvmField
-    var ARM_POSITION_LOW = 0.0 // in
+object Lift : Subsystem {
 
+    // configurable constants
+    @JvmField
+    var NAME = "lift"
+    @JvmField
+    var SPEED = 1.0
+    @JvmField
+    var HIGH_POSITION = 10.0 // in
+    @JvmField
+    var LOW_POSITION = 5.0 // in
+    @JvmField
+    var DIRECTION = DcMotorSimple.Direction.FORWARD
+
+    // unconfigurable constants
     private const val PULLEY_WIDTH = 1.0 // in
-    private const val COUNTS_PER_REV = 537.6
-    // higher value makes driven gear slower
-    private const val DRIVE_GEAR_REDUCTION = 1.0
+    private const val COUNTS_PER_REV = 28 * 19.2 // NeveRest 20 orbital (really 19.2 ratio, not 20)
+    private const val DRIVE_GEAR_REDUCTION = 1.0 // higher value means that driven gear is slower
     private const val COUNTS_PER_INCH = COUNTS_PER_REV * DRIVE_GEAR_REDUCTION / (PULLEY_WIDTH * Math.PI)
 
+    // commands
     val toLow: Command
-        get() = moveArmToPosition((ARM_POSITION_LOW * COUNTS_PER_INCH).toInt())
+        get() = MotorToPosition(liftMotor, (LOW_POSITION * COUNTS_PER_INCH).toInt(), SPEED)
     val toHigh: Command
-        get() = moveArmToPosition((ARM_POSITION_HIGH * COUNTS_PER_INCH).toInt())
-    val toStart: Command
-        get() = moveArmToPosition((0.1 * COUNTS_PER_INCH).toInt())
+        get() = MotorToPosition(liftMotor, (HIGH_POSITION * COUNTS_PER_INCH).toInt(), SPEED)
     val start: Command
-        get() = powerArm(ARM_SPEED)
+        get() = PowerMotor(liftMotor, SPEED)
     val reverse: Command
-        get() = powerArm(-ARM_SPEED)
+        get() = PowerMotor(liftMotor, -SPEED)
     val stop: Command
-        get() = halt()
+        get() = PowerMotor(liftMotor, 0.0)
 
-    lateinit var armMotor: DcMotorEx
+    // motor
+    lateinit var liftMotor: DcMotorEx
 
+    /**
+     * Initializes the liftMotor, resets its encoders, sets the mode to RUN_USING_ENCODER, and sets the direction to the
+     * DIRECTION variable.
+     */
     fun initialize() {
-        armMotor = opMode.hardwareMap.get(DcMotorEx::class.java, ARM_NAME)
-        armMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        armMotor.mode = DcMotor.RunMode.RUN_USING_ENCODER
-
+        liftMotor = opMode.hardwareMap.get(DcMotorEx::class.java, NAME)
+        liftMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        liftMotor.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        liftMotor.direction = DIRECTION
     }
-
-    fun halt() = CustomCommand(_start = {
-        armMotor.power = 0.0
-    })
-
-    fun powerArm(speed: Double) = CustomCommand(_start = {
-        armMotor.mode = DcMotor.RunMode.RUN_USING_ENCODER
-        armMotor.power = speed
-    })
-
-    fun moveArmToPosition(position: Int) = CustomCommand(
-            getDone = { abs(armMotor.targetPosition - armMotor.currentPosition) <= armMotor.targetPositionTolerance },
-            _start = {
-                armMotor.targetPosition = position
-                armMotor.mode = DcMotor.RunMode.RUN_TO_POSITION
-                armMotor.power = ARM_SPEED
-            },
-            _done = {
-                if (position == 0)
-                    armMotor.power = 0.0
-            }
-    )
 }

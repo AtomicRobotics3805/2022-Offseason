@@ -4,8 +4,11 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.util.ElapsedTime
 import com.qualcomm.robotcore.util.Range
 import org.firstinspires.ftc.teamcode.commandFramework.Command
+import org.firstinspires.ftc.teamcode.commandFramework.CommandScheduler
+import org.firstinspires.ftc.teamcode.commandFramework.utilCommands.TelemetryCommand
 import kotlin.math.abs
 import kotlin.math.min
+import kotlin.math.roundToInt
 import kotlin.math.sign
 
 /**
@@ -24,9 +27,10 @@ open class MotorToPosition(protected val motor: DcMotor, protected val targetPos
                            protected val kP: Double = 0.005): Command() {
 
     protected val timer = ElapsedTime()
-    protected val positions: MutableList<Double> = mutableListOf()
+    protected val positions: MutableList<Int> = mutableListOf()
     protected val savesPerSecond = 10.0
     protected var saveTimes: MutableList<Double> = mutableListOf()
+    protected val minimumChangeForStall = 20.0
     protected var error: Int = 0
     protected var direction: Double = 0.0
     override val _isDone: Boolean
@@ -60,11 +64,27 @@ open class MotorToPosition(protected val motor: DcMotor, protected val targetPos
         motor.power = 0.0
     }
 
+    /**
+     * Starts by determining whether a stall check has been performed in the past 1 / savesPerSecond seconds. If not,
+     * It then compares the speed from the previous check to the current speed. If there's a change of at least
+     * minimumChangeForStall times, then the motor is stalled. It sends out a telemetry message and cancels the command.
+     */
     fun cancelIfStalled() {
         val lastTime = if (saveTimes.size == 0) 0.0 else saveTimes.last()
-                if ((saveTimes.size == 0 && timer.seconds() > 1 / savesPerSecond) ||
-            timer.seconds() - saveTimes.last() > 1 / savesPerSecond) {
-
+        val roundedLastTime = (lastTime * savesPerSecond).roundToInt() / savesPerSecond
+        if (timer.seconds() - roundedLastTime < 1 / savesPerSecond) {
+            if (positions.size > 1) {
+                val lastSpeed = abs(positions[positions.size - 2] - positions[positions.size - 1])
+                val currentSpeed = abs(positions[positions.size - 1] - motor.currentPosition)
+                if (lastSpeed / currentSpeed >= minimumChangeForStall) {
+                    CommandScheduler.scheduleCommand(
+                        TelemetryCommand(3.0, "Motor " + motor.deviceName + " Stalled!")
+                    )
+                    isDone = true
+                }
+            }
+            saveTimes.add(timer.seconds())
+            positions.add(motor.currentPosition)
         }
 
     }

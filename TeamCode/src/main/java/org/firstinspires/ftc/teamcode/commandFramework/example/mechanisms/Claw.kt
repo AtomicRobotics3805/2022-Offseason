@@ -10,27 +10,27 @@ import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
  * This class is an example of a claw controlled by a single servo. Its first two commands, open and close, which each
  * move the claw to the corresponding position. The third command, switch, opens it if it's closed and closes it if it's
  * open. The switch command is particularly useful during TeleOp.
+ * If you want, you can also use this class for other mechanisms that also involve one servo, like a delivery bucket.
  * To use this class, copy it into the proper package and change the four constants.
  */
 @Suppress("PropertyName", "MemberVisibilityCanBePrivate", "unused")
 class Claw : Subsystem {
 
-    // constants
+    // configurable constants
     @JvmField
-    var CAP_CLAW_NAME = "claw"
+    var NAME = "claw"
     @JvmField
     var OPEN_POSITION = 0.0
     @JvmField
     var CLOSE_POSITION = 1.0
-    // the number of seconds required to move the servo from 0.0 to 1.0
     @JvmField
-    var SPEED = 1.0
+    var TIME = 1.0 // the number of seconds required to move the servo from 0.0 to 1.0 (not necessarily OPEN to CLOSE)
 
     // commands
     val open: Command
-        get() = MoveServo(clawServo, OPEN_POSITION, SPEED, listOf(this), true)
+        get() = MoveServo(clawServo, OPEN_POSITION, TIME, listOf(this), true)
     val close: Command
-        get() = MoveServo(clawServo, CLOSE_POSITION, SPEED, listOf(this), true)
+        get() = MoveServo(clawServo, CLOSE_POSITION, TIME, listOf(this), true)
     val switch: Command
         get() = if (clawServo.position == OPEN_POSITION) close else open
 
@@ -41,6 +41,6 @@ class Claw : Subsystem {
      * Initializes the clawServo.
      */
     fun initialize() {
-        clawServo = Constants.opMode.hardwareMap.get(Servo::class.java, CAP_CLAW_NAME)
+        clawServo = Constants.opMode.hardwareMap.get(Servo::class.java, NAME)
     }
 }
