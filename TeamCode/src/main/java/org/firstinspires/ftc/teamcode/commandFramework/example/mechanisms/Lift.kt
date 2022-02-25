@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.Constants.opMode
 import org.firstinspires.ftc.teamcode.commandFramework.Command
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.PowerMotor
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
-import org.firstinspires.ftc.teamcode.util.commands.subsystems.MotorToPosition
+import org.firstinspires.ftc.teamcode.commandFramework.subsystems.MotorToPosition
 
 /**
  * This class is an example of a lift controlled by a single motor. Unlike the Intake example object, it can use

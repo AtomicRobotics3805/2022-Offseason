@@ -1,11 +1,10 @@
-package org.firstinspires.ftc.teamcode.util.commands.subsystems
+package org.firstinspires.ftc.teamcode.commandFramework.subsystems
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.util.ElapsedTime
 import com.qualcomm.robotcore.util.Range
 import org.firstinspires.ftc.teamcode.commandFramework.Command
 import org.firstinspires.ftc.teamcode.commandFramework.CommandScheduler
-import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
 import org.firstinspires.ftc.teamcode.commandFramework.utilCommands.TelemetryCommand
 import kotlin.math.abs
 import kotlin.math.min
@@ -13,14 +12,16 @@ import kotlin.math.roundToInt
 import kotlin.math.sign
 
 /**
- *  MotorToPosition is a class used to rotate a motor to a specific position. It uses proportional powering
- * slow down before reaching the target destination.
+ * This class rotates a motor to a certain position. It proportionally slows down as it nears that
+ * position. It starts slowing down 1 / kP ticks away from its target position.
  *
  * @param motor the motor to move
  * @param targetPosition where the motor should move to
  * @param speed how fast it should move there
+ * @param requirements any Subsystems used by this command
+ * @param interruptible whether this command can be interrupted or not
  * @param minError minimum error
- * @param kP multiplied by the error and speed to get the power
+ * @param kP multiplied by the error and speed to get the
  */
 @Suppress("MemberVisibilityCanBePrivate")
 open class MotorToPosition(
