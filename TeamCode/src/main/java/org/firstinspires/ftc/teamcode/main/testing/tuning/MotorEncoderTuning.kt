@@ -25,6 +25,9 @@ class MotorEncoderTuning : LinearOpMode() {
 
     private var kP = 0.005
 
+    /**
+     * Main function, scans gamepad to alter kP and run MotorToPosition
+     */
     override fun runOpMode() {
         Constants.opMode = this
         val motor = hardwareMap.get(DcMotor::class.java, MOTOR_NAME)
@@ -60,9 +63,17 @@ class MotorEncoderTuning : LinearOpMode() {
         }
     }
 
+    /**
+     * Just a simple MotorToPosition command, but also sends out a telemetry message when the
+     * command ends containing the time required to get to the correct position & the kP value of
+     * this command.
+     */
     class TuneMotorKP(motor: DcMotor, targetPosition: Int, speed: Double, kP: Double) :
         MotorToPosition(motor, targetPosition, speed, kP = kP) {
 
+        /**
+         * Runs the super end function and schedules a telemetry command with the kP and time.
+         */
         override fun end(interrupted: Boolean) {
             super.end(interrupted)
             CommandScheduler.scheduleCommand(
