@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
  */
 @Config
 @Suppress("PropertyName", "MemberVisibilityCanBePrivate", "unused")
-class Claw : Subsystem {
+object Claw : Subsystem {
 
     // configurable constants
     @JvmField
