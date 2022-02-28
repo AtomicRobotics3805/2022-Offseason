@@ -19,4 +19,5 @@ interface Driver {
     var driverSpeed: Double
     fun setDriveSignal(driveSignal: DriveSignal)
     fun setWeightedDrivePower(drivePower: Pose2d)
+    fun getExternalHeadingVelocity(): Double?
 }
