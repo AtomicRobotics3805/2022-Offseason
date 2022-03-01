@@ -27,7 +27,7 @@ var PERPENDICULAR_Y = 0.0 // in; left offset of the perpendicular wheel
  * need them to be outside of the class to use them in the constructor.
  */
 @Config
-class OdometryLocalizer : TwoTrackingWheelLocalizer(listOf(
+object OdometryLocalizer : TwoTrackingWheelLocalizer(listOf(
     Pose2d(PARALLEL_X, PARALLEL_Y, 0.0),
     Pose2d(PERPENDICULAR_X, PERPENDICULAR_Y, Math.toRadians(90.0))
 )), Localizer {
