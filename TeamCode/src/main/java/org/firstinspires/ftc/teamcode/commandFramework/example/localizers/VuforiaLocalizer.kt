@@ -154,7 +154,7 @@ object VuforiaLocalizer : Localizer {
         targetVisible = false
         for (trackable in allTrackables) {
             if ((trackable.listener as VuforiaTrackableDefaultListener).isVisible) {
-                Constants.opMode.telemetry.addData("Visible Target", trackable.name)
+                TelemetryController.telemetry.addData("Visible Target", trackable.name)
                 targetVisible = true
 
                 // getUpdatedRobotLocation() will return null if no new information is available since

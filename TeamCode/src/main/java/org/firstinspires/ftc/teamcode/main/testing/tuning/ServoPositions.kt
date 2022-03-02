@@ -70,7 +70,7 @@ class ServoPositions : LinearOpMode() {
             val deltaTime = timer.seconds() - oldTime
             position = Range.clip(position + joyStick.x * deltaTime, 0.0, 1.0)
             servo.position = position
-            opMode.telemetry.addData("Servo Position", position)
+            TelemetryController.telemetry.addData("Servo Position", position)
         }
     }
 }
