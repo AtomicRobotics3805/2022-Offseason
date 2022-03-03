@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
  * If you want, you can also use this class for other mechanisms that also involve one servo, like a delivery bucket.
  * To use this class, copy it into the proper package and change the four constants.
  */
-@Config
+// @Config // This should be uncommented
 @Suppress("PropertyName", "MemberVisibilityCanBePrivate", "unused")
 object Claw : Subsystem {
 

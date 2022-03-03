@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.hardware.AnalogInput
 import org.firstinspires.ftc.teamcode.commandFramework.Constants
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
 
+// @Config // This should be uncommented
 @Suppress("unused", "MemberVisibilityCanBePrivate")
-@Config
 object DistanceSensor : Subsystem {
 
     @JvmField

@@ -18,7 +18,8 @@ import org.firstinspires.ftc.teamcode.commandFramework.subsystems.MotorToPositio
  * To use this class, copy it into the proper package and change the first eight constants (COUNTS_PER_INCH is fine as
  * is).
  */
-@Config
+
+// @Config // This should be uncommented
 @Suppress("Unused", "MemberVisibilityCanBePrivate")
 object Lift : Subsystem {
 

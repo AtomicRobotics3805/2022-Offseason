@@ -83,7 +83,7 @@ open class MotorToPosition(
         if (timer.seconds() - roundedLastTime < 1 / savesPerSecond) {
             if (positions.size > 1) {
                 val lastSpeed = abs(positions[positions.size - 2] - positions[positions.size - 1])
-                val currentSpeed = abs(positions[positions.size - 1] - motor.currentPosition)
+                val currentSpeed = abs(positions[positions.size - 1] - motor.currentPosition) + 0.000001
                 if (lastSpeed / currentSpeed >= minimumChangeForStall) {
                     CommandScheduler.scheduleCommand(
                         TelemetryCommand(3.0, "Motor " + motor.deviceName + " Stalled!")

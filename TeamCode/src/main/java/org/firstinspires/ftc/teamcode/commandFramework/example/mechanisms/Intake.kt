@@ -17,7 +17,8 @@ import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
  * don't require encoders.
  * To use this class, copy it into the proper package and change the two constants.
  */
-@Config
+
+// @Config // This should be uncommented
 @Suppress("Unused", "MemberVisibilityCanBePrivate")
 object Intake : Subsystem {
 
