@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.main.other
 import org.firstinspires.ftc.teamcode.commandFramework.CommandScheduler
 import org.firstinspires.ftc.teamcode.commandFramework.Constants.opMode
 import org.firstinspires.ftc.teamcode.commandFramework.CustomGamepad
+import org.firstinspires.ftc.teamcode.commandFramework.example.mechanisms.Lift
+import org.firstinspires.ftc.teamcode.mechanismTesting.LiftMechanism
 
 /**
  * This class manages the controls for TeleOp OpModes. It's currently just a skeleton of what it
@@ -33,6 +35,7 @@ object Controls {
      * Directions for registering commands are in the class docs.
      */
     fun registerCommands() {
-
+        gamepad1.dpadUp.startCommand = { LiftMechanism.toHigh }
+        gamepad1.dpadDown.startCommand= { LiftMechanism.toLow }
     }
 }
