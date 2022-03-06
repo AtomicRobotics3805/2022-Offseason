@@ -59,7 +59,7 @@ object Lift : Subsystem {
      * Initializes the liftMotor, resets its encoders, sets the mode to RUN_USING_ENCODER, and sets the direction to the
      * DIRECTION variable.
      */
-    fun initialize() {
+    override fun initialize() {
         liftMotor = opMode.hardwareMap.get(DcMotorEx::class.java, NAME)
         liftMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
         liftMotor.mode = DcMotor.RunMode.RUN_USING_ENCODER

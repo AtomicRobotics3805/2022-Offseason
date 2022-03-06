@@ -19,7 +19,7 @@ object DistanceSensor : Subsystem {
 
     private lateinit var distanceSensor: AnalogInput
 
-    fun initialize() {
+    override fun initialize() {
         distanceSensor = Constants.opMode.hardwareMap.get(AnalogInput::class.java, NAME)
     }
 

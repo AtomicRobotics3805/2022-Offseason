@@ -12,6 +12,13 @@ package org.firstinspires.ftc.teamcode.commandFramework.subsystems
 interface Subsystem {
 
     /**
+     * The CommandScheduler runs this function when the Subsystem is registered using
+     * registerSubsystems(). It should contain anything that needs to be done once at the start of
+     * the program, like initializing motors or servos.
+     */
+    fun initialize() { }
+
+    /**
      * The CommandScheduler runs this function every loop (provided the subsystem has been
      * registered using registerSubsystems()). It should contain anything related to the subsystem
      * that needs to be done repeatedly, such as displaying telemetry information.

@@ -44,7 +44,7 @@ object Intake : Subsystem {
      * Initializes the intakeMotor, sets its mode to RUN_WITHOUT_ENCODER, and sets its direction to the DIRECTION
      * variable.
      */
-    fun initialize() {
+    override fun initialize() {
         intakeMotor = opMode.hardwareMap.get(DcMotorEx::class.java, NAME)
         intakeMotor.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
         intakeMotor.direction = DcMotorSimple.Direction.REVERSE

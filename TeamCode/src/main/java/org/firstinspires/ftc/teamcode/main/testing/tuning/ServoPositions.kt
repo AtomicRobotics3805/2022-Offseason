@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.Command
 import org.firstinspires.ftc.teamcode.commandFramework.CommandScheduler
 import org.firstinspires.ftc.teamcode.commandFramework.Constants.opMode
 import org.firstinspires.ftc.teamcode.commandFramework.CustomGamepad
+import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
 
 /**
  * This class tunes the position of a servo. Before you use it, make sure to change SERVO_NAME.

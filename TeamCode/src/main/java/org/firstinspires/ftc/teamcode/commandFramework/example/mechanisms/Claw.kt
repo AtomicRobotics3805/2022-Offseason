@@ -42,7 +42,7 @@ object Claw : Subsystem {
     /**
      * Initializes the clawServo.
      */
-    fun initialize() {
+    override fun initialize() {
         clawServo = Constants.opMode.hardwareMap.get(Servo::class.java, NAME)
     }
 }
