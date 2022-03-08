@@ -7,6 +7,7 @@ import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix
 import org.firstinspires.ftc.robotcore.external.navigation.*
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer
 import org.firstinspires.ftc.teamcode.commandFramework.Constants
+import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Localizer
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.Pose2d
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.inchesToMm
@@ -61,7 +62,7 @@ object VuforiaLocalizer : Localizer {
     /**
      * Initializes the webcam & sets up Vuforia
      */
-    fun initialize() {
+    override fun initialize() {
         /*
          * Retrieve the camera we are to use.
          */

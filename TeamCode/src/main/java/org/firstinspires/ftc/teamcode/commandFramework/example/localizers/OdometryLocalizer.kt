@@ -53,7 +53,7 @@ object OdometryLocalizer : TwoTrackingWheelLocalizer(listOf(
     /**
      * Initializes the encoders & sets their direction
      */
-    fun initialize() {
+    override fun initialize() {
         perpendicularEncoder = Encoder(Constants.opMode.hardwareMap.get(DcMotorEx::class.java, "RF"))
         parallelEncoder = Encoder(Constants.opMode.hardwareMap.get(DcMotorEx::class.java, "LF"))
 

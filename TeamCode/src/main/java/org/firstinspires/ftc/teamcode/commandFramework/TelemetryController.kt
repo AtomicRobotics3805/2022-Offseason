@@ -26,7 +26,7 @@ object TelemetryController : Subsystem {
     /**
      * Initializes the dashboardAdapter and telemetry instances
      */
-    fun initialize() {
+    override fun initialize() {
         dashboardAdapter = Adapter(FtcDashboard.getInstance())
         telemetry = MultipleTelemetry(Constants.opMode.telemetry, dashboardAdapter)
     }

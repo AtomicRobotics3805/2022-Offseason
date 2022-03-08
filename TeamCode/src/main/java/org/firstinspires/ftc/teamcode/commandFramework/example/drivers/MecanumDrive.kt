@@ -49,6 +49,8 @@ import kotlin.math.abs
  * constructor. When copying this file and making adjustments for a new robot, you should only have
  * to change these constants.
  */
+
+
 @Config
 object MecanumDriveConstants {
 
@@ -150,11 +152,11 @@ object MecanumDriveConstants {
     var driverSpeeds = listOf(0.1, 0.4, 1.0)
 
     fun encoderTicksToInches(ticks: Double): Double {
-        return Const.WHEEL_RADIUS * 2 * Math.PI * Const.GEAR_RATIO * ticks / Const.TICKS_PER_REV
+        return WHEEL_RADIUS * 2 * Math.PI * GEAR_RATIO * ticks / TICKS_PER_REV
     }
 
     fun rpmToVelocity(rpm: Double): Double {
-        return rpm * Const.GEAR_RATIO * 2 * Math.PI * Const.WHEEL_RADIUS / 60.0
+        return rpm * GEAR_RATIO * 2 * Math.PI * WHEEL_RADIUS / 60.0
     }
 
     fun getMotorVelocityF(ticksPerSecond: Double): Double {
@@ -279,7 +281,7 @@ object MecanumDrive : RoadRunnerMecanumDrive(
      * Initializes the drivetrain. This includes initializing the IMU, motor, and the battery
      * voltage sensor.
      */
-    fun initialize() {
+    override fun initialize() {
         hardwareMap = Constants.opMode.hardwareMap
         // initializes the imu
         imu = hardwareMap.get(BNO055IMU::class.java, "imu")
@@ -418,4 +420,43 @@ object MecanumDrive : RoadRunnerMecanumDrive(
             motor.setPIDFCoefficients(RunMode.RUN_USING_ENCODER, compensatedCoefficients)
         }
     }
+
+    override val TICKS_PER_REV: Double
+        get() = Const.TICKS_PER_REV
+    override val MAX_RPM: Double
+        get() = Const.MAX_RPM
+    override val MOTOR_VELO_PID: PIDFCoefficients
+        get() = Const.MOTOR_VELO_PID
+    override val IS_RUN_USING_ENCODER: Boolean
+        get() = Const.IS_RUN_USING_ENCODER
+    override val kV: Double
+        get() = Const.kV
+    override val kA: Double
+        get() = Const.kA
+    override val kStatic: Double
+        get() = Const.kStatic
+    override val WHEEL_RADIUS: Double
+        get() = Const.WHEEL_RADIUS
+    override val GEAR_RATIO: Double
+        get() = Const.GEAR_RATIO
+    override val TRACK_WIDTH: Double
+        get() = Const.TRACK_WIDTH
+    override val MAX_VEL: Double
+        get() = Const.MAX_VEL
+    override val MAX_ACCEL: Double
+        get() = Const.MAX_ACCEL
+    override val MAX_ANG_VEL: Double
+        get() = Const.MAX_ANG_VEL
+    override val MAX_ANG_ACCEL: Double
+        get() = Const.MAX_ANG_ACCEL
+    override val LATERAL_MULTIPLIER: Double
+        get() = Const.LATERAL_MULTIPLIER
+    override val DRIFT_MULTIPLIER: Double
+        get() = Const.DRIFT_MULTIPLIER
+    override val DRIFT_TURN_MULTIPLIER: Double
+        get() = Const.DRIFT_TURN_MULTIPLIER
+    override val TRANSLATION_PID: PIDCoefficients
+        get() = Const.TRANSLATIONAL_PID
+    override val HEADING_PID: PIDCoefficients
+        get() = Const.HEADING_PID
 }
