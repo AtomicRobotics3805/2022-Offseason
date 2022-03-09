@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.commandFramework.utilCommands
 
 import com.qualcomm.robotcore.util.ElapsedTime
-import org.firstinspires.ftc.teamcode.commandFramework.Constants
 import org.firstinspires.ftc.teamcode.commandFramework.Command
+import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
 
 /**
  * This class is used to repeatedly send telemetry messages for a certain period of time.
@@ -55,6 +55,6 @@ class TelemetryCommand(private val time: Double, private val message: () -> Stri
      * Adds telemetry line
      */
     override fun execute() {
-        Constants.opMode.telemetry.addLine(message.invoke())
+        TelemetryController.telemetry.addLine(message.invoke())
     }
 }
