@@ -8,12 +8,8 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.teamcode.commandFramework.Command
 import org.firstinspires.ftc.teamcode.commandFramework.utilCommands.CustomCommand
 import org.openftc.easyopencv.OpenCvCamera.AsyncCameraOpenListener
-import org.opencv.core.Mat
 import org.openftc.easyopencv.*
 import org.openftc.easyopencv.OpenCvCameraFactory
-
-
-
 
 class WebcamDetection {
     var cameraMonitorViewId = hardwareMap.appContext.resources.getIdentifier(
