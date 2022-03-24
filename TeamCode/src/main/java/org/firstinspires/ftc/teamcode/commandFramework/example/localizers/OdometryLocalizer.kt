@@ -74,7 +74,7 @@ object OdometryLocalizer : TwoTrackingWheelLocalizer(listOf(
      * @return the radian/sec heading velocity
      */
     override fun getHeadingVelocity(): Double? {
-        return Constants.drive.getExternalHeadingVelocity()
+        return Constants.drive.externalHeadingVelocity
     }
 
     /**

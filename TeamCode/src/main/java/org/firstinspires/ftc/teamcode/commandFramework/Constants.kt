@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode.commandFramework
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import org.firstinspires.ftc.teamcode.commandFramework.driving.Driver
+import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.Driver
 import org.firstinspires.ftc.teamcode.commandFramework.driving.DriveConstants
+import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
 import org.firstinspires.ftc.teamcode.commandFramework.example.drive.ExampleDriveConstants
 
 /**
@@ -21,6 +22,6 @@ object Constants {
     }
     lateinit var color: Color
     lateinit var opMode: LinearOpMode
-    lateinit var drive: Driver
-    val driveConstants: DriveConstants = ExampleDriveConstants
+    var driveConstants: DriveConstants = ExampleDriveConstants
+    var drive: Driver = MecanumDrive()
 }

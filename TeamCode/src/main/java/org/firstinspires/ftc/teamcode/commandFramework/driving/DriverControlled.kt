@@ -38,6 +38,6 @@ class DriverControlled(
                 if (reverseTurn) -1 else {1} * (gamepad.right_stick_x).toDouble()
         )
 
-        drive.setWeightedDrivePower(drivePower * drive.driverSpeed)
+        drive.setDrivePower(drivePower * drive.driverSpeed)
     }
 }
