@@ -19,6 +19,7 @@ import com.qualcomm.robotcore.hardware.VoltageSensor
 import org.firstinspires.ftc.teamcode.commandFramework.Command
 import org.firstinspires.ftc.teamcode.commandFramework.Constants
 import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
+import org.firstinspires.ftc.teamcode.commandFramework.driving.DriveConstants
 import org.firstinspires.ftc.teamcode.commandFramework.driving.FollowTrajectory
 import org.firstinspires.ftc.teamcode.commandFramework.driving.Turn
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
@@ -33,19 +34,19 @@ import java.util.*
  * DisplacementDelay. Drivetrain objects/classes like MecanumDrive should implement this interface.
  */
 @Suppress("PropertyName", "MemberVisibilityCanBePrivate", "unused")
-abstract class Driver : Subsystem {
+abstract class Driver(private val constants: DriveConstants, val localizer: Localizer) : Subsystem {
 
     protected val POSE_HISTORY_LIMIT = 100
 
     // these two are used to follow trajectories & turn
     val follower: HolonomicPIDVAFollower = HolonomicPIDVAFollower(
-            Constants.driveConstants.TRANSLATIONAL_PID, Constants.driveConstants.TRANSLATIONAL_PID, Constants.driveConstants.HEADING_PID,
+            constants.TRANSLATIONAL_PID, constants.TRANSLATIONAL_PID, constants.HEADING_PID,
             Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.5
         )
-    val turnController: PIDFController = PIDFController(Constants.driveConstants.HEADING_PID)
+    val turnController: PIDFController = PIDFController(constants.HEADING_PID)
 
     protected val accelConstraint: ProfileAccelerationConstraint
-        get() = ProfileAccelerationConstraint(Constants.driveConstants.MAX_ACCEL)
+        get() = ProfileAccelerationConstraint(constants.MAX_ACCEL)
     // different for different drive types, which is why it's abstract unlike accelConstraint
     protected abstract val velConstraint: MinVelocityConstraint
 
@@ -55,14 +56,13 @@ abstract class Driver : Subsystem {
     // these two variables are used in TeleOp to control "slow mode"
     var driverSpeedIndex = 0
     val driverSpeed: Double
-        get() = Constants.driveConstants.DRIVER_SPEEDS[driverSpeedIndex]
+        get() = constants.DRIVER_SPEEDS[driverSpeedIndex]
 
     // keeps a list of positions to upload to the FTC Dashboard
     protected val poseHistory = LinkedList<Pose2d>()
     // this is the trajectory that the robot is currently following
     var trajectory: ParallelTrajectory? = null
 
-    lateinit var localizer: Localizer
     lateinit var poseEstimate: Pose2d
     val poseVelocity: Pose2d?
         get() = localizer.poseVelocity
@@ -101,7 +101,7 @@ abstract class Driver : Subsystem {
      * @param turnType whether the turn should be relative to current position or relative to field
      */
     fun turn(angle: Double, turnType: Turn.TurnType): Command =
-        Turn(angle, Constants.driveConstants.MAX_ACCEL, Constants.driveConstants.MAX_VEL, turnType, listOf(this), true)
+        Turn(angle, constants.MAX_ACCEL, constants.MAX_VEL, turnType, listOf(this), true)
 
     /**
      * Returns a TrajectoryBuilder with a certain start position

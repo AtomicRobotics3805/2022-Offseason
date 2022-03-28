@@ -20,9 +20,6 @@ interface DriveConstants {
     val MAX_ACCEL: Double
     val MAX_ANG_VEL: Double
     val MAX_ANG_ACCEL: Double
-    val LATERAL_MULTIPLIER: Double
-    val DRIFT_MULTIPLIER: Double
-    val DRIFT_TURN_MULTIPLIER: Double
     val TRANSLATIONAL_PID: PIDCoefficients
     val HEADING_PID: PIDCoefficients
     val DRIVER_SPEEDS: List<Double>

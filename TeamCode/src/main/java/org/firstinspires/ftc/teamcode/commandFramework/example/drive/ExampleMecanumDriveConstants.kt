@@ -1,13 +1,13 @@
 package org.firstinspires.ftc.teamcode.commandFramework.example.drive
 
 import com.acmerobotics.roadrunner.control.PIDCoefficients
+import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.PIDFCoefficients
-import org.firstinspires.ftc.teamcode.commandFramework.driving.DriveConstants
-import org.firstinspires.ftc.teamcode.commandFramework.trajectories.inchesToMm
+import org.firstinspires.ftc.teamcode.commandFramework.driving.MecanumDriveConstants
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.toRadians
 
 @Suppress("ObjectPropertyName")
-object ExampleDriveConstants : DriveConstants {
+object ExampleMecanumDriveConstants : MecanumDriveConstants {
 
     // These are motor constants that should be listed online for your motors.
     @JvmField
@@ -94,17 +94,29 @@ object ExampleDriveConstants : DriveConstants {
     @JvmField
     var _HEADING_PID = PIDCoefficients(8.0, 0.0, 0.0)
 
-    // camera location, only necessary if you're using cameras obviously
-    @JvmField
-    var _CAMERA_FORWARD_DISPLACEMENT = 0.0.inchesToMm.toFloat()
-    @JvmField
-    var _CAMERA_VERTICAL_DISPLACEMENT = 0.0.inchesToMm.toFloat()
-    @JvmField
-    var _CAMERA_LEFT_DISPLACEMENT = 0.0.inchesToMm.toFloat()
-
     // used during TeleOp to make precise movements
     @JvmField
     var _DRIVER_SPEEDS = listOf(0.1, 0.4, 1.0)
+
+    // these are the directions (forward or reverse) for each motor
+    @JvmField
+    var _LEFT_FRONT_DIRECTION = DcMotorSimple.Direction.REVERSE
+    @JvmField
+    var _LEFT_BACK_DIRECTION = DcMotorSimple.Direction.REVERSE
+    @JvmField
+    var _RIGHT_FRONT_DIRECTION = DcMotorSimple.Direction.FORWARD
+    @JvmField
+    var _RIGHT_BACK_DIRECTION = DcMotorSimple.Direction.FORWARD
+
+    // these are the names for the motors in the configuration files on the robot
+    @JvmField
+    var _LEFT_FRONT_NAME = "LF"
+    @JvmField
+    var _LEFT_BACK_NAME = "LB"
+    @JvmField
+    var _RIGHT_FRONT_NAME = "RF"
+    @JvmField
+    var _RIGHT_BACK_NAME = "RB"
 
     override val TICKS_PER_REV: Double
         get() = _TICKS_PER_REV
@@ -140,6 +152,22 @@ object ExampleDriveConstants : DriveConstants {
         get() = _DRIFT_MULTIPLIER
     override val DRIFT_TURN_MULTIPLIER: Double
         get() = _DRIFT_TURN_MULTIPLIER
+    override val LEFT_FRONT_DIRECTION: DcMotorSimple.Direction
+        get() = _LEFT_FRONT_DIRECTION
+    override val LEFT_BACK_DIRECTION: DcMotorSimple.Direction
+        get() = _LEFT_BACK_DIRECTION
+    override val RIGHT_FRONT_DIRECTION: DcMotorSimple.Direction
+        get() = _RIGHT_FRONT_DIRECTION
+    override val RIGHT_BACK_DIRECTION: DcMotorSimple.Direction
+        get() = _RIGHT_BACK_DIRECTION
+    override val LEFT_FRONT_NAME: String
+        get() = _LEFT_FRONT_NAME
+    override val LEFT_BACK_NAME: String
+        get() = _LEFT_BACK_NAME
+    override val RIGHT_FRONT_NAME: String
+        get() = _RIGHT_FRONT_NAME
+    override val RIGHT_BACK_NAME: String
+        get() = _RIGHT_BACK_NAME
     override val TRANSLATIONAL_PID: PIDCoefficients
         get() = _TRANSLATIONAL_PID
     override val HEADING_PID: PIDCoefficients

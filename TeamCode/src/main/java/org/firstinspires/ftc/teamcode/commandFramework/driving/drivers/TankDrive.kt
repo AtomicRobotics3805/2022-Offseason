@@ -3,37 +3,20 @@
 package org.firstinspires.ftc.teamcode.commandFramework.driving.drivers
 
 import com.acmerobotics.dashboard.config.Config
-import com.acmerobotics.roadrunner.control.PIDFController
 import com.acmerobotics.roadrunner.drive.DriveSignal
-import com.acmerobotics.roadrunner.drive.TankDrive as RoadRunnerTankDrive
-import com.acmerobotics.roadrunner.followers.HolonomicPIDVAFollower
 import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.acmerobotics.roadrunner.kinematics.Kinematics
-import com.acmerobotics.roadrunner.kinematics.MecanumKinematics
 import com.acmerobotics.roadrunner.kinematics.TankKinematics
-import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder
 import com.acmerobotics.roadrunner.trajectory.constraints.*
-import com.qualcomm.hardware.bosch.BNO055IMU
-import com.qualcomm.hardware.lynx.LynxModule
 import com.qualcomm.robotcore.hardware.*
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode
 import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior
 import org.firstinspires.ftc.teamcode.commandFramework.Command
-import org.firstinspires.ftc.teamcode.commandFramework.Constants
-import org.firstinspires.ftc.teamcode.commandFramework.Constants.driveConstants
-import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
 import org.firstinspires.ftc.teamcode.commandFramework.driving.DriverControlled
-import org.firstinspires.ftc.teamcode.commandFramework.driving.FollowTrajectory
-import org.firstinspires.ftc.teamcode.commandFramework.driving.Turn
-import org.firstinspires.ftc.teamcode.commandFramework.example.localizers.OdometryLocalizer
-import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
-import org.firstinspires.ftc.teamcode.commandFramework.trajectories.ParallelTrajectory
-import org.firstinspires.ftc.teamcode.commandFramework.trajectories.ParallelTrajectoryBuilder
+import org.firstinspires.ftc.teamcode.commandFramework.driving.TankDriveConstants
+import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Localizer
 import org.firstinspires.ftc.teamcode.commandFramework.utilCommands.CustomCommand
-import org.firstinspires.ftc.teamcode.roadrunnerutil.roadrunner.DashboardUtil
-import org.firstinspires.ftc.teamcode.roadrunnerutil.roadrunner.LynxModuleUtil
 import java.util.*
-import kotlin.math.abs
 
 /**
  * This object controls the movement of a tank drivetrain. It's pretty complicated, so it might be
@@ -45,13 +28,13 @@ import kotlin.math.abs
  * the one used in the Constants file.
  */
 @Config
-class TankDrive : Driver() {
+class TankDrive(val constants: TankDriveConstants, localizer: Localizer) : Driver(constants, localizer) {
 
     // this constraint is used when building trajectories to determine how fast the robot will go
     override val velConstraint: MinVelocityConstraint
         get() = MinVelocityConstraint(listOf(
-            AngularVelocityConstraint(driveConstants.MAX_ANG_VEL),
-            MecanumVelocityConstraint(driveConstants.MAX_VEL, driveConstants.TRACK_WIDTH)
+            AngularVelocityConstraint(constants.MAX_ANG_VEL),
+            MecanumVelocityConstraint(constants.MAX_VEL, constants.TRACK_WIDTH)
         ))
 
     // drive motors
@@ -74,7 +57,7 @@ class TankDrive : Driver() {
      */
     fun switchSpeed(): Command = CustomCommand(_start = {
         driverSpeedIndex++
-        if (driverSpeedIndex >= driveConstants.DRIVER_SPEEDS.size)
+        if (driverSpeedIndex >= constants.DRIVER_SPEEDS.size)
             driverSpeedIndex = 0
     })
     /**
@@ -100,13 +83,13 @@ class TankDrive : Driver() {
             motor.motorType = motorConfigurationType
         }
         // sets the RunMode for each motor
-        if (driveConstants.IS_RUN_USING_ENCODER) {
+        if (constants.IS_RUN_USING_ENCODER) {
             for (motor in motors) {
                 motor.mode = RunMode.STOP_AND_RESET_ENCODER
                 motor.mode = RunMode.RUN_USING_ENCODER
             }
             // sets the motors' PIDFCoefficients
-            setPIDFCoefficients(driveConstants.MOTOR_VEL_PID)
+            setPIDFCoefficients(constants.MOTOR_VEL_PID)
         }
         else {
             for (motor in motors) {
@@ -118,9 +101,8 @@ class TankDrive : Driver() {
             motor.zeroPowerBehavior = ZeroPowerBehavior.BRAKE
         }
         // reverses motors if necessary
-        left.direction = DcMotorSimple.Direction.REVERSE
-        // sets the localizer
-        localizer = OdometryLocalizer
+        left.direction = constants.LEFT_DIRECTION
+        right.direction = constants.RIGHT_DIRECTION
     }
 
     /**
@@ -130,7 +112,7 @@ class TankDrive : Driver() {
     fun getWheelPositions(): List<Double> {
         val wheelPositions: MutableList<Double> = ArrayList()
         for (motor in motors) {
-            wheelPositions.add(driveConstants.encoderTicksToInches(motor.currentPosition.toDouble()))
+            wheelPositions.add(constants.encoderTicksToInches(motor.currentPosition.toDouble()))
         }
         return wheelPositions
     }
@@ -142,7 +124,7 @@ class TankDrive : Driver() {
     fun getWheelVelocities(): List<Double> {
         val wheelVelocities: MutableList<Double> = ArrayList()
         for (motor in motors) {
-            wheelVelocities.add(driveConstants.encoderTicksToInches(motor.velocity))
+            wheelVelocities.add(constants.encoderTicksToInches(motor.velocity))
         }
         return wheelVelocities
     }
@@ -164,18 +146,18 @@ class TankDrive : Driver() {
     override fun setDriveSignal(driveSignal: DriveSignal) {
         val velocities = TankKinematics.robotToWheelVelocities(
             driveSignal.vel,
-            driveConstants.TRACK_WIDTH
+            constants.TRACK_WIDTH
         )
         val accelerations = TankKinematics.robotToWheelAccelerations(
             driveSignal.accel,
-            driveConstants.TRACK_WIDTH
+            constants.TRACK_WIDTH
         )
         val powers = Kinematics.calculateMotorFeedforward(
             velocities,
             accelerations,
-            driveConstants.kV,
-            driveConstants.kA,
-            driveConstants.kStatic
+            constants.kV,
+            constants.kA,
+            constants.kStatic
         )
         setMotorPowers(powers[0], powers[1])
     }
