@@ -27,7 +27,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.trajectories.ParallelTraj
 @Config
 @Autonomous(group = "drive")
 class BackAndForth : LinearOpMode() {
-    @Throws(InterruptedException::class)
+
     override fun runOpMode() {
         val trajectoryForward: ParallelTrajectory = drive.trajectoryBuilder(Pose2d())
             .forward(DISTANCE)
@@ -43,6 +43,7 @@ class BackAndForth : LinearOpMode() {
     }
 
     companion object {
+        @JvmField
         var DISTANCE = 50.0
     }
 }

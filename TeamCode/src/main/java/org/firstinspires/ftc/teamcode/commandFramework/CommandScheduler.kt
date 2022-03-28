@@ -56,8 +56,10 @@ object CommandScheduler {
      * @param subsystems the subsystems to be registered
      */
     fun registerSubsystems(vararg subsystems: Subsystem) {
-        for (subsystem in subsystems)
+        for (subsystem in subsystems) {
+            subsystem.initialize()
             this.subsystems += subsystem
+        }
     }
 
     /**
