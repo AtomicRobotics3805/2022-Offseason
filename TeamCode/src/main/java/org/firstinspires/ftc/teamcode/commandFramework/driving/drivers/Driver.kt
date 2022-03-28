@@ -38,13 +38,11 @@ abstract class Driver : Subsystem {
     protected val POSE_HISTORY_LIMIT = 100
 
     // these two are used to follow trajectories & turn
-    val follower: HolonomicPIDVAFollower
-        get() = HolonomicPIDVAFollower(
+    val follower: HolonomicPIDVAFollower = HolonomicPIDVAFollower(
             Constants.driveConstants.TRANSLATIONAL_PID, Constants.driveConstants.TRANSLATIONAL_PID, Constants.driveConstants.HEADING_PID,
             Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.5
         )
-    val turnController: PIDFController
-        get() = PIDFController(Constants.driveConstants.HEADING_PID)
+    val turnController: PIDFController = PIDFController(Constants.driveConstants.HEADING_PID)
 
     protected val accelConstraint: ProfileAccelerationConstraint
         get() = ProfileAccelerationConstraint(Constants.driveConstants.MAX_ACCEL)
@@ -150,6 +148,8 @@ abstract class Driver : Subsystem {
      * Displays the robot and its position history on the FtcDashboard
      */
     override fun periodic() {
+        localizer.update()
+        poseEstimate = localizer.poseEstimate
         poseHistory.add(poseEstimate)
         if (POSE_HISTORY_LIMIT > -1 && poseHistory.size > POSE_HISTORY_LIMIT) {
             poseHistory.removeFirst()
