@@ -1,8 +1,5 @@
-package org.firstinspires.ftc.teamcode.commandFramework.detection
+package org.firstinspires.ftc.teamcode.commandFramework.detection.openCV
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode
-import com.qualcomm.robotcore.hardware.DcMotor
-import org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion
 import org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.*
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.firstinspires.ftc.teamcode.commandFramework.Command

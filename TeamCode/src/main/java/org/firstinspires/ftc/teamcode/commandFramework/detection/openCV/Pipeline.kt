@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.commandFramework.detection
+package org.firstinspires.ftc.teamcode.commandFramework.detection.openCV
 
 import org.openftc.easyopencv.OpenCvPipeline
 import org.opencv.core.Mat
