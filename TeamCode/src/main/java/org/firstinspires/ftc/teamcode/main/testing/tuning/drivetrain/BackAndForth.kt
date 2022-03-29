@@ -5,8 +5,15 @@ import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.acmerobotics.roadrunner.trajectory.Trajectory
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import org.firstinspires.ftc.teamcode.commandFramework.CommandScheduler
+import org.firstinspires.ftc.teamcode.commandFramework.Constants
 import org.firstinspires.ftc.teamcode.commandFramework.Constants.drive
+import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
+import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
+import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryLocalizer
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.ParallelTrajectory
+import org.firstinspires.ftc.teamcode.main.subsystems.drive.DriveConstants
+import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
 
 /*
  * Op mode for preliminary tuning of the follower PID coefficients (located in the drive base
@@ -29,6 +36,13 @@ import org.firstinspires.ftc.teamcode.commandFramework.trajectories.ParallelTraj
 class BackAndForth : LinearOpMode() {
 
     override fun runOpMode() {
+        Constants.opMode = this
+        drive = MecanumDrive(
+            DriveConstants,
+            TwoWheelOdometryLocalizer(OdometryConstants),
+            Pose2d()
+        )
+        CommandScheduler.registerSubsystems(drive, TelemetryController)
         val trajectoryForward: ParallelTrajectory = drive.trajectoryBuilder(Pose2d())
             .forward(DISTANCE)
             .build()

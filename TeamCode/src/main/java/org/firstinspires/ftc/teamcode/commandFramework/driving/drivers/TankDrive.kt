@@ -28,7 +28,7 @@ import java.util.*
  * the one used in the Constants file.
  */
 @Config
-class TankDrive(val constants: TankDriveConstants,
+class TankDrive(constants: TankDriveConstants,
                 localizer: Localizer,
                 startPose: Pose2d = Pose2d()
 ) : Driver(constants, localizer, startPose) {

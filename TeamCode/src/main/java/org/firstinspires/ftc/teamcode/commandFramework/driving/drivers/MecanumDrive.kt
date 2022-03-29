@@ -32,7 +32,7 @@ import java.util.*
  */
 @Suppress("unused")
 @Config
-class MecanumDrive(val constants: MecanumDriveConstants,
+class MecanumDrive(constants: MecanumDriveConstants,
                    localizer: Localizer,
                    startPose: Pose2d = Pose2d()
 ) : Driver(constants, localizer, startPose) {

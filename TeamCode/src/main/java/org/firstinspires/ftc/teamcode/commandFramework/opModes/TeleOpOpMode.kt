@@ -21,28 +21,20 @@ import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
  *                  how to use the coordinate system, go to TrajectoryFactory
  */
 @Suppress("unused")
-abstract class TeleOpOpMode(private val color: Constants.Color,
+abstract class TeleOpOpMode(private val mainRoutine: (() -> Command)? = null,
+                            private val initRoutine: (() -> Command)? = null,
                             private vararg val subsystems: Subsystem,
-                            private val startPose: (() -> Pose2d)? = null,
-                            private val mainRoutine: (() -> Command)? = null,
-                            private val initRoutine: (() -> Command)? = null
 ) : LinearOpMode() {
 
     override fun runOpMode() {
         try {
             // setting constants
             Constants.opMode = this
-            CommandScheduler.registerSubsystems(
-                MecanumDrive(
-                    DriveConstants,
-                    TwoWheelOdometryLocalizer(OdometryConstants),
-                    startPose?.invoke() ?: Pose2d()
-                ), *subsystems)
             // controls stuff
             Controls.registerGamepads()
             Controls.registerCommands()
             // this both registers & initializes the subsystems
-            CommandScheduler.registerSubsystems(*subsystems)
+            CommandScheduler.registerSubsystems(TelemetryController, *subsystems)
             // if there is a routine that's supposed to be performed on init, then do it
             if (initRoutine != null) CommandScheduler.scheduleCommand(initRoutine.invoke())
             // wait for start

@@ -12,8 +12,13 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.util.RobotLog
 import org.firstinspires.ftc.teamcode.commandFramework.CommandScheduler
 import org.firstinspires.ftc.teamcode.commandFramework.Constants
+import org.firstinspires.ftc.teamcode.commandFramework.Constants.drive
 import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
+import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
+import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryLocalizer
 import org.firstinspires.ftc.teamcode.commandFramework.utilCommands.TelemetryCommand
+import org.firstinspires.ftc.teamcode.main.subsystems.drive.DriveConstants
+import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
 import java.util.*
 
 /*
@@ -45,7 +50,13 @@ class ManualFeedforwardTuner : LinearOpMode() {
 
     override fun runOpMode() {
         Constants.opMode = this
-        if (driveConstants.IS_RUN_USING_ENCODER) {
+        drive = MecanumDrive(
+                DriveConstants,
+                TwoWheelOdometryLocalizer(OdometryConstants),
+                Pose2d()
+            )
+        CommandScheduler.registerSubsystems(TelemetryController, drive)
+        if (drive.constants.IS_RUN_USING_ENCODER) {
             RobotLog.setGlobalErrorMsg(
                 "Feedforward constants usually don't need to be tuned " +
                         "when using the built-in drive motor velocity PID."
@@ -79,7 +90,7 @@ class ManualFeedforwardTuner : LinearOpMode() {
                     }
                     val motionState = activeProfile[profileTime]
                     val targetPower: Double =
-                        calculateMotorFeedforward(motionState.v, motionState.a, driveConstants.kV, driveConstants.kA, driveConstants.kStatic)
+                        calculateMotorFeedforward(motionState.v, motionState.a, drive.constants.kV, drive.constants.kA, drive.constants.kStatic)
                     drive.setDrivePower(Pose2d(targetPower, 0.0, 0.0))
                     drive.periodic()
                     val poseVelo: Pose2d = Objects.requireNonNull(
@@ -121,8 +132,8 @@ class ManualFeedforwardTuner : LinearOpMode() {
             val goal = MotionState(if (movingForward) DISTANCE else 0.0, 0.0, 0.0, 0.0)
             return generateSimpleMotionProfile(
                 start, goal,
-                driveConstants.MAX_VEL,
-                driveConstants.MAX_ACCEL,
+                drive.constants.MAX_VEL,
+                drive.constants.MAX_ACCEL,
                 0.0
             )
         }

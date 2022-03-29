@@ -8,7 +8,7 @@ import com.acmerobotics.roadrunner.localization.TwoTrackingWheelLocalizer
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import org.firstinspires.ftc.teamcode.commandFramework.Constants
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Localizer
-import org.firstinspires.ftc.teamcode.roadrunnerutil.roadrunner.Encoder
+import org.firstinspires.ftc.teamcode.roadrunnerutil.test.Encoder
 
 
 /**

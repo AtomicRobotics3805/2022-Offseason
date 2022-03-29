@@ -21,9 +21,9 @@ import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
  */
 @Suppress("unused")
 abstract class AutonomousOpMode(private val color: Constants.Color,
-                                private vararg val subsystems: Subsystem,
                                 private val mainRoutine: (() -> Command),
-                                private val initRoutine: (() -> Command)? = null
+                                private val initRoutine: (() -> Command)? = null,
+                                private vararg val subsystems: Subsystem
 ) : LinearOpMode() {
 
     override fun runOpMode() {
@@ -34,7 +34,7 @@ abstract class AutonomousOpMode(private val color: Constants.Color,
             // initialize trajectories & start positions
             TrajectoryFactory.initialize()
             // this both registers & initializes the subsystems
-            CommandScheduler.registerSubsystems(*subsystems)
+            CommandScheduler.registerSubsystems(TelemetryController, *subsystems)
             // if there is a routine that's supposed to be performed on init, then do it
             if (initRoutine != null) CommandScheduler.scheduleCommand(initRoutine.invoke())
             // wait for start
