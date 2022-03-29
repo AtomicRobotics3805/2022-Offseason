@@ -28,7 +28,10 @@ import java.util.*
  * the one used in the Constants file.
  */
 @Config
-class TankDrive(val constants: TankDriveConstants, localizer: Localizer) : Driver(constants, localizer) {
+class TankDrive(val constants: TankDriveConstants,
+                localizer: Localizer,
+                startPose: Pose2d = Pose2d()
+) : Driver(constants, localizer, startPose) {
 
     // this constraint is used when building trajectories to determine how fast the robot will go
     override val velConstraint: MinVelocityConstraint

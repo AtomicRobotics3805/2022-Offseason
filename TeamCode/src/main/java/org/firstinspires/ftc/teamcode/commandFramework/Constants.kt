@@ -22,5 +22,4 @@ object Constants {
     }
     lateinit var color: Color
     lateinit var opMode: LinearOpMode
-    lateinit var drive: Driver
 }

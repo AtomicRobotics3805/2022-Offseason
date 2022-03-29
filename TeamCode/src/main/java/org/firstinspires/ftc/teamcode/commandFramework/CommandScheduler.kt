@@ -73,6 +73,15 @@ object CommandScheduler {
     }
 
     /**
+     * Removes every subsystem and gamepad. This function should generally only be used when an
+     * OpMode ends.
+     */
+    fun unregisterAll() {
+        subsystems.clear()
+        gamepads.clear()
+    }
+
+    /**
      * Cancels every command. This function should generally only be used when an OpMode ends.
      */
     fun cancelAll() {

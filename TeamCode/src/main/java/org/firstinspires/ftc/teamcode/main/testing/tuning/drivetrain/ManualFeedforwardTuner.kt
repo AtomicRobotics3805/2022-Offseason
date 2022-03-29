@@ -11,9 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.util.RobotLog
 import org.firstinspires.ftc.teamcode.commandFramework.CommandScheduler
-import org.firstinspires.ftc.teamcode.commandFramework.Constants.drive
-import org.firstinspires.ftc.teamcode.commandFramework.Constants.driveConstants
-import org.firstinspires.ftc.teamcode.commandFramework.Constants.opMode
+import org.firstinspires.ftc.teamcode.commandFramework.Constants
 import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
 import org.firstinspires.ftc.teamcode.commandFramework.utilCommands.TelemetryCommand
 import java.util.*
@@ -46,7 +44,7 @@ class ManualFeedforwardTuner : LinearOpMode() {
     private var mode: Mode? = null
 
     override fun runOpMode() {
-        opMode = this
+        Constants.opMode = this
         if (driveConstants.IS_RUN_USING_ENCODER) {
             RobotLog.setGlobalErrorMsg(
                 "Feedforward constants usually don't need to be tuned " +
