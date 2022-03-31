@@ -1,17 +1,13 @@
-package org.firstinspires.ftc.teamcode.commandFramework.opModes
+package org.firstinspires.ftc.teamcode.commandFramework.opmodes
 
-import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.firstinspires.ftc.teamcode.commandFramework.Command
 import org.firstinspires.ftc.teamcode.commandFramework.CommandScheduler
 import org.firstinspires.ftc.teamcode.commandFramework.Constants
 import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
-import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
-import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryLocalizer
+import org.firstinspires.ftc.teamcode.commandFramework.controls.Controls
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
-import org.firstinspires.ftc.teamcode.main.other.TrajectoryFactory
-import org.firstinspires.ftc.teamcode.main.subsystems.drive.DriveConstants
-import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
+import org.firstinspires.ftc.teamcode.commandFramework.trajectories.TrajectoryFactory
 
 /**
  * This object performs several tasks that need to be done at the start of every competition OpMode.
@@ -20,19 +16,26 @@ import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
  *                  how to use the coordinate system, go to TrajectoryFactory
  */
 @Suppress("unused")
-abstract class AutonomousOpMode(private val color: Constants.Color,
-                                private val mainRoutine: (() -> Command),
-                                private val initRoutine: (() -> Command)? = null,
-                                private vararg val subsystems: Subsystem
+abstract class TeleOpOpMode(private val controls: Controls,
+                            private val color: Constants.Color = Constants.Color.UNKNOWN,
+                            private val trajectoryFactory: TrajectoryFactory? = null,
+                            private val mainRoutine: (() -> Command)? = null,
+                            private val initRoutine: (() -> Command)? = null,
+                            private vararg val subsystems: Subsystem
 ) : LinearOpMode() {
 
     override fun runOpMode() {
         try {
             // setting constants
             Constants.opMode = this
-            Constants.color = color
-            // initialize trajectories & start positions
-            TrajectoryFactory.initialize()
+            if (Constants.color == Constants.Color.UNKNOWN)
+                Constants.color = color
+            // initializing trajectory factory
+            if (trajectoryFactory != null && !trajectoryFactory.initialized)
+                trajectoryFactory.initialize()
+            // controls stuff
+            controls.registerGamepads()
+            controls.registerCommands()
             // this both registers & initializes the subsystems
             CommandScheduler.registerSubsystems(TelemetryController, *subsystems)
             // if there is a routine that's supposed to be performed on init, then do it
@@ -41,8 +44,8 @@ abstract class AutonomousOpMode(private val color: Constants.Color,
             while (!isStarted && !isStopRequested) {
                 CommandScheduler.run()
             }
-            // do the main routine
-            CommandScheduler.scheduleCommand(mainRoutine.invoke())
+            // if there's a routine that's supposed to be performed on play, do it
+            if (mainRoutine != null) CommandScheduler.scheduleCommand(mainRoutine.invoke())
             // wait for stop
             while (opModeIsActive()) {
                 CommandScheduler.run()

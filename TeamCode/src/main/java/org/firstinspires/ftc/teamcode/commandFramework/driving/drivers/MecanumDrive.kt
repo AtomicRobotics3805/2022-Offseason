@@ -14,11 +14,9 @@ import com.qualcomm.robotcore.hardware.*
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode
 import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior
 import org.firstinspires.ftc.teamcode.commandFramework.Command
-import org.firstinspires.ftc.teamcode.commandFramework.driving.DriveConstants
 import org.firstinspires.ftc.teamcode.commandFramework.driving.DriverControlled
 import org.firstinspires.ftc.teamcode.commandFramework.driving.MecanumDriveConstants
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Localizer
-import org.firstinspires.ftc.teamcode.commandFramework.utilCommands.CustomCommand
 import java.util.*
 
 /**
@@ -62,14 +60,6 @@ class MecanumDrive(constants: MecanumDriveConstants,
         get() = -imu.angularVelocity.xRotationRate.toDouble()
 
     /**
-     * Switches TeleOp speeds, also known as slow mode
-     */
-    fun switchSpeed(): Command = CustomCommand(_start = {
-            driverSpeedIndex++
-            if (driverSpeedIndex >= constants.DRIVER_SPEEDS.size)
-                driverSpeedIndex = 0
-        })
-    /**
      * Allows the drivers to control the drivetrain using a gamepad
      * @param gamepad the gamepad that controls the drivetrain
      */
@@ -82,6 +72,7 @@ class MecanumDrive(constants: MecanumDriveConstants,
     override fun initialize() {
         super.initialize()
         // initializes the motors
+        constants as MecanumDriveConstants
         leftFront = hardwareMap.get(DcMotorEx::class.java, constants.LEFT_FRONT_NAME)
         leftBack = hardwareMap.get(DcMotorEx::class.java, constants.LEFT_BACK_NAME)
         rightBack = hardwareMap.get(DcMotorEx::class.java, constants.RIGHT_BACK_NAME)
@@ -149,7 +140,7 @@ class MecanumDrive(constants: MecanumDriveConstants,
      * @param backRight the power for the back right motor
      * @param frontRight the power for the front right motor
      */
-    fun setMotorPowers(frontLeft: Double, backLeft: Double, backRight: Double, frontRight: Double) {
+    private fun setMotorPowers(frontLeft: Double, backLeft: Double, backRight: Double, frontRight: Double) {
         leftFront.power = frontLeft
         leftBack.power = backLeft
         rightBack.power = backRight
@@ -165,7 +156,7 @@ class MecanumDrive(constants: MecanumDriveConstants,
             driveSignal.vel,
             constants.TRACK_WIDTH,
             constants.TRACK_WIDTH,
-            constants.LATERAL_MULTIPLIER
+            (constants as MecanumDriveConstants).LATERAL_MULTIPLIER
         )
         val accelerations = MecanumKinematics.robotToWheelAccelerations(
             driveSignal.accel,
@@ -192,7 +183,7 @@ class MecanumDrive(constants: MecanumDriveConstants,
             drivePower,
             1.0,
             1.0,
-            constants.LATERAL_MULTIPLIER
+            (constants as MecanumDriveConstants).LATERAL_MULTIPLIER
         )
         setMotorPowers(powers[0], powers[1], powers[2], powers[3])
     }

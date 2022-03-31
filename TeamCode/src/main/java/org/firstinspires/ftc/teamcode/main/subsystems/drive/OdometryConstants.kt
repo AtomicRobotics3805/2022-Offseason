@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.main.subsystems.drive
 
-import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.OdometryConstants
+import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryConstants
 
 @Suppress("ObjectPropertyName")
-object OdometryConstants : OdometryConstants {
+object OdometryConstants : TwoWheelOdometryConstants {
     @JvmField
     var _PARALLEL_X = 0.0 // in; forward offset of the parallel wheel
     @JvmField

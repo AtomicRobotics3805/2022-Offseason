@@ -24,6 +24,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.roadrunner.LynxModuleUtil
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.ParallelTrajectory
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.ParallelTrajectoryBuilder
+import org.firstinspires.ftc.teamcode.commandFramework.utilCommands.CustomCommand
 import java.util.*
 
 /**
@@ -88,6 +89,14 @@ abstract class Driver(public val constants: DriveConstants,
      * @param gamepad the gamepad that controls the drivetrain
      */
     abstract fun driverControlled(gamepad: Gamepad): Command
+    /**
+     * Switches TeleOp speeds, also known as slow mode
+     */
+    fun switchSpeed(): Command = CustomCommand(_start = {
+        driverSpeedIndex++
+        if (driverSpeedIndex >= constants.DRIVER_SPEEDS.size)
+            driverSpeedIndex = 0
+    })
 
     /**
      * Drives the robot along a pre-built trajectory

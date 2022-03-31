@@ -19,9 +19,10 @@ object Constants {
      */
     enum class Color {
         BLUE,
-        RED
+        RED,
+        UNKNOWN
     }
-    lateinit var color: Color
+    var color = Color.UNKNOWN
     lateinit var opMode: LinearOpMode
     lateinit var drive: Driver
     var endPose: Pose2d? = null
