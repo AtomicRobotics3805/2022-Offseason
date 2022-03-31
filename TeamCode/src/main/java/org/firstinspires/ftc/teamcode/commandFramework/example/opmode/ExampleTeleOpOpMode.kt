@@ -9,6 +9,11 @@ import org.firstinspires.ftc.teamcode.commandFramework.opModes.TeleOpOpMode
 import org.firstinspires.ftc.teamcode.main.subsystems.drive.DriveConstants
 import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
 
+/**
+ * This is an example OpMode for the TeleOp (driver-controlled) period. In a real project, you would
+ * have to remove the @Disabled annotation, change the name, and change most of the constructor
+ * parameters.
+ */
 @Disabled
 @TeleOp(name = "Example Auto OpMode")
 class ExampleTeleOpOpMode : TeleOpOpMode(

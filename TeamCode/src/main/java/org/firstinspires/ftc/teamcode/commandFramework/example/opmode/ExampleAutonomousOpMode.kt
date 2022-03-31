@@ -11,6 +11,11 @@ import org.firstinspires.ftc.teamcode.commandFramework.sequential
 import org.firstinspires.ftc.teamcode.main.subsystems.drive.DriveConstants
 import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
 
+/**
+ * This is an example OpMode for the Autonomous (not driver-controlled) period. In a real project,
+ * you would have to remove the @Disabled annotation, change the name, and change most of the
+ * constructor parameters.
+ */
 @Disabled
 @Autonomous(name = "Example Auto OpMode")
 class ExampleAutonomousOpMode : AutonomousOpMode(

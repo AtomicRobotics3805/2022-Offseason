@@ -14,6 +14,9 @@ import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.Driver
  */
 object Constants {
 
+    /**
+     * Alliance color, this has to be specified in Auto programs
+     */
     enum class Color {
         BLUE,
         RED
