@@ -51,8 +51,6 @@ class BackAndForth : LinearOpMode() {
             .build()
         waitForStart()
         while (opModeIsActive() && !isStopRequested) {
-            drive.followTrajectory(trajectoryForward)
-            drive.followTrajectory(trajectoryBackward)
         }
     }
 

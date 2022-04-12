@@ -1,18 +1,12 @@
 package org.firstinspires.ftc.teamcode.commandFramework.opModes
 
-import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.firstinspires.ftc.teamcode.commandFramework.Command
 import org.firstinspires.ftc.teamcode.commandFramework.CommandScheduler
 import org.firstinspires.ftc.teamcode.commandFramework.Constants
 import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
-import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
-import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryLocalizer
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
 import org.firstinspires.ftc.teamcode.main.other.Controls
-import org.firstinspires.ftc.teamcode.main.other.TrajectoryFactory
-import org.firstinspires.ftc.teamcode.main.subsystems.drive.DriveConstants
-import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
 
 /**
  * This object performs several tasks that need to be done at the start of every competition OpMode.
@@ -32,7 +26,6 @@ abstract class TeleOpOpMode(private val mainRoutine: (() -> Command)? = null,
             Constants.opMode = this
             // controls stuff
             Controls.registerGamepads()
-            Controls.registerCommands()
             // this both registers & initializes the subsystems
             CommandScheduler.registerSubsystems(TelemetryController, *subsystems)
             // if there is a routine that's supposed to be performed on init, then do it
@@ -41,6 +34,7 @@ abstract class TeleOpOpMode(private val mainRoutine: (() -> Command)? = null,
             while (!isStarted && !isStopRequested) {
                 CommandScheduler.run()
             }
+            Controls.registerCommands()
             // if there's a routine that's supposed to be performed on play, do it
             if (mainRoutine != null) CommandScheduler.scheduleCommand(mainRoutine.invoke())
             // wait for stop
