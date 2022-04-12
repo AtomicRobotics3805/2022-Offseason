@@ -1,23 +1,26 @@
 package org.firstinspires.ftc.teamcode.commandFramework.opModes
 
-import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.firstinspires.ftc.teamcode.commandFramework.Command
 import org.firstinspires.ftc.teamcode.commandFramework.CommandScheduler
 import org.firstinspires.ftc.teamcode.commandFramework.Constants
 import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
-import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
-import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryLocalizer
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
 import org.firstinspires.ftc.teamcode.main.other.TrajectoryFactory
-import org.firstinspires.ftc.teamcode.main.subsystems.drive.DriveConstants
-import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
 
 /**
- * This object performs several tasks that need to be done at the start of every competition OpMode.
+ * All Competition Autonomous OpModes should inherit from this class. It performs several tasks that
+ * all Auto programs need to do. Each competition OpMode only needs to pass parameters to the
+ * constructor - it doesn't need to have a body.
  * @param color the color of the alliance
- * @param startPose the starting position of the robot. For information on
- *                  how to use the coordinate system, go to TrajectoryFactory
+ * @param mainRoutine a lambda returning the main routine that needs to be performed after the play
+ *                    button is pressed. This routine should be declared in a separate Routines
+ *                    class.
+ * @param initRoutine a lambda returning the routine that needs to be performed during
+ *                    initialization. This routine should also be declared in a separate Routines
+ *                    class.
+ * @param subsystems each of the subsystems used by the robot. One of these should be a drivetrain
+ *                   and the others should be mechanisms.
  */
 @Suppress("unused")
 abstract class AutonomousOpMode(private val color: Constants.Color,
