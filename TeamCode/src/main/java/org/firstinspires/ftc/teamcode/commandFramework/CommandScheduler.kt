@@ -93,6 +93,13 @@ object CommandScheduler {
     }
 
     /**
+     * Returns whether or not there are commands running
+     */
+    fun hasCommands() {
+        runningCommands.isNotEmpty()
+    }
+
+    /**
      * Initializes every command in the commandsToSchedule list.
      */
     private fun scheduleCommands() {
