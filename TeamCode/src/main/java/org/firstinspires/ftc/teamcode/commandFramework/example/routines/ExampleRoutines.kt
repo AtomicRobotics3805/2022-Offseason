@@ -8,6 +8,10 @@ import org.firstinspires.ftc.teamcode.commandFramework.example.trajectoryfactory
 import org.firstinspires.ftc.teamcode.commandFramework.parallel
 import org.firstinspires.ftc.teamcode.commandFramework.sequential
 
+/**
+ * This class is an example of how to create routines. Routines are essentially just groups of
+ * commands that can be run either one at a time (sequentially) or all at once (in parallel).
+ */
 object ExampleRoutines {
 
     val initializationRoutine: Command

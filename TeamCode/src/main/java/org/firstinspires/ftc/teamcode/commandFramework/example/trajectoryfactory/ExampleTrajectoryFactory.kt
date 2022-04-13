@@ -5,13 +5,24 @@ import com.acmerobotics.roadrunner.geometry.Vector2d
 import org.firstinspires.ftc.teamcode.commandFramework.Constants
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.*
 
+/**
+ * This class contains all of the RoadRunner trajectories and start positions in the project. It's
+ * used by the ExampleRoutines class. You can find how to use each of the possible trajectory
+ * segments (like back and splineToSplineHeading) here:
+ * https://learnroadrunner.com/trajectorybuilder-functions.html
+ */
 object ExampleTrajectoryFactory : TrajectoryFactory() {
 
+    // start position declarations
     lateinit var hubFrontStartPose: Pose2d
-
+    // trajectory declarations
     lateinit var startToHubFront: ParallelTrajectory
     lateinit var hubFrontToPark: ParallelTrajectory
 
+    /**
+     * Initializes the robot's start positions and trajectories. This is where the trajectories are
+     * actually created.
+     */
     override fun initialize() {
         super.initialize()
         // start positions
