@@ -24,7 +24,7 @@ object OpModeController {
      *                  coordinate system, go to TrajectoryFactory. For TeleOp, set this to null
      */
     fun initialize(opMode: LinearOpMode, color: Constants.Color?, startPose: (() -> Pose2d)?) {
-        Constants.opMode = opMode
+        Constants.opMode = opModegit
         if (color != null) Constants.color = color
         initializeSubsystems()
         TrajectoryFactory.initialize()
