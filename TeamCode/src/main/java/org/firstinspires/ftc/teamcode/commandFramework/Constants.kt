@@ -1,11 +1,8 @@
 package org.firstinspires.ftc.teamcode.commandFramework
 
+import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.Driver
-import org.firstinspires.ftc.teamcode.commandFramework.driving.DriveConstants
-import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
-import org.firstinspires.ftc.teamcode.commandFramework.example.drive.ExampleDriveConstants
-import org.firstinspires.ftc.teamcode.main.testing.tuning.drivetrain.TestDriveConstants
 
 /**
  * This object contains various "constant" values used by other classes. This object is not strictly
@@ -17,12 +14,16 @@ import org.firstinspires.ftc.teamcode.main.testing.tuning.drivetrain.TestDriveCo
  */
 object Constants {
 
+    /**
+     * Alliance color, this has to be specified in Auto programs
+     */
     enum class Color {
         BLUE,
-        RED
+        RED,
+        UNKNOWN
     }
-    lateinit var color: Color
+    var color = Color.UNKNOWN
     lateinit var opMode: LinearOpMode
-    var driveConstants: DriveConstants = TestDriveConstants
-    var drive: Driver = MecanumDrive()
+    lateinit var drive: Driver
+    var endPose: Pose2d? = null
 }

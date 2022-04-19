@@ -56,8 +56,10 @@ object CommandScheduler {
      * @param subsystems the subsystems to be registered
      */
     fun registerSubsystems(vararg subsystems: Subsystem) {
-        for (subsystem in subsystems)
+        for (subsystem in subsystems) {
+            subsystem.initialize()
             this.subsystems += subsystem
+        }
     }
 
     /**
@@ -71,6 +73,15 @@ object CommandScheduler {
     }
 
     /**
+     * Removes every subsystem and gamepad. This function should generally only be used when an
+     * OpMode ends.
+     */
+    fun unregisterAll() {
+        subsystems.clear()
+        gamepads.clear()
+    }
+
+    /**
      * Cancels every command. This function should generally only be used when an OpMode ends.
      */
     fun cancelAll() {
@@ -79,6 +90,13 @@ object CommandScheduler {
         }
         cancelCommands()
         commandsToSchedule.clear()
+    }
+
+    /**
+     * Returns whether or not there are commands running
+     */
+    fun hasCommands() {
+        runningCommands.isNotEmpty()
     }
 
     /**

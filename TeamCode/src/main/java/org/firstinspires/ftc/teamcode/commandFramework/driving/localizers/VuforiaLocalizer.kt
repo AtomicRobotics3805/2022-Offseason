@@ -1,4 +1,6 @@
-package org.firstinspires.ftc.teamcode.commandFramework.example.localizers
+@file:Suppress("PropertyName")
+
+package org.firstinspires.ftc.teamcode.commandFramework.driving.localizers
 
 import com.acmerobotics.roadrunner.geometry.Pose2d
 import org.firstinspires.ftc.robotcore.external.ClassFactory
@@ -19,20 +21,10 @@ import java.util.*
  * To use this object, copy it into the proper package and change the three displacement constants.
  */
 @Suppress("Unused", "MemberVisibilityCanBePrivate")
-object VuforiaLocalizer : Localizer {
+class VuforiaLocalizer(val constants: VuforiaConstants) : Localizer {
 
-    @JvmField
-    var VUFORIA_KEY = " AZ2jk6P/////AAABmck8NCyjWkCGvLdpx9HZ1kxI2vQPDlzN9vJnqy69nXRjvoXgBCEWZasRnd1hFjBpRiSXw4G4JwDFsk3kNSVko2UkuCgbi/RsiODF76MtldIi6YZGfrRMZTICMKwTanuOysh4Cn9Xd9nZzCpDiLAPLsUtKoj/DdBUn0gJuARMglUPW7/qirgtk0xI232ttZpXhgh9ya8R8LxnH+UTCCFtEaQft2ru0Tv+30Un82gG1uEzcrMc/8F3lefedcOTrelPQx8xUD8cME9dj99b5oZWfM60b36/xdswhYF7pygskPtXCS28j81xWKHGNhr5s8xL91cbKOovDzdJYdfVIILZnL1sjdbtN8zW4mULOYHwO4ur"
-    @JvmField
-    var CAMERA_FORWARD_DISPLACEMENT = 0.0.inchesToMm.toFloat()
-    @JvmField
-    var CAMERA_VERTICAL_DISPLACEMENT = 0.0.inchesToMm.toFloat()
-    @JvmField
-    var CAMERA_LEFT_DISPLACEMENT = 0.0.inchesToMm.toFloat()
-
-    val cameraLocationOnRobot: OpenGLMatrix
-        get() = OpenGLMatrix
-            .translation(CAMERA_FORWARD_DISPLACEMENT, CAMERA_LEFT_DISPLACEMENT, CAMERA_VERTICAL_DISPLACEMENT)
+    val cameraLocationOnRobot: OpenGLMatrix = OpenGLMatrix
+            .translation(constants.CAMERA_FORWARD_DISPLACEMENT, constants.CAMERA_LEFT_DISPLACEMENT, constants.CAMERA_VERTICAL_DISPLACEMENT)
             .multiplied(Orientation.getRotationMatrix(AxesReference.EXTRINSIC, AxesOrder.XZY, AngleUnit.DEGREES, 90f, 90f, 0f))
 
     override var poseEstimate: Pose2d
@@ -77,7 +69,7 @@ object VuforiaLocalizer : Localizer {
         val cameraMonitorViewId: Int = Constants.opMode.hardwareMap.appContext.resources.getIdentifier("cameraMonitorViewId", "id", Constants.opMode.hardwareMap.appContext.packageName)
         val parameters = VuforiaLocalizer.Parameters(cameraMonitorViewId)
 
-        parameters.vuforiaLicenseKey = VUFORIA_KEY
+        parameters.vuforiaLicenseKey = constants.VUFORIA_KEY
 
         /*
          * We also indicate which camera on the RC we wish to use.
@@ -182,4 +174,12 @@ object VuforiaLocalizer : Localizer {
                     AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES, rx, ry, rz)
         )
     }
+}
+
+interface VuforiaConstants {
+    val VUFORIA_KEY: String
+    val CAMERA_FORWARD_DISPLACEMENT: Float
+    val CAMERA_VERTICAL_DISPLACEMENT: Float
+    val CAMERA_LEFT_DISPLACEMENT: Float
+    val DELAY_TIME_MILLIS: Double
 }

@@ -1,14 +1,11 @@
 package org.firstinspires.ftc.teamcode.commandFramework.driving.drivers
 
 import com.acmerobotics.roadrunner.control.PIDFController
-import com.acmerobotics.roadrunner.drive.Drive
 import com.acmerobotics.roadrunner.drive.DriveSignal
 import com.acmerobotics.roadrunner.followers.HolonomicPIDVAFollower
 import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.acmerobotics.roadrunner.localization.Localizer
 import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder
-import com.acmerobotics.roadrunner.trajectory.constraints.AngularVelocityConstraint
-import com.acmerobotics.roadrunner.trajectory.constraints.MecanumVelocityConstraint
 import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint
 import com.acmerobotics.roadrunner.trajectory.constraints.ProfileAccelerationConstraint
 import com.qualcomm.hardware.bosch.BNO055IMU
@@ -19,13 +16,15 @@ import com.qualcomm.robotcore.hardware.VoltageSensor
 import org.firstinspires.ftc.teamcode.commandFramework.Command
 import org.firstinspires.ftc.teamcode.commandFramework.Constants
 import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
+import org.firstinspires.ftc.teamcode.commandFramework.driving.DriveConstants
 import org.firstinspires.ftc.teamcode.commandFramework.driving.FollowTrajectory
 import org.firstinspires.ftc.teamcode.commandFramework.driving.Turn
+import org.firstinspires.ftc.teamcode.commandFramework.roadrunner.DashboardUtil
+import org.firstinspires.ftc.teamcode.commandFramework.roadrunner.LynxModuleUtil
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.ParallelTrajectory
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.ParallelTrajectoryBuilder
-import org.firstinspires.ftc.teamcode.roadrunnerutil.roadrunner.DashboardUtil
-import org.firstinspires.ftc.teamcode.roadrunnerutil.roadrunner.LynxModuleUtil
+import org.firstinspires.ftc.teamcode.commandFramework.utilCommands.CustomCommand
 import java.util.*
 
 /**
@@ -33,19 +32,22 @@ import java.util.*
  * DisplacementDelay. Drivetrain objects/classes like MecanumDrive should implement this interface.
  */
 @Suppress("PropertyName", "MemberVisibilityCanBePrivate", "unused")
-abstract class Driver : Subsystem {
+abstract class Driver(public val constants: DriveConstants,
+                      val localizer: Localizer,
+                      private val startPose: Pose2d
+) : Subsystem {
 
     protected val POSE_HISTORY_LIMIT = 100
 
     // these two are used to follow trajectories & turn
     val follower: HolonomicPIDVAFollower = HolonomicPIDVAFollower(
-            Constants.driveConstants.TRANSLATIONAL_PID, Constants.driveConstants.TRANSLATIONAL_PID, Constants.driveConstants.HEADING_PID,
+            constants.TRANSLATIONAL_PID, constants.TRANSLATIONAL_PID, constants.HEADING_PID,
             Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.5
         )
-    val turnController: PIDFController = PIDFController(Constants.driveConstants.HEADING_PID)
+    val turnController: PIDFController = PIDFController(constants.HEADING_PID)
 
     protected val accelConstraint: ProfileAccelerationConstraint
-        get() = ProfileAccelerationConstraint(Constants.driveConstants.MAX_ACCEL)
+        get() = ProfileAccelerationConstraint(constants.MAX_ACCEL)
     // different for different drive types, which is why it's abstract unlike accelConstraint
     protected abstract val velConstraint: MinVelocityConstraint
 
@@ -55,14 +57,13 @@ abstract class Driver : Subsystem {
     // these two variables are used in TeleOp to control "slow mode"
     var driverSpeedIndex = 0
     val driverSpeed: Double
-        get() = Constants.driveConstants.DRIVER_SPEEDS[driverSpeedIndex]
+        get() = constants.DRIVER_SPEEDS[driverSpeedIndex]
 
     // keeps a list of positions to upload to the FTC Dashboard
     protected val poseHistory = LinkedList<Pose2d>()
     // this is the trajectory that the robot is currently following
     var trajectory: ParallelTrajectory? = null
 
-    lateinit var localizer: Localizer
     lateinit var poseEstimate: Pose2d
     val poseVelocity: Pose2d?
         get() = localizer.poseVelocity
@@ -88,6 +89,14 @@ abstract class Driver : Subsystem {
      * @param gamepad the gamepad that controls the drivetrain
      */
     abstract fun driverControlled(gamepad: Gamepad): Command
+    /**
+     * Switches TeleOp speeds, also known as slow mode
+     */
+    fun switchSpeed(): Command = CustomCommand(_start = {
+        driverSpeedIndex++
+        if (driverSpeedIndex >= constants.DRIVER_SPEEDS.size)
+            driverSpeedIndex = 0
+    })
 
     /**
      * Drives the robot along a pre-built trajectory
@@ -101,7 +110,7 @@ abstract class Driver : Subsystem {
      * @param turnType whether the turn should be relative to current position or relative to field
      */
     fun turn(angle: Double, turnType: Turn.TurnType): Command =
-        Turn(angle, Constants.driveConstants.MAX_ACCEL, Constants.driveConstants.MAX_VEL, turnType, listOf(this), true)
+        Turn(angle, constants.MAX_ACCEL, constants.MAX_VEL, turnType, listOf(this), true)
 
     /**
      * Returns a TrajectoryBuilder with a certain start position

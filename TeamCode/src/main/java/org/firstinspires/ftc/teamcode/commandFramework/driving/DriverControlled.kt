@@ -4,6 +4,7 @@ import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.qualcomm.robotcore.hardware.Gamepad
 import org.firstinspires.ftc.teamcode.commandFramework.Command
 import org.firstinspires.ftc.teamcode.commandFramework.Constants.drive
+import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.Driver
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
 
 /**
@@ -21,9 +22,9 @@ class DriverControlled(
     private val gamepad: Gamepad,
     override val requirements: List<Subsystem> = arrayListOf(),
     override val interruptible: Boolean = true,
-    private val reverseStrafe: Boolean = true,
+    private val reverseStrafe: Boolean = false,
     private val reverseStraight: Boolean = true,
-    private val reverseTurn: Boolean = true
+    private val reverseTurn: Boolean = false
 ) : Command() {
 
     override val _isDone = false

@@ -1,6 +1,6 @@
 @file:Suppress("PropertyName")
 
-package org.firstinspires.ftc.teamcode.commandFramework.example.localizers
+package org.firstinspires.ftc.teamcode.commandFramework.driving.localizers
 
 import com.acmerobotics.dashboard.config.Config
 import com.acmerobotics.roadrunner.geometry.Pose2d
@@ -8,16 +8,8 @@ import com.acmerobotics.roadrunner.localization.TwoTrackingWheelLocalizer
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import org.firstinspires.ftc.teamcode.commandFramework.Constants
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Localizer
-import org.firstinspires.ftc.teamcode.roadrunnerutil.roadrunner.Encoder
+import org.firstinspires.ftc.teamcode.commandFramework.roadrunner.Encoder
 
-@JvmField
-var PARALLEL_X = 0.0 // in; forward offset of the parallel wheel
-@JvmField
-var PARALLEL_Y = 0.0 // in; left offset of the parallel wheel
-@JvmField
-var PERPENDICULAR_X = 0.0 // in; forward offset of the perpendicular wheel
-@JvmField
-var PERPENDICULAR_Y = 0.0 // in; left offset of the perpendicular wheel
 
 /**
  * Determines position relative to previous position based on odometry wheels. Odometry wheels are
@@ -27,9 +19,9 @@ var PERPENDICULAR_Y = 0.0 // in; left offset of the perpendicular wheel
  * need them to be outside of the class to use them in the constructor.
  */
 @Config
-object OdometryLocalizer : TwoTrackingWheelLocalizer(listOf(
-    Pose2d(PARALLEL_X, PARALLEL_Y, 0.0),
-    Pose2d(PERPENDICULAR_X, PERPENDICULAR_Y, Math.toRadians(90.0))
+class TwoWheelOdometryLocalizer(constants: TwoWheelOdometryConstants) : TwoTrackingWheelLocalizer(listOf(
+    Pose2d(constants.PARALLEL_X, constants.PARALLEL_Y, 0.0),
+    Pose2d(constants.PERPENDICULAR_X, constants.PERPENDICULAR_Y, Math.toRadians(90.0))
 )), Localizer {
 
     @JvmField
@@ -110,4 +102,11 @@ object OdometryLocalizer : TwoTrackingWheelLocalizer(listOf(
     private fun encoderTicksToInches(ticks: Double): Double {
         return WHEEL_RADIUS * 2 * Math.PI * GEAR_RATIO * ticks / TICKS_PER_REV
     }
+}
+
+interface TwoWheelOdometryConstants {
+    val PARALLEL_X: Double // in; forward offset of the parallel wheel
+    val PARALLEL_Y: Double  // in; left offset of the parallel wheel
+    val PERPENDICULAR_X: Double // in; forward offset of the perpendicular wheel
+    val PERPENDICULAR_Y: Double // in; left offset of the perpendicular wheel
 }
