@@ -68,6 +68,7 @@ class ManualFeedforwardTuner : LinearOpMode() {
         while (!isStopRequested && !opModeIsActive()) {
             CommandScheduler.run()
         }
+        CommandScheduler.cancelAll()
         var movingForwards = true
         var activeProfile = generateProfile(true)
         var profileStart = clock.seconds()
