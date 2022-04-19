@@ -317,7 +317,7 @@ public abstract class Classifier {
     }
 
     /** Loads input image, and applies preprocessing.  */
-    private open fun loadImage(bitmap: Bitmap, sensorOrientation: Int): TensorImage {
+    open fun loadImage(bitmap: Bitmap, sensorOrientation: Int): TensorImage {
         // Loads bitmap into a TensorImage.
         inputImageBuffer!!.load(bitmap)
 
@@ -335,7 +335,7 @@ public abstract class Classifier {
     }
 
     /** Gets the top-k results.  */
-    private open fun getTopKProbability(labelProb: Map<String, Float>): List<Recognition?>? {
+    open fun getTopKProbability(labelProb: Map<String, Float>): List<Recognition?>? {
         // Find the best classifications.
         val pq = PriorityQueue<Recognition>(
             MAX_RESULTS

@@ -5,10 +5,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.tensorflow.lite.support.common.TensorOperator;
 import org.tensorflow.lite.support.common.ops.NormalizeOp;
 
-import java.io.IOException;
 import java.lang.Exception
 
-public class ClassifierFloatEfficientNet : Classifier(){
+class ClassifierFloatEfficientNet: Classifier(){
     private val IMAGE_MEAN = 127.0f
     private val IMAGE_STD = 128.0f
 
@@ -27,7 +26,12 @@ public class ClassifierFloatEfficientNet : Classifier(){
      */
     @Throws(Exception::class)
 
-    constructor (activity: Activity?, device: Device?, numThreads: Int, modelFileName: String?, labelFileName: String?, t: Telemetry?): this(activity, device, numThreads, modelFileName, labelFileName, t)
+    constructor (activity: Activity?,
+                 device: Device?,
+                 numThreads: Int,
+                 modelFileName: String?,
+                 labelFileName: String?,
+                 t: Telemetry?): this(activity, device, numThreads, modelFileName, labelFileName, t)
 
     override fun getPreprocessNormalizeOp(): TensorOperator? {
         return NormalizeOp(IMAGE_MEAN, IMAGE_STD)
@@ -36,4 +40,5 @@ public class ClassifierFloatEfficientNet : Classifier(){
     override fun getPostprocessNormalizeOp(): TensorOperator? {
         return NormalizeOp(PROBABILITY_MEAN, PROBABILITY_STD)
     }
+
 }
