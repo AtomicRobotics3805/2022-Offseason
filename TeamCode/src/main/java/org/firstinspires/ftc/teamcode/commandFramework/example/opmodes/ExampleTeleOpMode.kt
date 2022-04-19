@@ -13,11 +13,15 @@ import org.firstinspires.ftc.teamcode.commandFramework.example.mechanisms.Claw
 import org.firstinspires.ftc.teamcode.commandFramework.example.mechanisms.Lift
 import org.firstinspires.ftc.teamcode.commandFramework.example.routines.ExampleRoutines
 import org.firstinspires.ftc.teamcode.commandFramework.example.trajectoryfactory.ExampleTrajectoryFactory
-import org.firstinspires.ftc.teamcode.commandFramework.opmodes.TeleOpOpMode
+import org.firstinspires.ftc.teamcode.commandFramework.opmodes.TeleOpMode
 
+/**
+ * This class is an example of how you can create an TeleOp OpMode. Everything is handled by the
+ * TeleOpMode parent class, so all you have to do is pass in the constructor parameters.
+ */
 @Disabled
 @TeleOp(name = "Example Auto OpMode")
-class ExampleTeleOpOpMode : TeleOpOpMode(
+class ExampleTeleOpMode : TeleOpMode(
     ExampleControls,
     Constants.Color.UNKNOWN,
     ExampleTrajectoryFactory,

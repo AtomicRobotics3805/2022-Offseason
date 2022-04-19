@@ -29,13 +29,13 @@ import org.firstinspires.ftc.teamcode.commandFramework.trajectories.TrajectoryFa
  *                   and the others should be mechanisms.
  */
 @Suppress("unused")
-abstract class TeleOpOpMode(private val controls: Controls,
-                            private val color: Constants.Color = Constants.Color.UNKNOWN,
-                            private val trajectoryFactory: TrajectoryFactory? = null,
-                            private val mainRoutine: (() -> Command)? = null,
-                            private val initRoutine: (() -> Command)? = null,
-                            private val drive: Driver,
-                            private vararg val subsystems: Subsystem
+abstract class TeleOpMode(private val controls: Controls,
+                          private val color: Constants.Color = Constants.Color.UNKNOWN,
+                          private val trajectoryFactory: TrajectoryFactory? = null,
+                          private val mainRoutine: (() -> Command)? = null,
+                          private val initRoutine: (() -> Command)? = null,
+                          private val drive: Driver,
+                          private vararg val subsystems: Subsystem
 ) : LinearOpMode() {
 
     override fun runOpMode() {

@@ -15,6 +15,10 @@ import org.firstinspires.ftc.teamcode.commandFramework.example.trajectoryfactory
 import org.firstinspires.ftc.teamcode.commandFramework.opmodes.AutonomousOpMode
 import org.firstinspires.ftc.teamcode.commandFramework.sequential
 
+/**
+ * This class is an example of how you can create an Autonomous OpMode. Everything is handled by
+ * the AutonomousOpMode parent class, so all you have to do is pass in the constructor parameters.
+ */
 @Disabled
 @Autonomous(name = "Example Auto OpMode")
 class ExampleAutonomousOpMode : AutonomousOpMode(
