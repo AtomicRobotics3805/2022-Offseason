@@ -32,8 +32,8 @@ class LocalizationTest : LinearOpMode() {
                 Pose2d()
             )
         CommandScheduler.registerSubsystems(TelemetryController, drive)
-        CommandScheduler.scheduleCommand(drive.driverControlled(gamepad1))
         waitForStart()
+        CommandScheduler.scheduleCommand(drive.driverControlled(gamepad1))
         while (!isStopRequested) {
             CommandScheduler.run()
         }

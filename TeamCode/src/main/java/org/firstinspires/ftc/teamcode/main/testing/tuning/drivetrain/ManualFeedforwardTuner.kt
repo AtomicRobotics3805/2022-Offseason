@@ -65,7 +65,6 @@ class ManualFeedforwardTuner : LinearOpMode() {
         mode = Mode.TUNING_MODE
         val clock = NanoClock.system()
         CommandScheduler.scheduleCommand(TelemetryCommand(1000.0, "Ready"))
-        CommandScheduler.registerSubsystems(TelemetryController)
         while (!isStopRequested && !opModeIsActive()) {
             CommandScheduler.run()
         }
@@ -73,7 +72,8 @@ class ManualFeedforwardTuner : LinearOpMode() {
         var activeProfile = generateProfile(true)
         var profileStart = clock.seconds()
         while (!isStopRequested) {
-            telemetry.addData("mode", mode)
+            TelemetryController.telemetry.addData("mode", mode)
+            CommandScheduler.run()
             when (mode) {
                 Mode.TUNING_MODE -> {
                     if (gamepad1.x) {
@@ -92,7 +92,6 @@ class ManualFeedforwardTuner : LinearOpMode() {
                     val targetPower: Double =
                         calculateMotorFeedforward(motionState.v, motionState.a, drive.constants.kV, drive.constants.kA, drive.constants.kStatic)
                     drive.setDrivePower(Pose2d(targetPower, 0.0, 0.0))
-                    drive.periodic()
                     val poseVelo: Pose2d = Objects.requireNonNull(
                         drive.poseVelocity,
                         "poseVelocity() must not be null. Ensure that the getWheelVelocities() method has been overridden in your localizer."
@@ -100,9 +99,9 @@ class ManualFeedforwardTuner : LinearOpMode() {
                     val currentVelo = poseVelo.x
 
                     // update telemetry
-                    telemetry.addData("targetVelocity", motionState.v)
-                    telemetry.addData("poseVelocity", currentVelo)
-                    telemetry.addData("error", currentVelo - motionState.v)
+                    TelemetryController.telemetry.addData("targetVelocity", motionState.v)
+                    TelemetryController.telemetry.addData("poseVelocity", currentVelo)
+                    TelemetryController.telemetry.addData("error", currentVelo - motionState.v)
                 }
                 Mode.DRIVER_MODE -> {
                     if (gamepad1.a) {
@@ -120,7 +119,6 @@ class ManualFeedforwardTuner : LinearOpMode() {
                     )
                 }
             }
-            telemetry.update()
         }
     }
 

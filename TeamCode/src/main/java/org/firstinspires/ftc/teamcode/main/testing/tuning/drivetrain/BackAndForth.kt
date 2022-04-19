@@ -2,13 +2,9 @@ package org.firstinspires.ftc.teamcode.main.testing.tuning.drivetrain
 
 import com.acmerobotics.dashboard.config.Config
 import com.acmerobotics.roadrunner.geometry.Pose2d
-import com.acmerobotics.roadrunner.trajectory.Trajectory
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import org.firstinspires.ftc.teamcode.commandFramework.CommandScheduler
-import org.firstinspires.ftc.teamcode.commandFramework.Constants
-import org.firstinspires.ftc.teamcode.commandFramework.Constants.drive
-import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
+import org.firstinspires.ftc.teamcode.commandFramework.*
 import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
 import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryLocalizer
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.ParallelTrajectory
@@ -35,22 +31,34 @@ import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
 @Autonomous(group = "drive")
 class BackAndForth : LinearOpMode() {
 
+    private lateinit var trajectoryForward: ParallelTrajectory
+    private lateinit var trajectoryBackward: ParallelTrajectory
+    private val followTrajectories: Command
+        get() = sequential {
+            +Constants.drive.followTrajectory(trajectoryForward)
+            +Constants.drive.followTrajectory(trajectoryBackward)
+        }
+
     override fun runOpMode() {
         Constants.opMode = this
-        drive = MecanumDrive(
+        Constants.drive = MecanumDrive(
             DriveConstants,
             TwoWheelOdometryLocalizer(OdometryConstants),
             Pose2d()
         )
-        CommandScheduler.registerSubsystems(drive, TelemetryController)
-        val trajectoryForward: ParallelTrajectory = drive.trajectoryBuilder(Pose2d())
+        CommandScheduler.registerSubsystems(Constants.drive, TelemetryController)
+        trajectoryForward = Constants.drive.trajectoryBuilder(Pose2d())
             .forward(DISTANCE)
             .build()
-        val trajectoryBackward: ParallelTrajectory = drive.trajectoryBuilder(trajectoryForward.end())
+        trajectoryBackward = Constants.drive.trajectoryBuilder(trajectoryForward.end())
             .back(DISTANCE)
             .build()
         waitForStart()
+        CommandScheduler.scheduleCommand(followTrajectories)
         while (opModeIsActive() && !isStopRequested) {
+            if (!CommandScheduler.hasCommands()) {
+                CommandScheduler.scheduleCommand(followTrajectories)
+            }
         }
     }
 
