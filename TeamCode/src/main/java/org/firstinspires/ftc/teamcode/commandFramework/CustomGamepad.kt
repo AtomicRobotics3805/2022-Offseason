@@ -93,8 +93,10 @@ class CustomGamepad(private val gamepad: Gamepad) {
         var down = false
         var pressed = false
         var released = false
-        var startCommand: (() -> Command)? = null
+        var toggleState = 0
+        var pressedCommand: (() -> Command)? = null
         var releasedCommand: (() -> Command)? = null
+        var toggleCommands: List<() -> Command>? = null
 
         /**
          * Updates whether the trigger was just pressed, just released, and whether it's being held
@@ -108,8 +110,15 @@ class CustomGamepad(private val gamepad: Gamepad) {
             released = !value && down
             down = value
             // Run the associated commands
-            if (pressed && startCommand != null) {
-                CommandScheduler.scheduleCommand(startCommand!!.invoke())
+            if (pressed && toggleCommands != null && toggleCommands!!.isNotEmpty()) {
+                if (toggleState > toggleCommands!!.size) {
+                    toggleState = 0
+                }
+                CommandScheduler.scheduleCommand(toggleCommands!![toggleState].invoke())
+                toggleState++
+            }
+            if (pressed && pressedCommand != null) {
+                CommandScheduler.scheduleCommand(pressedCommand!!.invoke())
             }
             if (released && releasedCommand != null) {
                 CommandScheduler.scheduleCommand(releasedCommand!!.invoke())
@@ -144,8 +153,10 @@ class CustomGamepad(private val gamepad: Gamepad) {
         var pressed = false
         var released = false
         var amount = 0.0f
-        var startCommand: (() -> Command)? = null
+        var toggleState = 0
+        var pressedCommand: (() -> Command)? = null
         var releasedCommand: (() -> Command)? = null
+        var toggleCommands: List<() -> Command>? = null
 
         /**
          * Updates whether the trigger was just pressed, just released, and how much it's being held
@@ -158,8 +169,15 @@ class CustomGamepad(private val gamepad: Gamepad) {
             released = value == 0.0f && down
             amount = value
             // Run the associated commands
-            if (pressed && startCommand != null) {
-                CommandScheduler.scheduleCommand(startCommand!!.invoke())
+            if (pressed && toggleCommands != null && toggleCommands!!.isNotEmpty()) {
+                if (toggleState > toggleCommands!!.size) {
+                    toggleState = 0
+                }
+                CommandScheduler.scheduleCommand(toggleCommands!![toggleState].invoke())
+                toggleState++
+            }
+            if (pressed && pressedCommand != null) {
+                CommandScheduler.scheduleCommand(pressedCommand!!.invoke())
             }
             if (released && releasedCommand != null) {
                 CommandScheduler.scheduleCommand(releasedCommand!!.invoke())
