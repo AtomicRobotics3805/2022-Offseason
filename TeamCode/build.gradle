@@ -8,6 +8,14 @@
 // please think carefully as to whether such customizations are really necessary
 // before doing so.
 
+plugins {
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+}
+
+javafx {
+    version = "14"
+    modules = [ 'javafx.graphics', 'javafx.controls' ]
+}
 
 // Custom definitions may go here
 
