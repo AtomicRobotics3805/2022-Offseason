@@ -32,9 +32,10 @@ import java.util.*
  * DisplacementDelay. Drivetrain objects/classes like MecanumDrive should implement this interface.
  */
 @Suppress("PropertyName", "MemberVisibilityCanBePrivate", "unused")
-abstract class Driver(public val constants: DriveConstants,
-                      val localizer: Localizer,
-                      private val startPose: Pose2d
+abstract class Driver(
+    val constants: DriveConstants,
+    val localizer: Localizer,
+    private val startPose: Pose2d
 ) : Subsystem {
 
     protected val POSE_HISTORY_LIMIT = 100
