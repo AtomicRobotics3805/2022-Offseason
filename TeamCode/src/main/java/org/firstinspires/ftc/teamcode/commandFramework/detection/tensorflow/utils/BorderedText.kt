@@ -33,20 +33,20 @@ public class BorderedText {
      * @param exteriorColor the exterior text color
      * @param textSize text size in pixels
      */
-    fun BorderedText(interiorColor: Int, exteriorColor: Int, textSize: Float) {
+    constructor (interiorColor: Int, exteriorColor: Int, textSize: Float) {
         interiorPaint = Paint()
-        interiorPaint.setTextSize(textSize)
-        interiorPaint.setColor(interiorColor)
-        interiorPaint.setStyle(Paint.Style.FILL)
-        interiorPaint.setAntiAlias(false)
-        interiorPaint.setAlpha(255)
+        interiorPaint!!.setTextSize(textSize)
+        interiorPaint!!.setColor(interiorColor)
+        interiorPaint!!.setStyle(Paint.Style.FILL)
+        interiorPaint!!.setAntiAlias(false)
+        interiorPaint!!.setAlpha(255)
         exteriorPaint = Paint()
-        exteriorPaint.setTextSize(textSize)
-        exteriorPaint.setColor(exteriorColor)
-        exteriorPaint.setStyle(Paint.Style.FILL_AND_STROKE)
-        exteriorPaint.setStrokeWidth(textSize / 8)
-        exteriorPaint.setAntiAlias(false)
-        exteriorPaint.setAlpha(255)
+        exteriorPaint!!.setTextSize(textSize)
+        exteriorPaint!!.setColor(exteriorColor)
+        exteriorPaint!!.setStyle(Paint.Style.FILL_AND_STROKE)
+        exteriorPaint!!.setStrokeWidth(textSize / 8)
+        exteriorPaint!!.setAntiAlias(false)
+        exteriorPaint!!.setAlpha(255)
         this.textSize = textSize
     }
 

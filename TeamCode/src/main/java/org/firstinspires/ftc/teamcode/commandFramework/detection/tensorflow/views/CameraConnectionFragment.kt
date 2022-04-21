@@ -47,13 +47,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
-import android.R
 import android.media.ImageReader.OnImageAvailableListener
 import android.view.TextureView.SurfaceTextureListener
 import java.lang.IllegalStateException
 import java.lang.NullPointerException
 import java.lang.RuntimeException
-
 
 @SuppressLint("ValidFragment")
 class CameraConnectionFragment: Fragment(){
