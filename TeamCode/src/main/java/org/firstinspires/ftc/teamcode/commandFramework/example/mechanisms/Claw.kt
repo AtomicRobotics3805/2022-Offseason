@@ -6,6 +6,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.Command
 import org.firstinspires.ftc.teamcode.commandFramework.Constants
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.MoveServo
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
+import org.firstinspires.ftc.teamcode.commandFramework.utilCommands.ToggleCommand
 
 /**
  * This class is an example of a claw controlled by a single servo. Its first two commands, open and close, which each
@@ -34,7 +35,7 @@ object Claw : Subsystem {
     val close: Command
         get() = MoveServo(clawServo, CLOSE_POSITION, TIME, listOf(this), true)
     val switch: Command
-        get() = if (clawServo.position == OPEN_POSITION) close else open
+        get() = ToggleCommand("claw", open, close)
 
     // servo
     private lateinit var clawServo: Servo
