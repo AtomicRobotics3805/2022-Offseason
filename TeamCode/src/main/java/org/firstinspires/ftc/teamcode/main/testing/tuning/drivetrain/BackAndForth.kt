@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.*
 import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
 import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryLocalizer
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.ParallelTrajectory
-import org.firstinspires.ftc.teamcode.main.subsystems.drive.DriveConstants
+import org.firstinspires.ftc.teamcode.main.subsystems.drive.TrioDriveConstants
 import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
 
 /*
@@ -42,7 +42,7 @@ class BackAndForth : LinearOpMode() {
     override fun runOpMode() {
         Constants.opMode = this
         Constants.drive = MecanumDrive(
-            DriveConstants,
+            TrioDriveConstants,
             TwoWheelOdometryLocalizer(OdometryConstants),
             Pose2d()
         )

@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
 import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
 import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryLocalizer
 import org.firstinspires.ftc.teamcode.commandFramework.utilCommands.TelemetryCommand
-import org.firstinspires.ftc.teamcode.main.subsystems.drive.DriveConstants
+import org.firstinspires.ftc.teamcode.main.subsystems.drive.TrioDriveConstants
 import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
 import java.util.*
 
@@ -51,7 +51,7 @@ class ManualFeedforwardTuner : LinearOpMode() {
     override fun runOpMode() {
         Constants.opMode = this
         drive = MecanumDrive(
-                DriveConstants,
+                TrioDriveConstants,
                 TwoWheelOdometryLocalizer(OdometryConstants),
                 Pose2d()
             )

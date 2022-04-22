@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.driving.Turn
 import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
 import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryLocalizer
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.toRadians
-import org.firstinspires.ftc.teamcode.main.subsystems.drive.DriveConstants
+import org.firstinspires.ftc.teamcode.main.subsystems.drive.TrioDriveConstants
 import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
 import kotlin.math.sqrt
 
@@ -35,7 +35,7 @@ class TrackWidthTuner : LinearOpMode() {
     override fun runOpMode() {
         Constants.opMode = this
         drive = MecanumDrive(
-            DriveConstants,
+            TrioDriveConstants,
             TwoWheelOdometryLocalizer(OdometryConstants),
             Pose2d()
         )
@@ -64,7 +64,7 @@ class TrackWidthTuner : LinearOpMode() {
                 CommandScheduler.run()
             }
             val trackWidth: Double =
-                DriveConstants.TRACK_WIDTH * Math.toRadians(ANGLE) / headingAccumulator
+                TrioDriveConstants.TRACK_WIDTH * Math.toRadians(ANGLE) / headingAccumulator
             trackWidthStats.add(trackWidth)
             sleep(DELAY.toLong())
         }

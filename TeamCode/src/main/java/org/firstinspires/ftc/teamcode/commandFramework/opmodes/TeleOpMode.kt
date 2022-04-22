@@ -30,7 +30,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.trajectories.TrajectoryFa
  */
 @Suppress("unused")
 abstract class TeleOpMode(private val controls: Controls,
-                          private val color: Constants.Color = Constants.Color.UNKNOWN,
+                          private val color: Constants.Colors = Constants.Colors.UNKNOWN,
                           private val trajectoryFactory: TrajectoryFactory? = null,
                           private val mainRoutine: (() -> Command)? = null,
                           private val initRoutine: (() -> Command)? = null,
@@ -42,7 +42,7 @@ abstract class TeleOpMode(private val controls: Controls,
         try {
             // setting constants
             Constants.opMode = this
-            if (Constants.color == Constants.Color.UNKNOWN)
+            if (Constants.color == Constants.Colors.UNKNOWN)
                 Constants.color = color
             Constants.drive = drive
             // initializing trajectory factory

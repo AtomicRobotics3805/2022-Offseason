@@ -26,7 +26,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.trajectories.TrajectoryFa
  *                   and the others should be mechanisms.
  */
 @Suppress("unused")
-abstract class AutonomousOpMode(private val color: Constants.Color,
+abstract class AutonomousOpMode(private val color: Constants.Colors,
                                 private val trajectoryFactory: TrajectoryFactory,
                                 private val mainRoutine: (() -> Command),
                                 private val initRoutine: (() -> Command)? = null,

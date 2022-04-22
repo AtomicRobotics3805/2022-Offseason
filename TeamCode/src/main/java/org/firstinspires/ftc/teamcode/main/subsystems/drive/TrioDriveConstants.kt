@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.driving.MecanumDriveConst
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.toRadians
 
 @Suppress("ObjectPropertyName")
-object DriveConstants : MecanumDriveConstants {
+object TrioDriveConstants : MecanumDriveConstants {
 
     // These are motor constants that should be listed online for your motors.
     @JvmField

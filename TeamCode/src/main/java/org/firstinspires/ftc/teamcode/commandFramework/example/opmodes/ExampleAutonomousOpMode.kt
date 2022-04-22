@@ -13,7 +13,6 @@ import org.firstinspires.ftc.teamcode.commandFramework.example.mechanisms.Lift
 import org.firstinspires.ftc.teamcode.commandFramework.example.routines.ExampleRoutines
 import org.firstinspires.ftc.teamcode.commandFramework.example.trajectoryfactory.ExampleTrajectoryFactory
 import org.firstinspires.ftc.teamcode.commandFramework.opmodes.AutonomousOpMode
-import org.firstinspires.ftc.teamcode.commandFramework.sequential
 
 /**
  * This class is an example of how you can create an Autonomous OpMode. Everything is handled by
@@ -22,7 +21,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.sequential
 @Disabled
 @Autonomous(name = "Example Auto OpMode")
 class ExampleAutonomousOpMode : AutonomousOpMode(
-    Constants.Color.BLUE,
+    Constants.Colors.BLUE,
     ExampleTrajectoryFactory,
     { ExampleRoutines.mainRoutine },
     { ExampleRoutines.initializationRoutine },

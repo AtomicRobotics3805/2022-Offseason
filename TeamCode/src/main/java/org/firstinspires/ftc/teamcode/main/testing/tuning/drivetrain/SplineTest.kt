@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.sequential
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.ParallelTrajectory
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.toRadians
 import org.firstinspires.ftc.teamcode.commandFramework.utilCommands.Delay
-import org.firstinspires.ftc.teamcode.main.subsystems.drive.DriveConstants
+import org.firstinspires.ftc.teamcode.main.subsystems.drive.TrioDriveConstants
 import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
 
 /*
@@ -26,7 +26,7 @@ class SplineTest : LinearOpMode() {
     override fun runOpMode() {
         Constants.opMode = this
         drive = MecanumDrive(
-            DriveConstants,
+            TrioDriveConstants,
             TwoWheelOdometryLocalizer(OdometryConstants),
             Pose2d()
         )

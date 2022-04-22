@@ -17,12 +17,12 @@ object Constants {
     /**
      * Alliance color, this has to be specified in Auto programs
      */
-    enum class Color {
+    enum class Colors {
         BLUE,
         RED,
         UNKNOWN
     }
-    var color = Color.UNKNOWN
+    var color = Colors.UNKNOWN
     lateinit var opMode: LinearOpMode
     lateinit var drive: Driver
     var endPose: Pose2d? = null
