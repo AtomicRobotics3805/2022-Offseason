@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.commandFramework
 
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
+import org.firstinspires.ftc.teamcode.commandFramework.utilCommands.TelemetryCommand
 
 /**
  * This class runs commands, updates subsystems, and manages Gamepad-related commands. The important
@@ -31,7 +32,12 @@ object CommandScheduler {
             scheduleCommands()
             cancelCommands()
             for (command in runningCommands) {
-                command.execute()
+                try {
+                    command.execute()
+                } catch (e: Exception) {
+                    scheduleCommand(TelemetryCommand(30.0, "Error updating " +
+                            command.javaClass, e.message ?: "Message Unknown"))
+                }
                 if (command.isDone) {
                     commandsToCancel += Pair(command, false)
                 }
@@ -138,8 +144,15 @@ object CommandScheduler {
             for (conflict in conflicts)
                 commandsToCancel += Pair(command, true)
         }
-        command.start()
-        runningCommands += command
+        try {
+            command.start()
+            runningCommands += command
+        } catch (e: UninitializedPropertyAccessException) {
+            val name: String = e.message!!.substring(18, e.message!!.length - 25)
+            scheduleCommand(TelemetryCommand(30.0, "Error",
+                "A lateinit property named $name in the was not initialized. Did you forget" +
+                        " to initialize the subsystem running the " + command.javaClass + " command?"))
+        }
     }
 
     /**
@@ -149,7 +162,12 @@ object CommandScheduler {
      *                    prematurely
      */
     private fun cancel(command: Command, interrupted: Boolean = false) {
-        command.end(interrupted)
+        try {
+            command.end(interrupted)
+        } catch (e: RuntimeException) {
+            scheduleCommand(TelemetryCommand(30.0, "Error canceling " +
+                    command.javaClass, e.message ?: "Message Unknown"))
+        }
         runningCommands -= command
     }
 
@@ -167,9 +185,20 @@ object CommandScheduler {
      */
     private fun updateSubsystems() {
         for (subsystem in subsystems) {
-            subsystem.periodic()
-            if (findCommand({ it.requirements.contains(subsystem) }) != null)
-                subsystem.inUsePeriodic()
+            try {
+                subsystem.periodic()
+            } catch (e: Exception) {
+                scheduleCommand(TelemetryCommand(30.0, "Error running periodic for " +
+                        subsystem.javaClass, e.message ?: "Message Unknown"))
+            }
+            if (findCommand({ it.requirements.contains(subsystem) }) != null) {
+                try {
+                    subsystem.inUsePeriodic()
+                } catch (e: Exception) {
+                    scheduleCommand(TelemetryCommand(30.0, "Error running" +
+                            "inUsePeriodic for " + subsystem.javaClass, e.message ?: "Message Unknown"))
+                }
+            }
         }
     }
 
