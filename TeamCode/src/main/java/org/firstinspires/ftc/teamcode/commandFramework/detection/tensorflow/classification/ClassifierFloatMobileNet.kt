@@ -7,9 +7,13 @@ import org.tensorflow.lite.support.common.ops.NormalizeOp;
 
 import java.lang.Exception
 
-class ClassifierFloatMobileNet : Classifier()  {
+class ClassifierFloatMobileNet(activity: Activity?,
+                               device: Device?,
+                               numThreads: Int,
+                               modelFileName: String?,
+                               labelFileName: String?,
+                               t: Telemetry?): Classifier (activity, device, numThreads, modelFileName, labelFileName, t)  {
     private val IMAGE_MEAN = 127.5f
-
     private val IMAGE_STD = 127.5f
 
     /**
@@ -26,13 +30,6 @@ class ClassifierFloatMobileNet : Classifier()  {
      * @param activity
      */
     @Throws(Exception::class)
-
-    constructor(activity: Activity?,
-                device: Device?,
-                numThreads: Int,
-                modelFileName: String?,
-                labelFileName: String?,
-                t: Telemetry?): this(activity, device, numThreads, modelFileName, labelFileName, t)
 
     override fun getPreprocessNormalizeOp(): TensorOperator? {
         return NormalizeOp(IMAGE_MEAN, IMAGE_STD)

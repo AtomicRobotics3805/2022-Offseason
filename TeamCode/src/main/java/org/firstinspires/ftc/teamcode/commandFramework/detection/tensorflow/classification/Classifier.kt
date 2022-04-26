@@ -185,72 +185,8 @@ public abstract class Classifier {
             return resultString.trim { it <= ' ' }
         }
     }
-
     /** Initializes a `Classifier`.  */
     @Throws(Exception::class)
-    protected open fun Classifier(
-        activity: Activity?,
-        device: Device?,
-        numThreads: Int,
-        modelFileName: String?,
-        labelFileName: String?,
-        t: Telemetry?
-    ) {
-        telemetry = t
-        setModelPath(modelFileName)
-        setLabelPath(labelFileName)
-        try {
-            val tfliteModel = FileUtil.loadMappedFile(
-                activity!!, getModelPath()!!
-            )
-            when (device) {
-                NNAPI -> {
-                    nnApiDelegate = NnApiDelegate()
-                    tfliteOptions.addDelegate(nnApiDelegate)
-                }
-                GPU -> {
-                    gpuDelegate = GpuDelegate()
-                    tfliteOptions.addDelegate(gpuDelegate)
-                }
-                CPU -> {}
-            }
-            tfliteOptions.setNumThreads(numThreads)
-            tflite = Interpreter(tfliteModel, tfliteOptions)
-
-            // Loads labels out from the label file.
-            labels = FileUtil.loadLabels(
-                activity,
-                getLabelPath()!!
-            )
-            Log.d(TAG, "Classifier. Labels loaded")
-
-            // Reads type and shape of input and output tensors, respectively.
-            val imageTensorIndex = 0
-            val imageShape =
-                tflite!!.getInputTensor(imageTensorIndex).shape() // {1, height, width, 3}
-            imageSizeY = imageShape[1]
-            imageSizeX = imageShape[2]
-            val imageDataType = tflite!!.getInputTensor(imageTensorIndex).dataType()
-            val probabilityTensorIndex = 0
-            val probabilityShape =
-                tflite!!.getOutputTensor(probabilityTensorIndex).shape() // {1, NUM_CLASSES}
-            val probabilityDataType = tflite!!.getOutputTensor(probabilityTensorIndex).dataType()
-
-            // Creates the input tensor.
-            inputImageBuffer = TensorImage(imageDataType)
-
-            // Creates the output tensor and its processor.
-            outputProbabilityBuffer =
-                TensorBuffer.createFixedSize(probabilityShape, probabilityDataType)
-
-            // Creates the post processor for the output probability.
-            probabilityProcessor =
-                TensorProcessor.Builder().add(getPostprocessNormalizeOp()).build()
-            Log.d(TAG, "Created a Tensorflow Lite Image Classifier.")
-        } catch (ex: Exception) {
-            throw Exception("Unable init classifier", ex)
-        }
-    }
 
     /** Runs inference and returns the classification results.  */
     open fun recognizeImage(bitmap: Bitmap, sensorOrientation: Int): List<Recognition?>? {

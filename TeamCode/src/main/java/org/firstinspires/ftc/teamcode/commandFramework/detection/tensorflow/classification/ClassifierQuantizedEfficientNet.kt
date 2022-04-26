@@ -8,7 +8,12 @@ import org.tensorflow.lite.support.common.ops.NormalizeOp;
 
 import java.lang.Exception
 
-class ClassifierQuantizedEfficientNet: Classifier(){
+class ClassifierQuantizedEfficientNet(activity: Activity?,
+                                      device: Device?,
+                                      numThreads: Int,
+                                      modelFileName: String?,
+                                      labelFileName: String?,
+                                      t: Telemetry?): Classifier(activity, device, numThreads, modelFileName, labelFileName, t){
 
     private val IMAGE_MEAN = 0.0f
 
@@ -25,13 +30,6 @@ class ClassifierQuantizedEfficientNet: Classifier(){
      * @param activity
      */
     @Throws(Exception::class)
-
-    constructor (activity: Activity?,
-                 device: Device?,
-                 numThreads: Int,
-                 modelFileName: String?,
-                 labelFileName: String?,
-                 t: Telemetry?): this(activity, device, numThreads, modelFileName, labelFileName, t)
 
     override fun getPreprocessNormalizeOp(): TensorOperator? {
         return NormalizeOp(IMAGE_MEAN, IMAGE_STD)

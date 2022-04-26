@@ -9,7 +9,8 @@ import android.graphics.Rect
 
 import java.util.Vector
 
-public class BorderedText {
+public class BorderedText(textSize: Float) {
+
     private var interiorPaint: Paint? = null
     private var exteriorPaint: Paint? = null
 
