@@ -33,8 +33,6 @@ object Claw : Subsystem {
         get() = MoveServo(clawServo, OPEN_POSITION, TIME, listOf(this), true)
     val close: Command
         get() = MoveServo(clawServo, CLOSE_POSITION, TIME, listOf(this), true)
-    val switch: Command
-        get() = if (clawServo.position == OPEN_POSITION) close else open
 
     // servo
     private lateinit var clawServo: Servo
