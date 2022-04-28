@@ -6,6 +6,14 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients
 import org.firstinspires.ftc.teamcode.commandFramework.driving.MecanumDriveConstants
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.toRadians
 
+/**
+ * Contains all the necessary constants for any type of drivetrain as well as the constants
+ * necessary for a Mecanum drive specifically. Read the inline comments carefully to understand what
+ * each constant means.
+ *
+ * The current values for these constants are what we used for Trio (our main competition robot)
+ * during the 2021-22 Freight Frenzy season.
+ */
 @Suppress("ObjectPropertyName")
 object ExampleMecanumDriveConstants : MecanumDriveConstants {
 

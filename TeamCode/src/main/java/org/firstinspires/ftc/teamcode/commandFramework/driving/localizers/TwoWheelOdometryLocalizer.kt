@@ -8,7 +8,7 @@ import com.acmerobotics.roadrunner.localization.TwoTrackingWheelLocalizer
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import org.firstinspires.ftc.teamcode.commandFramework.Constants
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Localizer
-import org.firstinspires.ftc.teamcode.roadrunnerutil.roadrunner.Encoder
+import org.firstinspires.ftc.teamcode.commandFramework.roadrunner.Encoder
 
 
 /**
@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.roadrunnerutil.roadrunner.Encoder
  * need them to be outside of the class to use them in the constructor.
  */
 @Config
-class TwoWheelOdometryLocalizer(constants: OdometryConstants) : TwoTrackingWheelLocalizer(listOf(
+class TwoWheelOdometryLocalizer(constants: TwoWheelOdometryConstants) : TwoTrackingWheelLocalizer(listOf(
     Pose2d(constants.PARALLEL_X, constants.PARALLEL_Y, 0.0),
     Pose2d(constants.PERPENDICULAR_X, constants.PERPENDICULAR_Y, Math.toRadians(90.0))
 )), Localizer {
@@ -104,7 +104,7 @@ class TwoWheelOdometryLocalizer(constants: OdometryConstants) : TwoTrackingWheel
     }
 }
 
-interface OdometryConstants {
+interface TwoWheelOdometryConstants {
     val PARALLEL_X: Double // in; forward offset of the parallel wheel
     val PARALLEL_Y: Double  // in; left offset of the parallel wheel
     val PERPENDICULAR_X: Double // in; forward offset of the perpendicular wheel

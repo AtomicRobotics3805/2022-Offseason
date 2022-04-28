@@ -1,12 +1,17 @@
 package org.firstinspires.ftc.teamcode.main.testing.tuning.drivetrain
 
 import com.acmerobotics.dashboard.config.Config
+import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.commandFramework.CommandScheduler
 import org.firstinspires.ftc.teamcode.commandFramework.Constants.drive
 import org.firstinspires.ftc.teamcode.commandFramework.Constants.opMode
+import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
 import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
+import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryLocalizer
+import org.firstinspires.ftc.teamcode.main.subsystems.drive.DriveConstants
+import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
 
 /**
  * This is a simple teleop routine for testing localization. Drive the robot around like a normal
@@ -21,8 +26,14 @@ class LocalizationTest : LinearOpMode() {
     @Throws(InterruptedException::class)
     override fun runOpMode() {
         opMode = this
-        CommandScheduler.scheduleCommand(drive.driverControlled(gamepad1))
+        drive = MecanumDrive(
+                DriveConstants,
+                TwoWheelOdometryLocalizer(OdometryConstants),
+                Pose2d()
+            )
+        CommandScheduler.registerSubsystems(TelemetryController, drive)
         waitForStart()
+        CommandScheduler.scheduleCommand(drive.driverControlled(gamepad1))
         while (!isStopRequested) {
             CommandScheduler.run()
         }

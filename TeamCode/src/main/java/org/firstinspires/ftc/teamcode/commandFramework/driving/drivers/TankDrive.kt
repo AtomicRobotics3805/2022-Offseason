@@ -15,7 +15,6 @@ import org.firstinspires.ftc.teamcode.commandFramework.Command
 import org.firstinspires.ftc.teamcode.commandFramework.driving.DriverControlled
 import org.firstinspires.ftc.teamcode.commandFramework.driving.TankDriveConstants
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Localizer
-import org.firstinspires.ftc.teamcode.commandFramework.utilCommands.CustomCommand
 import java.util.*
 
 /**
@@ -27,8 +26,9 @@ import java.util.*
  * of this object. You just need to make another object that inherits DriveConstants and set that as
  * the one used in the Constants file.
  */
+@Suppress("unused")
 @Config
-class TankDrive(val constants: TankDriveConstants,
+class TankDrive(constants: TankDriveConstants,
                 localizer: Localizer,
                 startPose: Pose2d = Pose2d()
 ) : Driver(constants, localizer, startPose) {
@@ -56,14 +56,6 @@ class TankDrive(val constants: TankDriveConstants,
         get() = -imu.angularVelocity.xRotationRate.toDouble()
 
     /**
-     * Switches TeleOp speeds, also known as slow mode
-     */
-    fun switchSpeed(): Command = CustomCommand(_start = {
-        driverSpeedIndex++
-        if (driverSpeedIndex >= constants.DRIVER_SPEEDS.size)
-            driverSpeedIndex = 0
-    })
-    /**
      * Allows the drivers to control the drivetrain using a gamepad
      * @param gamepad the gamepad that controls the drivetrain
      */
@@ -76,8 +68,9 @@ class TankDrive(val constants: TankDriveConstants,
     override fun initialize() {
         super.initialize()
         // initializes the motors
-        left = hardwareMap.get(DcMotorEx::class.java, "leftMotor")
-        right = hardwareMap.get(DcMotorEx::class.java, "rightMotor")
+        constants as TankDriveConstants
+        left = hardwareMap.get(DcMotorEx::class.java, constants.LEFT_NAME)
+        right = hardwareMap.get(DcMotorEx::class.java,  constants.RIGHT_NAME)
         motors = listOf(left, right)
         // sets the achieveableMaxRPMFraction for each motor to 1.0
         for (motor in motors) {
@@ -137,7 +130,7 @@ class TankDrive(val constants: TankDriveConstants,
      * @param leftPower the power for the left motor
      * @param rightPower the power for the right motor
      */
-    fun setMotorPowers(leftPower: Double, rightPower: Double) {
+    private fun setMotorPowers(leftPower: Double, rightPower: Double) {
         left.power = leftPower
         right.power = rightPower
     }
