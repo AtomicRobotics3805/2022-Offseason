@@ -264,7 +264,7 @@ class CameraConnectionFragment: Fragment(){
         imageListener: OnImageAvailableListener,
         layout: Int,
         inputSize: Size, t: Telemetry
-    ): CameraConnectionFragment? {
+    ) {
         return CameraConnectionFragment(callback, imageListener, layout, inputSize, t)
     }
 

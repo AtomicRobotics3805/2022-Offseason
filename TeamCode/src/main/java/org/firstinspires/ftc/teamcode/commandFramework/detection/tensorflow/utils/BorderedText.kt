@@ -11,6 +11,10 @@ import java.util.Vector
 
 public class BorderedText(textSize: Float) {
 
+    init {
+        this(Color.WHITE, Color.BLACK, textSize)
+    }
+
     private var interiorPaint: Paint? = null
     private var exteriorPaint: Paint? = null
 
@@ -22,9 +26,6 @@ public class BorderedText(textSize: Float) {
      *
      * @param textSize text size in pixels
      */
-    fun BorderedText(textSize: Float) {
-        this(Color.WHITE, Color.BLACK, textSize)
-    }
 
     /**
      * Create a bordered text object with the specified interior and exterior colors, text size and
@@ -57,8 +58,10 @@ public class BorderedText(textSize: Float) {
     }
 
     fun drawText(canvas: Canvas, posX: Float, posY: Float, text: String?) {
-        canvas.drawText(text, posX, posY, exteriorPaint)
-        canvas.drawText(text, posX, posY, interiorPaint)
+
+        canvas.drawText(text!!, posX, posY, exteriorPaint!!)
+
+        canvas.drawText(text, posX, posY, interiorPaint!!)
     }
 
     fun drawLines(canvas: Canvas, posX: Float, posY: Float, lines: Vector<String?>) {
@@ -82,18 +85,18 @@ public class BorderedText(textSize: Float) {
     }
 
     fun setAlpha(alpha: Int) {
-        interiorPaint.setAlpha(alpha)
-        exteriorPaint.setAlpha(alpha)
+        interiorPaint?.setAlpha(alpha)
+        exteriorPaint?.setAlpha(alpha)
     }
 
     fun getTextBounds(
         line: String?, index: Int, count: Int, lineBounds: Rect?
     ) {
-        interiorPaint.getTextBounds(line, index, count, lineBounds)
+        interiorPaint?.getTextBounds(line, index, count, lineBounds)
     }
 
     fun setTextAlign(align: Align?) {
-        interiorPaint.setTextAlign(align)
-        exteriorPaint.setTextAlign(align)
+        interiorPaint?.setTextAlign(align)
+        exteriorPaint?.setTextAlign(align)
     }
 }

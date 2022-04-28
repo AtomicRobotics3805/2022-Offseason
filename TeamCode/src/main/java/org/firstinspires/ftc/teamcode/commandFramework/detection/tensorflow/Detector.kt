@@ -9,7 +9,6 @@ import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
-import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image
 import android.media.ImageReader
 import android.os.Handler
@@ -24,16 +23,12 @@ import android.widget.FrameLayout
 
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.teamcode.R
-import org.firstinspires.ftc.teamcode.commandFramework.detection.tensorflow.classification.Classifier;
 import org.firstinspires.ftc.teamcode.commandFramework.detection.tensorflow.classification.Classifier.Device;
 import org.firstinspires.ftc.teamcode.commandFramework.detection.tensorflow.classification.Classifier.Model;
 import org.firstinspires.ftc.teamcode.commandFramework.detection.tensorflow.utils.BorderedText;
 import org.firstinspires.ftc.teamcode.commandFramework.detection.tensorflow.utils.ImageUtils;
 import org.firstinspires.ftc.teamcode.commandFramework.detection.tensorflow.views.CameraConnectionFragment;
 import org.firstinspires.ftc.teamcode.commandFramework.detection.tensorflow.views.LegacyCameraConnectionFragment;
-
-import java.nio.ByteBuffer;
-import java.util.List;
 
 import java.lang.Exception
 
