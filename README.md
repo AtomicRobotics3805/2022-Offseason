@@ -10,7 +10,7 @@ This will add all of the dependencies required for the system to function.
 
 ## Basic Usage
 There are 3 main aspects to the system. These aspects are:
-- [Mechanisms/Subsystems](https://github.com/AtomicRobotics3805/2022-Offseason/blob/docs/README.md#mechanisms--subsystems)
+- [Mechanisms/Subsystems](https://github.com/AtomicRobotics3805/2022-Offseason/blob/docs/summaries/Mechanisms%20%26%20Subsystems.md)
 - [Commands/OpModes](https://github.com/AtomicRobotics3805/2022-Offseason/blob/docs/README.md#commands--opmodes)
 - [Trajectories/Roadrunner](https://github.com/AtomicRobotics3805/2022-Offseason/blob/docs/README.md#trajectories--roadrunner)
 
