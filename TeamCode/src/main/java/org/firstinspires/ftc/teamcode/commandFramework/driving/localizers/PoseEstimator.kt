@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.commandFramework.driving.localizers
 
 import com.acmerobotics.roadrunner.geometry.Pose2d
-import com.acmerobotics.roadrunner.localization.Localizer
 import com.qualcomm.robotcore.util.ElapsedTime
 import kotlin.math.abs
 
@@ -24,7 +23,7 @@ class PoseEstimator(
 
     private val timer = ElapsedTime()
 
-    fun initialize() {
+    override fun initialize() {
         timer.reset()
     }
 
