@@ -30,4 +30,10 @@ object ExampleRoutines {
                 +drive.followTrajectory(ExampleTrajectoryFactory.hubFrontToPark)
             }
         }
+
+    val teleOpStartRoutine: Command
+        get() = parallel {
+            +Lift.toLow
+            +Claw.open
+        }
 }

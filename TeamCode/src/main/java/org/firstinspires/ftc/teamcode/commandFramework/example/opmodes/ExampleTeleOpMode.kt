@@ -25,7 +25,7 @@ class ExampleTeleOpMode : TeleOpMode(
     ExampleControls,
     Constants.Color.UNKNOWN,
     ExampleTrajectoryFactory,
-    { ExampleRoutines.initializationRoutine },
+    { ExampleRoutines.teleOpStartRoutine },
     null,
     MecanumDrive(
         ExampleMecanumDriveConstants,
