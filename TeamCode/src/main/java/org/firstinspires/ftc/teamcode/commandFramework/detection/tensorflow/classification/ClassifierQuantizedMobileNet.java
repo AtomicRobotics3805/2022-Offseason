@@ -1,33 +1,35 @@
 package org.firstinspires.ftc.teamcode.commandFramework.detection.tensorflow.classification;
+
 import android.app.Activity;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.tensorflow.lite.support.common.TensorOperator;
 import org.tensorflow.lite.support.common.ops.NormalizeOp;
 
-import java.io.IOException;
-
-public class ClassifierFloatEfficient extends Classifier {
-    private static final float IMAGE_MEAN = 127.0f;
-    private static final float IMAGE_STD = 128.0f;
-
+public class ClassifierQuantizedMobileNet extends Classifier {
     /**
-     * Float model does not need dequantization in the post-processing. Setting mean and std as 0.0f
-     * and 1.0f, repectively, to bypass the normalization.
+     * The quantized model does not require normalization, thus set mean as 0.0f, and std as 1.0f to
+     * bypass the normalization.
      */
+    private static final float IMAGE_MEAN = 0.0f;
+
+    private static final float IMAGE_STD = 1.0f;
+
+    /** Quantized MobileNet requires additional dequantization to the output probability. */
     private static final float PROBABILITY_MEAN = 0.0f;
 
-    private static final float PROBABILITY_STD = 1.0f;
+    private static final float PROBABILITY_STD = 255.0f;
 
     /**
-     * Initializes a {@code ClassifierFloatMobileNet}.
+     * Initializes a {@code ClassifierQuantizedMobileNet}.
      *
      * @param activity
      */
-    public ClassifierFloatEfficientNet(Activity activity, Device device, int numThreads, String modelFileName, String labelFileName, Telemetry t)
+    public ClassifierQuantizedMobileNet(Activity activity, Device device, int numThreads, String modelFileName, String labelFileName, Telemetry t)
             throws Exception {
         super(activity, device, numThreads, modelFileName, labelFileName, t);
     }
+
 
     @Override
     protected TensorOperator getPreprocessNormalizeOp() {
