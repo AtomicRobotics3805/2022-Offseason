@@ -20,7 +20,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.opmodes.TeleOpMode
  * TeleOpMode parent class, so all you have to do is pass in the constructor parameters.
  */
 @Disabled
-@TeleOp(name = "Example Auto OpMode")
+@TeleOp(name = "Example TeleOp OpMode")
 class ExampleTeleOpMode : TeleOpMode(
     ExampleControls,
     Constants.Color.UNKNOWN,
