@@ -1,4 +1,3 @@
-# **DOCS**
 # Getting Started
 
 ## Installation
@@ -10,13 +9,8 @@ implementation 'com.acmerobotics.roadrunner:core:0.5.3'
 This will add all of the dependencies required for the system to function.
 
 ## Basic Usage
-There are 3 main aspects to the system. Each one will be explained in its subsection below. These aspects are:
+There are 3 main aspects to the system. These aspects are:
 - [Mechanisms/Subsystems](https://github.com/AtomicRobotics3805/2022-Offseason/blob/docs/README.md#mechanisms--subsystems)
 - [Commands/OpModes](https://github.com/AtomicRobotics3805/2022-Offseason/blob/docs/README.md#commands--opmodes)
 - [Trajectories/Roadrunner](https://github.com/AtomicRobotics3805/2022-Offseason/blob/docs/README.md#trajectories--roadrunner)
 
-### Mechanisms & Subsystems
-
-### Commands & OpModes
-
-### Trajectories & Roadrunner
