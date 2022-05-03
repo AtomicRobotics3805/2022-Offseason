@@ -11,9 +11,9 @@ This will add all of the dependencies required for the system to function.
 
 ## Basic Usage
 There are 3 main aspects to the system. Each one will be explained in its subsection below. These aspects are:
-- [Mechanisms/Subsystems](https://github.com/AtomicRobotics3805/2022-Offseason/edit/docs/README.md#mechanisms--subsystems)
-- [Commands/OpModes](https://github.com/AtomicRobotics3805/2022-Offseason/edit/docs/README.md#commands--opmodes)
-- [Trajectories/Roadrunner](https://github.com/AtomicRobotics3805/2022-Offseason/edit/docs/README.md#trajectories--roadrunner)
+- [Mechanisms/Subsystems](https://github.com/AtomicRobotics3805/2022-Offseason/blob/docs/README.md#mechanisms--subsystems)
+- [Commands/OpModes](https://github.com/AtomicRobotics3805/2022-Offseason/blob/docs/README.md#commands--opmodes)
+- [Trajectories/Roadrunner](https://github.com/AtomicRobotics3805/2022-Offseason/blob/docs/README.md#trajectories--roadrunner)
 
 ### Mechanisms & Subsystems
 
