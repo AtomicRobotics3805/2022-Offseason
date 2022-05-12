@@ -22,7 +22,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.R;
+import android.R;
 import org.firstinspires.ftc.teamcode.commandFramework.detection.tensorflow.classification.Classifier;
 import org.firstinspires.ftc.teamcode.commandFramework.detection.tensorflow.classification.Classifier.Device;
 import org.firstinspires.ftc.teamcode.commandFramework.detection.tensorflow.classification.Classifier.Model;
@@ -245,7 +245,6 @@ public class Detector implements ImageReader.OnImageAvailableListener, Camera.Pr
             buffer.get(yuvBytes[i]);
         }
     }
-
 
     protected void readyForNextImage() {
         if (postInferenceCallback != null) {
