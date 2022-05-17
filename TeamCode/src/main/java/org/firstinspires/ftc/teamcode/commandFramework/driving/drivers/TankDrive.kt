@@ -30,7 +30,7 @@ import java.util.*
 @Config
 class TankDrive(constants: TankDriveConstants,
                 localizer: Localizer,
-                startPose: Pose2d = Pose2d()
+                startPose: () -> Pose2d = { Pose2d() }
 ) : Driver(constants, localizer, startPose) {
 
     // this constraint is used when building trajectories to determine how fast the robot will go

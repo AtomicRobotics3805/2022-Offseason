@@ -35,7 +35,7 @@ import java.util.*
 abstract class Driver(
     val constants: DriveConstants,
     val localizer: Localizer,
-    private val startPose: Pose2d
+    private val startPose: () -> Pose2d
 ) : Subsystem {
 
     protected val POSE_HISTORY_LIMIT = 100
@@ -152,6 +152,7 @@ abstract class Driver(
         for (module in hardwareMap.getAll(LynxModule::class.java)) {
             module.bulkCachingMode = LynxModule.BulkCachingMode.AUTO
         }
+        localizer.poseEstimate = startPose.invoke()
     }
 
     /**
