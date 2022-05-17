@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import org.firstinspires.ftc.teamcode.commandFramework.Constants
 import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
-import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryLocalizer
+import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.MecanumDriveWheelLocalizer
 import org.firstinspires.ftc.teamcode.commandFramework.example.drive.ExampleMecanumDriveConstants
 import org.firstinspires.ftc.teamcode.commandFramework.example.localizers.ExampleOdometryConstants
 import org.firstinspires.ftc.teamcode.commandFramework.example.mechanisms.Claw
@@ -13,7 +13,6 @@ import org.firstinspires.ftc.teamcode.commandFramework.example.mechanisms.Lift
 import org.firstinspires.ftc.teamcode.commandFramework.example.routines.ExampleRoutines
 import org.firstinspires.ftc.teamcode.commandFramework.example.trajectoryfactory.ExampleTrajectoryFactory
 import org.firstinspires.ftc.teamcode.commandFramework.opmodes.AutonomousOpMode
-import org.firstinspires.ftc.teamcode.commandFramework.sequential
 
 /**
  * This class is an example of how you can create an Autonomous OpMode. Everything is handled by
@@ -28,7 +27,7 @@ class ExampleAutonomousOpMode : AutonomousOpMode(
     { ExampleRoutines.initializationRoutine },
     MecanumDrive(
         ExampleMecanumDriveConstants,
-        TwoWheelOdometryLocalizer(ExampleOdometryConstants()),
+        MecanumDriveWheelLocalizer(ExampleOdometryConstants()),
         Pose2d()
     ),
     Lift,

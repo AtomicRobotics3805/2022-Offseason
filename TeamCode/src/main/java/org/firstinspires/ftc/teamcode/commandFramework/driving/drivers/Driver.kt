@@ -65,7 +65,9 @@ abstract class Driver(
     // this is the trajectory that the robot is currently following
     var trajectory: ParallelTrajectory? = null
 
-    lateinit var poseEstimate: Pose2d
+    var poseEstimate: Pose2d
+        get() = localizer.poseEstimate
+        set(value) { localizer.poseEstimate = value }
     val poseVelocity: Pose2d?
         get() = localizer.poseVelocity
 
@@ -152,6 +154,8 @@ abstract class Driver(
         for (module in hardwareMap.getAll(LynxModule::class.java)) {
             module.bulkCachingMode = LynxModule.BulkCachingMode.AUTO
         }
+        poseEstimate = startPose
+
     }
 
     /**
@@ -159,7 +163,6 @@ abstract class Driver(
      */
     override fun periodic() {
         localizer.update()
-        poseEstimate = localizer.poseEstimate
         poseHistory.add(poseEstimate)
         if (POSE_HISTORY_LIMIT > -1 && poseHistory.size > POSE_HISTORY_LIMIT) {
             poseHistory.removeFirst()

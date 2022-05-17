@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.commandFramework.Constants
 import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
-import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryLocalizer
+import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.MecanumDriveWheelLocalizer
 import org.firstinspires.ftc.teamcode.commandFramework.example.controls.ExampleControls
 import org.firstinspires.ftc.teamcode.commandFramework.example.drive.ExampleMecanumDriveConstants
 import org.firstinspires.ftc.teamcode.commandFramework.example.localizers.ExampleOdometryConstants
@@ -29,7 +29,7 @@ class ExampleTeleOpMode : TeleOpMode(
     null,
     MecanumDrive(
         ExampleMecanumDriveConstants,
-        TwoWheelOdometryLocalizer(ExampleOdometryConstants()),
+        MecanumDriveWheelLocalizer(ExampleOdometryConstants()),
         Constants.endPose ?: Pose2d()
     ),
     Lift,
