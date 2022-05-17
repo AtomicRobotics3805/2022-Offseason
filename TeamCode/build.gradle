@@ -25,6 +25,7 @@ dependencies {
     implementation 'org.openftc:easyopencv:1.5.1'
     implementation 'org.tensorflow:tensorflow-lite:2.3.0'
     implementation 'org.tensorflow:tensorflow-lite-gpu:2.3.0'
+    implementation('org.tensorflow:tensorflow-lite-support:0.0.0-nightly') { changing = true }
 }
 repositories {
     mavenCentral()

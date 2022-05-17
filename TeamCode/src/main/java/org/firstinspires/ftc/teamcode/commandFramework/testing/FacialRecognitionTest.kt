@@ -17,6 +17,16 @@ public class FacialRecognitionTest : LinearOpMode(){
         detectThread.start()
         telemetry.update()
 
+        waitForStart()
+
+        var face: String? = null
+
+        while (opModeIsActive()){
+            face = exampleDetector!!.result
+            telemetry.addData("Person =", face)
+        }
+        exampleDetector!!.stopDetection()
+
     }
 
 }
