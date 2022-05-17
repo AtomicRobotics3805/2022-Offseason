@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.Constants.drive
 import org.firstinspires.ftc.teamcode.commandFramework.Constants.opMode
 import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
 import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
-import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.MecanumDriveWheelLocalizer
+import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryLocalizer
 import org.firstinspires.ftc.teamcode.main.subsystems.drive.DriveConstants
 import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
 
@@ -28,7 +28,7 @@ class LocalizationTest : LinearOpMode() {
         opMode = this
         drive = MecanumDrive(
                 DriveConstants,
-                MecanumDriveWheelLocalizer(OdometryConstants),
+                TwoWheelOdometryLocalizer(OdometryConstants),
                 Pose2d()
             )
         CommandScheduler.registerSubsystems(TelemetryController, drive)

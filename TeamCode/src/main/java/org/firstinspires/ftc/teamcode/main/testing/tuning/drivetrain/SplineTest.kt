@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.Constants
 import org.firstinspires.ftc.teamcode.commandFramework.Constants.drive
 import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
 import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
-import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.MecanumDriveWheelLocalizer
+import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryLocalizer
 import org.firstinspires.ftc.teamcode.commandFramework.sequential
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.ParallelTrajectory
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.toRadians
@@ -27,7 +27,7 @@ class SplineTest : LinearOpMode() {
         Constants.opMode = this
         drive = MecanumDrive(
             DriveConstants,
-            MecanumDriveWheelLocalizer(OdometryConstants),
+            TwoWheelOdometryLocalizer(OdometryConstants),
             Pose2d()
         )
         CommandScheduler.registerSubsystems(drive, TelemetryController)
