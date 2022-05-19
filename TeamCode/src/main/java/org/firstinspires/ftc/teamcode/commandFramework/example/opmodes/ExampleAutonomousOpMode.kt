@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import org.firstinspires.ftc.teamcode.commandFramework.Constants
 import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
 import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.MecanumDriveWheelLocalizer
+import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryLocalizer
 import org.firstinspires.ftc.teamcode.commandFramework.example.drive.ExampleMecanumDriveConstants
 import org.firstinspires.ftc.teamcode.commandFramework.example.localizers.ExampleOdometryConstants
 import org.firstinspires.ftc.teamcode.commandFramework.example.mechanisms.Claw
@@ -27,7 +28,7 @@ class ExampleAutonomousOpMode : AutonomousOpMode(
     { ExampleRoutines.initializationRoutine },
     MecanumDrive(
         ExampleMecanumDriveConstants,
-        MecanumDriveWheelLocalizer(ExampleOdometryConstants()),
+        TwoWheelOdometryLocalizer(ExampleOdometryConstants()),
         Pose2d()
     ),
     Lift,
