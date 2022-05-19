@@ -27,10 +27,9 @@ class LocalizationTest : LinearOpMode() {
     override fun runOpMode() {
         opMode = this
         drive = MecanumDrive(
-                DriveConstants,
-                TwoWheelOdometryLocalizer(OdometryConstants),
-                Pose2d()
-            )
+            DriveConstants,
+            TwoWheelOdometryLocalizer(OdometryConstants),
+        ) { Pose2d() }
         CommandScheduler.registerSubsystems(TelemetryController, drive)
         waitForStart()
         CommandScheduler.scheduleCommand(drive.driverControlled(gamepad1))

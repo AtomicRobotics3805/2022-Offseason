@@ -44,8 +44,7 @@ class BackAndForth : LinearOpMode() {
         Constants.drive = MecanumDrive(
             DriveConstants,
             TwoWheelOdometryLocalizer(OdometryConstants),
-            Pose2d()
-        )
+        ) { Pose2d() }
         CommandScheduler.registerSubsystems(Constants.drive, TelemetryController)
         trajectoryForward = Constants.drive.trajectoryBuilder(Pose2d())
             .forward(DISTANCE)

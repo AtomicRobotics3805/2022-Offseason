@@ -28,9 +28,8 @@ class ExampleAutonomousOpMode : AutonomousOpMode(
     { ExampleRoutines.initializationRoutine },
     MecanumDrive(
         ExampleMecanumDriveConstants,
-        TwoWheelOdometryLocalizer(ExampleOdometryConstants()),
-        Pose2d()
-    ),
+        TwoWheelOdometryLocalizer(ExampleOdometryConstants())
+    ) { Pose2d() },
     Lift,
     Claw
 )
