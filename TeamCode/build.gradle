@@ -1,3 +1,5 @@
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+
 //
 // build.gradle in TeamCode
 //
@@ -23,8 +25,16 @@ dependencies {
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.acmerobotics.roadrunner:core:0.5.3'
+    implementation 'com.github.NoahBres:MeepMeep:2.0.0'
 
 }
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
+    maven { url = 'https://maven.brott.dev/' }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }

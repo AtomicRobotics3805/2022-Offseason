@@ -31,8 +31,7 @@ class ExampleTeleOpMode : TeleOpMode(
     MecanumDrive(
         ExampleMecanumDriveConstants,
         TwoWheelOdometryLocalizer(ExampleOdometryConstants()),
-        Constants.endPose ?: Pose2d()
-    ),
+    ) { Constants.endPose ?: Pose2d() },
     Lift,
     Claw
 )

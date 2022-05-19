@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.trajectories.ParallelTraj
  */
 @Suppress("unused")
 class FollowTrajectory(
-    private val trajectory: ParallelTrajectory,
+    val trajectory: ParallelTrajectory,
     override val requirements: List<Subsystem> = arrayListOf(),
     override val interruptible: Boolean = true
 ) : Command() {

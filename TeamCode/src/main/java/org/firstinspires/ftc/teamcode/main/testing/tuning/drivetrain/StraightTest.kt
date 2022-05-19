@@ -24,8 +24,7 @@ class StraightTest : LinearOpMode() {
         Constants.drive = MecanumDrive(
             DriveConstants,
             TwoWheelOdometryLocalizer(OdometryConstants),
-            Pose2d()
-        )
+        ) { Pose2d() }
         CommandScheduler.registerSubsystems(Constants.drive, TelemetryController)
         val trajectory: ParallelTrajectory = Constants.drive.trajectoryBuilder(Pose2d())
             .forward(DISTANCE)

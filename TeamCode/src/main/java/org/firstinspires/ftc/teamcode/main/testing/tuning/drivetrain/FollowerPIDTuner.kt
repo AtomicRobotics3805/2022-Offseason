@@ -49,9 +49,8 @@ class FollowerPIDTuner : LinearOpMode() {
         Constants.opMode = this
         drive = MecanumDrive(
             DriveConstants,
-            TwoWheelOdometryLocalizer(OdometryConstants),
-            startPose
-        )
+            TwoWheelOdometryLocalizer(OdometryConstants)
+        ) { Pose2d() }
         CommandScheduler.registerSubsystems(drive, TelemetryController)
         waitForStart()
         while (opModeIsActive()) {
