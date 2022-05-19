@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.main.testing.tuning.drivetrain
+package org.firstinspires.ftc.teamcode.commandFramework.tuning.drivetrain
 
 import com.acmerobotics.dashboard.config.Config
 import com.acmerobotics.roadrunner.geometry.Pose2d
@@ -13,10 +13,9 @@ import org.firstinspires.ftc.teamcode.commandFramework.Constants.drive
 import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
 import org.firstinspires.ftc.teamcode.commandFramework.driving.Turn
 import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
-import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryLocalizer
+import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.MecanumDriveWheelLocalizer
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.toRadians
 import org.firstinspires.ftc.teamcode.main.subsystems.drive.DriveConstants
-import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
 import kotlin.math.sqrt
 
 /*
@@ -36,8 +35,9 @@ class TrackWidthTuner : LinearOpMode() {
         Constants.opMode = this
         drive = MecanumDrive(
             DriveConstants,
-            TwoWheelOdometryLocalizer(OdometryConstants),
-        ) { Pose2d() }
+            MecanumDriveWheelLocalizer(drive as MecanumDrive),
+            Pose2d()
+        )
         CommandScheduler.registerSubsystems(TelemetryController, drive)
         // FINISHED: if you haven't already, set the localizer to something that doesn't depend on
         // drive encoders for computing the heading

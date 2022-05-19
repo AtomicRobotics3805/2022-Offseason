@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.main.testing.tuning.drivetrain
+package org.firstinspires.ftc.teamcode.commandFramework.tuning.drivetrain
 
 import com.acmerobotics.dashboard.config.Config
 import com.acmerobotics.roadrunner.geometry.Pose2d
@@ -8,11 +8,10 @@ import org.firstinspires.ftc.teamcode.commandFramework.*
 import org.firstinspires.ftc.teamcode.commandFramework.Constants.drive
 import org.firstinspires.ftc.teamcode.commandFramework.driving.Turn
 import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
-import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryLocalizer
+import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.MecanumDriveWheelLocalizer
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.ParallelTrajectory
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.toRadians
 import org.firstinspires.ftc.teamcode.main.subsystems.drive.DriveConstants
-import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
 
 /*
  * Op mode for preliminary tuning of the follower PID coefficients (located in the drive base
@@ -49,8 +48,9 @@ class FollowerPIDTuner : LinearOpMode() {
         Constants.opMode = this
         drive = MecanumDrive(
             DriveConstants,
-            TwoWheelOdometryLocalizer(OdometryConstants)
-        ) { Pose2d() }
+            MecanumDriveWheelLocalizer(drive as MecanumDrive),
+            startPose
+        )
         CommandScheduler.registerSubsystems(drive, TelemetryController)
         waitForStart()
         while (opModeIsActive()) {

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.main.testing.tuning.drivetrain
+package org.firstinspires.ftc.teamcode.commandFramework.tuning.drivetrain
 
 import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.acmerobotics.roadrunner.geometry.Vector2d
@@ -9,13 +9,12 @@ import org.firstinspires.ftc.teamcode.commandFramework.Constants
 import org.firstinspires.ftc.teamcode.commandFramework.Constants.drive
 import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
 import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
-import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryLocalizer
+import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.MecanumDriveWheelLocalizer
 import org.firstinspires.ftc.teamcode.commandFramework.sequential
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.ParallelTrajectory
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.toRadians
 import org.firstinspires.ftc.teamcode.commandFramework.utilCommands.Delay
 import org.firstinspires.ftc.teamcode.main.subsystems.drive.DriveConstants
-import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
 
 /*
  * This is an example of a more complex path to really test the tuning.
@@ -27,8 +26,9 @@ class SplineTest : LinearOpMode() {
         Constants.opMode = this
         drive = MecanumDrive(
             DriveConstants,
-            TwoWheelOdometryLocalizer(OdometryConstants),
-        ) { Pose2d() }
+            MecanumDriveWheelLocalizer(drive as MecanumDrive),
+            Pose2d()
+        )
         CommandScheduler.registerSubsystems(drive, TelemetryController)
         val forwardTrajectory: ParallelTrajectory = drive.trajectoryBuilder(Pose2d())
             .splineTo(Vector2d(30.0, 30.0), 0.0)

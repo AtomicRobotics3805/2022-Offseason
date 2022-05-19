@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.main.testing.tuning.drivetrain
+package org.firstinspires.ftc.teamcode.commandFramework.tuning.drivetrain
 
 import com.acmerobotics.dashboard.config.Config
 import com.acmerobotics.roadrunner.geometry.Pose2d
@@ -9,9 +9,8 @@ import org.firstinspires.ftc.teamcode.commandFramework.Constants.drive
 import org.firstinspires.ftc.teamcode.commandFramework.Constants.opMode
 import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
 import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
-import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryLocalizer
+import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.MecanumDriveWheelLocalizer
 import org.firstinspires.ftc.teamcode.main.subsystems.drive.DriveConstants
-import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
 
 /**
  * This is a simple teleop routine for testing localization. Drive the robot around like a normal
@@ -27,9 +26,10 @@ class LocalizationTest : LinearOpMode() {
     override fun runOpMode() {
         opMode = this
         drive = MecanumDrive(
-            DriveConstants,
-            TwoWheelOdometryLocalizer(OdometryConstants),
-        ) { Pose2d() }
+                DriveConstants,
+                MecanumDriveWheelLocalizer(drive as MecanumDrive),
+                Pose2d()
+            )
         CommandScheduler.registerSubsystems(TelemetryController, drive)
         waitForStart()
         CommandScheduler.scheduleCommand(drive.driverControlled(gamepad1))
