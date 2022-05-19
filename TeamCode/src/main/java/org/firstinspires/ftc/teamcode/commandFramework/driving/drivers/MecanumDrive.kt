@@ -193,13 +193,19 @@ class MecanumDrive(constants: MecanumDriveConstants,
      * value based on the battery voltage.
      * @param coefficients the PIDF coefficients to set the motors to
      */
-    private fun setPIDFCoefficients(coefficients: PIDFCoefficients) {
+    fun setPIDFCoefficients(coefficients: PIDFCoefficients) {
         val compensatedCoefficients = PIDFCoefficients(
             coefficients.p, coefficients.i, coefficients.d,
             coefficients.f * 12 / batteryVoltageSensor.voltage
         )
         for (motor in motors) {
             motor.setPIDFCoefficients(RunMode.RUN_USING_ENCODER, compensatedCoefficients)
+        }
+    }
+
+    fun setMode(mode: RunMode) {
+        for (motor in motors) {
+            motor.mode = mode
         }
     }
 }

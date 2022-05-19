@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.*
 import org.firstinspires.ftc.teamcode.commandFramework.Constants.drive
 import org.firstinspires.ftc.teamcode.commandFramework.driving.Turn
 import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
-import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.MecanumDriveWheelLocalizer
+import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryLocalizer
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.ParallelTrajectory
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.toRadians
 import org.firstinspires.ftc.teamcode.main.subsystems.drive.DriveConstants
@@ -49,7 +49,7 @@ class FollowerPIDTuner : LinearOpMode() {
         Constants.opMode = this
         drive = MecanumDrive(
             DriveConstants,
-            MecanumDriveWheelLocalizer(OdometryConstants),
+            TwoWheelOdometryLocalizer(OdometryConstants),
             startPose
         )
         CommandScheduler.registerSubsystems(drive, TelemetryController)
