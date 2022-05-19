@@ -16,7 +16,7 @@ fun main() {
             DriveConstants,
             TwoWheelOdometryLocalizer(OdometryConstants)
         ) { Pose2d() },
-        sequential { },
+        { sequential { } },
         Constants.Color.BLUE
     )
     MeepMeepVisualizer.run(TrajectoryFactory)
