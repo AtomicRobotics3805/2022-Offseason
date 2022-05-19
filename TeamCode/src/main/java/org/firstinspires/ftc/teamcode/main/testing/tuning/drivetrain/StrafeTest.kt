@@ -23,7 +23,7 @@ class StrafeTest : LinearOpMode() {
         Constants.opMode = this
         Constants.drive = MecanumDrive(
             DriveConstants,
-            TwoWheelOdometryLocalizer(OdometryConstants),
+            MecanumDriveWheelLocalizer(drive as MecanumDrive),
             Pose2d()
         )
         CommandScheduler.registerSubsystems(Constants.drive, TelemetryController)

@@ -5,12 +5,13 @@ import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.firstinspires.ftc.teamcode.commandFramework.*
+import org.firstinspires.ftc.teamcode.commandFramework.Constants.drive
 import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
+import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.MecanumDriveWheelLocalizer
 import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryLocalizer
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.ParallelTrajectory
 import org.firstinspires.ftc.teamcode.commandFramework.utilCommands.TelemetryCommand
 import org.firstinspires.ftc.teamcode.main.subsystems.drive.DriveConstants
-import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
 
 /*
  * This is a simple routine to test translational drive capabilities.
@@ -23,7 +24,7 @@ class StraightTest : LinearOpMode() {
         Constants.opMode = this
         Constants.drive = MecanumDrive(
             DriveConstants,
-            TwoWheelOdometryLocalizer(OdometryConstants),
+            MecanumDriveWheelLocalizer(drive as MecanumDrive),
             Pose2d()
         )
         CommandScheduler.registerSubsystems(Constants.drive, TelemetryController)

@@ -15,9 +15,9 @@ import org.firstinspires.ftc.teamcode.commandFramework.Constants.drive
 import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
 import org.firstinspires.ftc.teamcode.commandFramework.driving.MecanumDriveConstants
 import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.MecanumDrive
+import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.MecanumDriveWheelLocalizer
 import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWheelOdometryLocalizer
 import org.firstinspires.ftc.teamcode.main.subsystems.drive.DriveConstants
-import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
 
 /*
  * This routine is designed to tune the PID coefficients used by the REV Expansion Hubs for closed-
@@ -54,7 +54,7 @@ class DriveVelocityPIDTuner : LinearOpMode() {
         Constants.opMode = this
         drive = MecanumDrive(
             DriveConstants,
-            TwoWheelOdometryLocalizer(OdometryConstants)
+            MecanumDriveWheelLocalizer(drive as MecanumDrive)
         )
         CommandScheduler.registerSubsystems(drive, TelemetryController)
         var mode = Mode.TUNING_MODE

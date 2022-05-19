@@ -36,7 +36,7 @@ class TrackWidthTuner : LinearOpMode() {
         Constants.opMode = this
         drive = MecanumDrive(
             DriveConstants,
-            TwoWheelOdometryLocalizer(OdometryConstants),
+            MecanumDriveWheelLocalizer(drive as MecanumDrive),
             Pose2d()
         )
         CommandScheduler.registerSubsystems(TelemetryController, drive)

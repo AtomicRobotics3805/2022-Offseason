@@ -11,9 +11,9 @@ object DriveConstants : MecanumDriveConstants {
 
     // These are motor constants that should be listed online for your motors.
     @JvmField
-    var _TICKS_PER_REV = 537.7 // 5203 312 RPM Yellow Jacket
+    var _TICKS_PER_REV = 1120.0 // 5203 312 RPM Yellow Jacket
     @JvmField
-    var _MAX_RPM = 312.0
+    var _MAX_RPM = 160.0
 
     /*
      * Set runUsingEncoder to true to enable built-in hub velocity control using drive encoders.
@@ -26,7 +26,7 @@ object DriveConstants : MecanumDriveConstants {
     @JvmField
     var _MOTOR_VEL_PID = PIDFCoefficients(0.0, 0.0, 0.0, getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV))
     @JvmField
-    var _IS_RUN_USING_ENCODER = false
+    var _IS_RUN_USING_ENCODER = true
 
     /*
      * If not using the built-in motor velocity PID, then these coefficients need to be tuned. They
@@ -34,11 +34,11 @@ object DriveConstants : MecanumDriveConstants {
      * feedback, which adjusts motor movements mid-trajectory)
      */
     @JvmField
-    var _kV = 0.013
+    var _kV = 1.0 / rpmToVelocity(MAX_RPM)
     @JvmField
-    var _kA = 0.0025
+    var _kA = 0.0
     @JvmField
-    var _kStatic = 0.01
+    var _kStatic = 0.0
 
     /*
      * These constants are tied to your robot's hardware. You should be able to find them just by
@@ -49,7 +49,7 @@ object DriveConstants : MecanumDriveConstants {
     @JvmField
     var _GEAR_RATIO = 1.0 // output (wheel) speed / input (motor) speed
     @JvmField
-    var _TRACK_WIDTH = 18.0 // in, the distance between center of left and right drive wheels
+    var _TRACK_WIDTH = 17.0 // in, the distance between center of left and right drive wheels
 
     /*
      * These values are used to generate the trajectories for you robot. To ensure proper operation,
@@ -61,13 +61,13 @@ object DriveConstants : MecanumDriveConstants {
      * angular values are in radians.
      */
     @JvmField
-    var _MAX_VEL = 52.0
+    var _MAX_VEL = 30.0
     @JvmField
-    var _MAX_ACCEL = 45.0
+    var _MAX_ACCEL = 30.0
     @JvmField
-    var _MAX_ANG_VEL = 90.0.toRadians
+    var _MAX_ANG_VEL = 180.0.toRadians
     @JvmField
-    var _MAX_ANG_ACCEL = 90.0.toRadians
+    var _MAX_ANG_ACCEL = 180.0.toRadians
 
     /*
      * These values are used solely with Mecanum Drives to adjust the kinematics functions that
@@ -110,13 +110,13 @@ object DriveConstants : MecanumDriveConstants {
 
     // these are the names for the motors in the configuration files on the robot
     @JvmField
-    var _LEFT_FRONT_NAME = "LF"
+    var _LEFT_FRONT_NAME = "leftFront"
     @JvmField
-    var _LEFT_BACK_NAME = "LB"
+    var _LEFT_BACK_NAME = "leftBack"
     @JvmField
-    var _RIGHT_FRONT_NAME = "RF"
+    var _RIGHT_FRONT_NAME = "rightFront"
     @JvmField
-    var _RIGHT_BACK_NAME = "RB"
+    var _RIGHT_BACK_NAME = "rightBack"
 
     override val TICKS_PER_REV: Double
         get() = _TICKS_PER_REV
