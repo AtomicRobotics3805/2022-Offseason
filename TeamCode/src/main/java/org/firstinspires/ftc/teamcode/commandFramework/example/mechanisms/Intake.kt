@@ -34,8 +34,6 @@ object Intake : Subsystem {
         get() = PowerMotor(intakeMotor, SPEED, requirements = listOf(this))
     val stop: Command
         get() = PowerMotor(intakeMotor, 0.0, requirements = listOf(this))
-    val switch: Command
-        get() = if (SPEED == 0.0) start else stop
 
     // motor
     private lateinit var intakeMotor: DcMotorEx
@@ -47,6 +45,6 @@ object Intake : Subsystem {
     override fun initialize() {
         intakeMotor = opMode.hardwareMap.get(DcMotorEx::class.java, NAME)
         intakeMotor.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
-        intakeMotor.direction = DcMotorSimple.Direction.REVERSE
+        intakeMotor.direction = DIRECTION
     }
 }
