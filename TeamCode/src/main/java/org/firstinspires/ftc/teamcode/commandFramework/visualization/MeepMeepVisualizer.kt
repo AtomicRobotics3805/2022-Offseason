@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode.commandFramework.visualization
 
 import com.noahbres.meepmeep.MeepMeep
+import com.noahbres.meepmeep.core.colorscheme.scheme.ColorSchemeBlueDark
+import com.noahbres.meepmeep.core.colorscheme.scheme.ColorSchemeRedDark
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder
-import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity
 import com.noahbres.meepmeep.roadrunner.trajectorysequence.SequenceSegment
 import com.noahbres.meepmeep.roadrunner.trajectorysequence.TrajectorySegment
 import com.noahbres.meepmeep.roadrunner.trajectorysequence.TrajectorySequence
@@ -15,12 +16,13 @@ import org.firstinspires.ftc.teamcode.commandFramework.trajectories.TrajectoryFa
 
 object MeepMeepVisualizer {
 
-    val robots = mutableListOf<Triple<Driver, CommandGroup, Constants.Color>>()
+    val robots = mutableListOf<Triple<Driver, () -> CommandGroup, Constants.Color>>()
 
     fun run(trajectoryFactory: TrajectoryFactory, windowSize: Int = 600) {
         val meepMeep = MeepMeep(windowSize)
-        val bots = mutableListOf<RoadRunnerBotEntity>()
-
+        meepMeep.setBackground(MeepMeep.Background.FIELD_FREIGHTFRENZY_ADI_DARK)
+            .setDarkMode(true)
+            .setBackgroundAlpha(0.95f)
         robots.forEach {
             Constants.drive = it.first
             Constants.color = it.third
@@ -31,19 +33,21 @@ object MeepMeepVisualizer {
                     constants.MAX_VEL, constants.MAX_ACCEL,
                     constants.MAX_ANG_VEL, constants.MAX_ANG_ACCEL,
                     constants.TRACK_WIDTH
+                ).setColorScheme(
+                    if (it.third == Constants.Color.RED) ColorSchemeRedDark()
+                    else ColorSchemeBlueDark()
                 )
-            bots.add(botBuilder.followTrajectorySequence(
+            meepMeep.addEntity(botBuilder.followTrajectorySequence(
                 TrajectorySequence(
-                    routineToSegmentList(it.second)
+                    routineToSegmentList(it.second.invoke())
                 )
             ))
         }
-        meepMeep.setBackground(MeepMeep.Background.FIELD_FREIGHTFRENZY_ADI_DARK)
-            .setDarkMode(true)
-            .setBackgroundAlpha(0.95f)
+        meepMeep.start()
+
     }
 
-    fun addRobot(driver: Driver, routine: CommandGroup, color: Constants.Color) {
+    fun addRobot(driver: Driver, routine: () -> CommandGroup, color: Constants.Color) {
         robots.add(Triple(driver, routine, color))
     }
 
