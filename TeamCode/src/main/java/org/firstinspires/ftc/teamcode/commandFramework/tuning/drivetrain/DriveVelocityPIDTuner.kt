@@ -53,7 +53,7 @@ class DriveVelocityPIDTuner : LinearOpMode() {
         Constants.opMode = this
         drive = MecanumDrive(
             DriveConstants,
-            MecanumDriveWheelLocalizer(drive as MecanumDrive)
+            { MecanumDriveWheelLocalizer(drive as MecanumDrive) }
         )
         CommandScheduler.registerSubsystems(drive, TelemetryController)
         var mode = Mode.TUNING_MODE

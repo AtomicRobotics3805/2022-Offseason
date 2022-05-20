@@ -35,8 +35,9 @@ class TrackWidthTuner : LinearOpMode() {
         Constants.opMode = this
         drive = MecanumDrive(
             DriveConstants,
-            TwoWheelOdometryLocalizer(OdometryConstants),
-        ) { Pose2d() }
+            { MecanumDriveWheelLocalizer(drive as MecanumDrive) },
+            Pose2d()
+        )
         CommandScheduler.registerSubsystems(TelemetryController, drive)
         // FINISHED: if you haven't already, set the localizer to something that doesn't depend on
         // drive encoders for computing the heading

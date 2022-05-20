@@ -26,8 +26,9 @@ class SplineTest : LinearOpMode() {
         Constants.opMode = this
         drive = MecanumDrive(
             DriveConstants,
-            TwoWheelOdometryLocalizer(OdometryConstants),
-        ) { Pose2d() }
+            { MecanumDriveWheelLocalizer(drive as MecanumDrive) },
+            Pose2d()
+        )
         CommandScheduler.registerSubsystems(drive, TelemetryController)
         val forwardTrajectory: ParallelTrajectory = drive.trajectoryBuilder(Pose2d())
             .splineTo(Vector2d(30.0, 30.0), 0.0)

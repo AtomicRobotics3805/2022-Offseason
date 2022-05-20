@@ -4,7 +4,6 @@ import com.acmerobotics.roadrunner.control.PIDFController
 import com.acmerobotics.roadrunner.drive.DriveSignal
 import com.acmerobotics.roadrunner.followers.HolonomicPIDVAFollower
 import com.acmerobotics.roadrunner.geometry.Pose2d
-import com.acmerobotics.roadrunner.localization.Localizer
 import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder
 import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint
 import com.acmerobotics.roadrunner.trajectory.constraints.ProfileAccelerationConstraint
@@ -19,6 +18,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
 import org.firstinspires.ftc.teamcode.commandFramework.driving.DriveConstants
 import org.firstinspires.ftc.teamcode.commandFramework.driving.FollowTrajectory
 import org.firstinspires.ftc.teamcode.commandFramework.driving.Turn
+import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.Localizer
 import org.firstinspires.ftc.teamcode.commandFramework.roadrunner.DashboardUtil
 import org.firstinspires.ftc.teamcode.commandFramework.roadrunner.LynxModuleUtil
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
@@ -34,7 +34,7 @@ import java.util.*
 @Suppress("PropertyName", "MemberVisibilityCanBePrivate", "unused")
 abstract class Driver(
     val constants: DriveConstants,
-    val localizer: Localizer,
+    val _localizer: () -> Localizer,
     private val startPose: () -> Pose2d
 ) : Subsystem {
 
@@ -76,6 +76,7 @@ abstract class Driver(
     protected lateinit var batteryVoltageSensor: VoltageSensor
     // the IMU has a variety of purposes, but we use it to figure out the robot's heading (angle)
     protected lateinit var imu: BNO055IMU
+    lateinit var localizer: Localizer
 
     /**
      * Sets the robot's drive power as a Pose2d, which has x, y, and heading components.
@@ -154,6 +155,7 @@ abstract class Driver(
         for (module in hardwareMap.getAll(LynxModule::class.java)) {
             module.bulkCachingMode = LynxModule.BulkCachingMode.AUTO
         }
+        localizer = _localizer.invoke()
         localizer.poseEstimate = startPose.invoke()
     }
 

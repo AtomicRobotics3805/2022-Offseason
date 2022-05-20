@@ -50,9 +50,10 @@ class ManualFeedforwardTuner : LinearOpMode() {
     override fun runOpMode() {
         Constants.opMode = this
         drive = MecanumDrive(
-            DriveConstants,
-            TwoWheelOdometryLocalizer(OdometryConstants),
-        ) { Pose2d() }
+                DriveConstants,
+                { MecanumDriveWheelLocalizer(drive as MecanumDrive) },
+                Pose2d()
+            )
         CommandScheduler.registerSubsystems(TelemetryController, drive)
         if (drive.constants.IS_RUN_USING_ENCODER) {
             RobotLog.setGlobalErrorMsg(

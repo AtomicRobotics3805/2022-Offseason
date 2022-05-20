@@ -23,8 +23,9 @@ class StrafeTest : LinearOpMode() {
         Constants.opMode = this
         Constants.drive = MecanumDrive(
             DriveConstants,
-            TwoWheelOdometryLocalizer(OdometryConstants),
-        ) { Pose2d() }
+            { MecanumDriveWheelLocalizer(drive as MecanumDrive) },
+            Pose2d()
+        )
         CommandScheduler.registerSubsystems(Constants.drive, TelemetryController)
         val trajectory: ParallelTrajectory = Constants.drive.trajectoryBuilder(Pose2d())
             .strafeRight(DISTANCE)
