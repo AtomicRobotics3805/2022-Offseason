@@ -25,7 +25,7 @@ class TurnTest : LinearOpMode() {
         Constants.opMode = this
         Constants.drive = MecanumDrive(
             DriveConstants,
-            MecanumDriveWheelLocalizer(drive as MecanumDrive),
+            { MecanumDriveWheelLocalizer(drive as MecanumDrive) },
             Pose2d()
         )
         CommandScheduler.registerSubsystems(Constants.drive, TelemetryController)

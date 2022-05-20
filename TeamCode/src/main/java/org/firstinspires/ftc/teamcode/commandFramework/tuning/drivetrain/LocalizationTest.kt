@@ -27,7 +27,7 @@ class LocalizationTest : LinearOpMode() {
         opMode = this
         drive = MecanumDrive(
                 DriveConstants,
-                MecanumDriveWheelLocalizer(drive as MecanumDrive),
+                { MecanumDriveWheelLocalizer(drive as MecanumDrive) },
                 Pose2d()
             )
         CommandScheduler.registerSubsystems(TelemetryController, drive)

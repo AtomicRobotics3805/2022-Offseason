@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.hardware.DcMotor.RunMode
 import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior
 import org.firstinspires.ftc.teamcode.commandFramework.Command
 import org.firstinspires.ftc.teamcode.commandFramework.driving.DriverControlled
+import org.firstinspires.ftc.teamcode.commandFramework.driving.MecanumDriveConstants
 import org.firstinspires.ftc.teamcode.commandFramework.driving.TankDriveConstants
 import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.Localizer
 import java.util.*
@@ -29,9 +30,16 @@ import java.util.*
 @Suppress("unused")
 @Config
 class TankDrive(constants: TankDriveConstants,
-                localizer: Localizer,
+                localizer: () -> Localizer,
                 startPose: () -> Pose2d = { Pose2d() }
 ) : Driver(constants, localizer, startPose) {
+
+    constructor(constants: TankDriveConstants, localizer: Localizer, startPose: () -> Pose2d):
+            this(constants, { localizer }, startPose)
+    constructor(constants: TankDriveConstants, localizer: () -> Localizer, startPose: Pose2d):
+            this(constants, localizer, { startPose })
+    constructor(constants: TankDriveConstants, localizer: Localizer, startPose: Pose2d):
+            this(constants, { localizer }, { startPose })
 
     // this constraint is used when building trajectories to determine how fast the robot will go
     override val velConstraint: MinVelocityConstraint
