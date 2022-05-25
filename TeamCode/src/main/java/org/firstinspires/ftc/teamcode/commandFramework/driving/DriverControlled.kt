@@ -6,6 +6,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.Command
 import org.firstinspires.ftc.teamcode.commandFramework.Constants.drive
 import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.Driver
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
+import kotlin.math.*
 
 /**
  * Controls the robot manually using a gamepad. Left stick up/down moves the robot forwards/backwards, left stick left/
@@ -22,6 +23,7 @@ class DriverControlled(
     private val gamepad: Gamepad,
     override val requirements: List<Subsystem> = arrayListOf(),
     override val interruptible: Boolean = true,
+    private val fieldCentric: Boolean = false,
     private val reverseStrafe: Boolean = false,
     private val reverseStraight: Boolean = true,
     private val reverseTurn: Boolean = false
@@ -33,11 +35,24 @@ class DriverControlled(
      * Calculates and sets the robot's drive power
      */
     override fun execute() {
-        val drivePower = Pose2d(
-                if (reverseStraight) -1 else {1} * (gamepad.left_stick_y).toDouble(),
-                if (reverseStrafe) -1 else {1} * (gamepad.left_stick_x).toDouble(),
-                if (reverseTurn) -1 else {1} * (gamepad.right_stick_x).toDouble()
-        )
+        val drivePower: Pose2d
+        if (fieldCentric) {
+            val angle = atan(gamepad.left_stick_y / gamepad.left_stick_x)
+            val adjustedAngle = angle - drive.poseEstimate.heading
+            val totalPower = sqrt(gamepad.left_stick_y.pow(2) + gamepad.left_stick_x.pow(2))
+            drivePower = Pose2d(
+                if (reverseStraight) -1 else { 1 } * totalPower * sin(adjustedAngle),
+                if (reverseStrafe) -1 else { 1 } * totalPower * cos(adjustedAngle),
+                if (reverseTurn) -1 else { 1 } * (gamepad.right_stick_x).toDouble()
+            )
+        }
+        else {
+            drivePower = Pose2d(
+                if (reverseStraight) -1 else { 1 } * (gamepad.left_stick_y).toDouble(),
+                if (reverseStrafe) -1 else { 1 } * (gamepad.left_stick_x).toDouble(),
+                if (reverseTurn) -1 else { 1 } * (gamepad.right_stick_x).toDouble()
+            )
+        }
 
         drive.setDrivePower(drivePower * drive.driverSpeed)
     }
