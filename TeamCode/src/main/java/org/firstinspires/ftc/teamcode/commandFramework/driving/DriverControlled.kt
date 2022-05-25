@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.commandFramework.driving
 import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.qualcomm.robotcore.hardware.Gamepad
 import org.firstinspires.ftc.teamcode.commandFramework.Command
+import org.firstinspires.ftc.teamcode.commandFramework.Constants
+import org.firstinspires.ftc.teamcode.commandFramework.Constants.color
 import org.firstinspires.ftc.teamcode.commandFramework.Constants.drive
 import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.Driver
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
@@ -24,11 +26,17 @@ class DriverControlled(
     private val gamepad: Gamepad,
     override val requirements: List<Subsystem> = arrayListOf(),
     override val interruptible: Boolean = true,
-    private val fieldCentric: Boolean = false,
+    private val pov: POV = POV.ROBOT_CENTRIC,
     private val reverseStrafe: Boolean = false,
     private val reverseStraight: Boolean = true,
     private val reverseTurn: Boolean = false
 ) : Command() {
+
+    enum class POV {
+        ROBOT_CENTRIC,
+        FIELD_CENTRIC,
+        DRIVER_CENTRIC
+    }
 
     override val _isDone = false
 
@@ -37,12 +45,20 @@ class DriverControlled(
      */
     override fun execute() {
         val drivePower: Pose2d
-        if (fieldCentric) {
+        if (pov != POV.ROBOT_CENTRIC) {
             val angle: Double = if (gamepad.left_stick_x != 0.0f)
                 atan(gamepad.left_stick_y / gamepad.left_stick_x).toDouble()
             else 90.0.toRadians
 
-            val adjustedAngle = angle - drive.poseEstimate.heading
+            var adjustedAngle = angle - drive.poseEstimate.heading
+            if (pov == POV.DRIVER_CENTRIC) {
+                if (color == Constants.Color.BLUE) {
+                    adjustedAngle -= 90.0.toRadians
+                }
+                else {
+                    adjustedAngle += 90.0.toRadians
+                }
+            }
             val totalPower = sqrt(gamepad.left_stick_y.pow(2) + gamepad.left_stick_x.pow(2))
             drivePower = Pose2d(
                 if (reverseStraight) -1 else { 1 } * totalPower * sin(adjustedAngle),
