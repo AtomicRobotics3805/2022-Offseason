@@ -19,7 +19,8 @@ fun robotToWheelVelocities(
 ): Pair<List<Double>, Double> {
     var reversed = false
     var currentDirection = servoPosition * servoType.rotationDegrees
-    var targetDirection = atan(robotVel.y / (if (robotVel.x != 0.0) robotVel.x else 0.000001)).toDegrees()
+    var targetDirection =
+        if (robotVel.x == 0.0) 90.0 else atan(robotVel.y / robotVel.x).toDegrees()
     while (currentDirection > 360) {
         currentDirection -= 360
     }
@@ -37,7 +38,7 @@ fun robotToWheelVelocities(
         in 0.0..90.0 -> robotVel.heading
         in 90.0..180.0 -> -robotVel.heading * ((targetDirection - 135.0) / 45.0)
         in 180.0..270.0 -> -robotVel.heading
-        else -> robotVel.heading * ((targetDirection-315.0) / 45.0)
+        else -> robotVel.heading * ((targetDirection - 315.0) / 45.0)
     }
     val RBHeadingSpeed = -LFHeadingSpeed
     val LBHeadingSpeed = when (targetDirection) {
@@ -54,6 +55,13 @@ fun robotToWheelVelocities(
             wheelSpeed + RBHeadingSpeed,
             wheelSpeed + RFHeadingSpeed
         ),
-        servoPosition + directionAdjustment / servoType.rotationDegrees
+        if (wheelSpeed != 0.0) servoPosition + directionAdjustment / servoType.rotationDegrees
+        else servoPosition
     )
 }
+
+fun robotToWheelAccelerations(
+    robotVel: Pose2d,
+    servoPosition: Double,
+    servoType: ServoType
+): List<Double> = robotToWheelVelocities(robotVel, servoPosition, servoType).first
