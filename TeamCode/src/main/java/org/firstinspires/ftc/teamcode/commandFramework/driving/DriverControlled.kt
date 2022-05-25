@@ -6,6 +6,7 @@ import org.firstinspires.ftc.teamcode.commandFramework.Command
 import org.firstinspires.ftc.teamcode.commandFramework.Constants.drive
 import org.firstinspires.ftc.teamcode.commandFramework.driving.drivers.Driver
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
+import org.firstinspires.ftc.teamcode.commandFramework.trajectories.toRadians
 import kotlin.math.*
 
 /**
@@ -37,7 +38,10 @@ class DriverControlled(
     override fun execute() {
         val drivePower: Pose2d
         if (fieldCentric) {
-            val angle = atan(gamepad.left_stick_y / gamepad.left_stick_x)
+            val angle: Double = if (gamepad.left_stick_x != 0.0f)
+                atan(gamepad.left_stick_y / gamepad.left_stick_x).toDouble()
+            else 90.0.toRadians
+
             val adjustedAngle = angle - drive.poseEstimate.heading
             val totalPower = sqrt(gamepad.left_stick_y.pow(2) + gamepad.left_stick_x.pow(2))
             drivePower = Pose2d(
