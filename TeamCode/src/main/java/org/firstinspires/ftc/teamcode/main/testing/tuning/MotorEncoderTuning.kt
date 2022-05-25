@@ -31,7 +31,7 @@ class MotorEncoderTuning : LinearOpMode() {
     override fun runOpMode() {
         Constants.opMode = this
         val motor = hardwareMap.get(DcMotor::class.java, MOTOR_NAME)
-        val gamepad = CustomGamepad(gamepad1)
+        val gamepad = GamepadEx(gamepad1)
         waitForStart()
         while (opModeIsActive()) {
             if (gamepad.dpadUp.pressed) {

@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.commandFramework.controls
 
 import org.firstinspires.ftc.teamcode.commandFramework.CommandScheduler
 import org.firstinspires.ftc.teamcode.commandFramework.Constants
-import org.firstinspires.ftc.teamcode.commandFramework.CustomGamepad
+import org.firstinspires.ftc.teamcode.commandFramework.GamepadEx
 
 /**
  * This class manages the controls for TeleOp OpModes. In your project, you should create your own
@@ -16,16 +16,16 @@ import org.firstinspires.ftc.teamcode.commandFramework.CustomGamepad
  */
 abstract class Controls {
 
-    protected lateinit var gamepad1: CustomGamepad
-    protected lateinit var gamepad2: CustomGamepad
+    protected lateinit var gamepad1: GamepadEx
+    protected lateinit var gamepad2: GamepadEx
 
     /**
      * Registers gamepad1 and gamepad2 with the CommandScheduler so that the CommandScheduler can
      * update them every loop
      */
     fun registerGamepads() {
-        gamepad1 = CustomGamepad(Constants.opMode.gamepad1)
-        gamepad2 = CustomGamepad(Constants.opMode.gamepad2)
+        gamepad1 = GamepadEx(Constants.opMode.gamepad1)
+        gamepad2 = GamepadEx(Constants.opMode.gamepad2)
         CommandScheduler.registerGamepads(gamepad1, gamepad2)
     }
 

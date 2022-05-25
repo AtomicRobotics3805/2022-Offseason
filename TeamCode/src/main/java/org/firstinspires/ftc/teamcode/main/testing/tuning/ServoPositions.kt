@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.util.Range
 import org.firstinspires.ftc.teamcode.commandFramework.Command
 import org.firstinspires.ftc.teamcode.commandFramework.CommandScheduler
 import org.firstinspires.ftc.teamcode.commandFramework.Constants.opMode
-import org.firstinspires.ftc.teamcode.commandFramework.CustomGamepad
+import org.firstinspires.ftc.teamcode.commandFramework.GamepadEx
 import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
 
 /**
@@ -30,7 +30,7 @@ class ServoPositions : LinearOpMode() {
     override fun runOpMode() {
         opMode = this
         val servo = hardwareMap.get(Servo::class.java, SERVO_NAME)
-        val gamepad = CustomGamepad(gamepad1)
+        val gamepad = GamepadEx(gamepad1)
         waitForStart()
         CommandScheduler.scheduleCommand(TuneServoCommand(servo, gamepad.leftStick))
         while (opModeIsActive()) {
@@ -47,7 +47,7 @@ class ServoPositions : LinearOpMode() {
      * @param servo the servo to move
      * @param joyStick the joy stick that controls the servo
      */
-    class TuneServoCommand(private val servo: Servo, private val joyStick: CustomGamepad.JoyStick) :
+    class TuneServoCommand(private val servo: Servo, private val joyStick: GamepadEx.JoyStick) :
         Command() {
 
         override val _isDone = false

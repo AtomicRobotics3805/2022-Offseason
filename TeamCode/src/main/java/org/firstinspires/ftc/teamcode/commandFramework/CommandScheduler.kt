@@ -13,7 +13,7 @@ object CommandScheduler {
     private val runningCommands = mutableListOf<Command>()
     private val commandsToSchedule = mutableListOf<Command>()
     private val commandsToCancel = mutableMapOf<Command, Boolean>()
-    private val gamepads = mutableListOf<CustomGamepad>()
+    private val gamepads = mutableListOf<GamepadEx>()
     private val subsystems = mutableListOf<Subsystem>()
 
     /**
@@ -73,7 +73,7 @@ object CommandScheduler {
      * any buttons are being pressed, and if so, their corresponding commands will be scheduled.
      * @param gamepads the gamepads to be registered
      */
-    fun registerGamepads(vararg gamepads: CustomGamepad) {
+    fun registerGamepads(vararg gamepads: GamepadEx) {
         for (gamepad in gamepads)
             this.gamepads += gamepad
     }

@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.hardware.Gamepad
  * @param gamepad the Qualcomm gamepad used. Should be gamepad1 or gamepad2
  */
 @Suppress("MemberVisibilityCanBePrivate")
-class CustomGamepad(private val gamepad: Gamepad) {
+class GamepadEx(private val gamepad: Gamepad) {
     val a = Button("A")
     val b = Button("B")
     val x = Button("X")
@@ -250,6 +250,25 @@ class CustomGamepad(private val gamepad: Gamepad) {
                 set.add("Y: $y")
             }
             return if (set.isNotEmpty()) "$name: ${set.joinToString(", ")}" else ""
+        }
+    }
+
+    /**
+     * This command shakes the provided Gamepad using a given rumble effect (both motors at 100% for
+     * half a second by default).
+     */
+    class Shake(private val gamepad: Gamepad, private val rumbleEffect: () -> Gamepad.RumbleEffect =
+        {
+            Gamepad.RumbleEffect.Builder()
+                .addStep(1.0, 1.0, 500)  //  Rumble both motors 100% for 500 mSec
+                .build()
+        }
+    ): Command() {
+        override val _isDone = true
+        override val interruptible = true
+
+        override fun start() {
+            gamepad.runRumbleEffect(rumbleEffect.invoke())
         }
     }
 }
