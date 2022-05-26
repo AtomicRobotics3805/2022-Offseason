@@ -23,8 +23,9 @@ dependencies {
     implementation 'com.acmerobotics.roadrunner:core:0.5.3'
     implementation 'com.acmerobotics.dashboard:dashboard:0.4.3'
     implementation 'org.openftc:easyopencv:1.5.1'
-    implementation 'org.tensorflow:tensorflow-lite:2.3.0'
-    implementation 'org.tensorflow:tensorflow-lite-gpu:2.3.0'
+    implementation 'org.tensorflow:tensorflow-lite-task-vision:0.2.0'
+    implementation('org.tensorflow:tensorflow-lite:2.0.0')
+    implementation('org.tensorflow:tensorflow-lite-gpu:2.0.0')
     implementation('org.tensorflow:tensorflow-lite-support:0.0.0-nightly') { changing = true }
 }
 repositories {
