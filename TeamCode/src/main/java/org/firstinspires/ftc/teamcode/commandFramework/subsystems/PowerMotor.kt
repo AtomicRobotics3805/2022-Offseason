@@ -21,6 +21,9 @@ class PowerMotor(
     override val interruptible: Boolean = true
 ) : Command() {
 
+    /**
+     * Sets the motor's mode and power
+     */
     override fun start() {
         if (mode != null && motor is DcMotor) {
             motor.mode = mode

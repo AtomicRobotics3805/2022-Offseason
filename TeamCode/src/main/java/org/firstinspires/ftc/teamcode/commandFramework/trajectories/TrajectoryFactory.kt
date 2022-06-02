@@ -12,6 +12,9 @@ abstract class TrajectoryFactory {
 
     var initialized = false
 
+    /**
+     * Sets initialized to true and initializes any start positions and trajectories
+     */
     open fun initialize() {
         initialized = true
     }

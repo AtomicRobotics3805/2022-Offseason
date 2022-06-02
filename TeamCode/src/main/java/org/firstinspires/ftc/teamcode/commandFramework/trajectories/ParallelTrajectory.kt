@@ -10,6 +10,10 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory
 data class ParallelTrajectory(val trajectory: Trajectory,
                               val segmentLengths: MutableList<Double>) {
 
+    /**
+     * Returns the end of the trajectory
+     * @return the end of the trajectory
+     */
     fun end(): Pose2d {
         return trajectory.end()
     }

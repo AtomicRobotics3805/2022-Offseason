@@ -9,6 +9,11 @@ import org.firstinspires.ftc.teamcode.commandFramework.example.trajectoryfactory
 import org.firstinspires.ftc.teamcode.commandFramework.sequential
 import org.firstinspires.ftc.teamcode.commandFramework.visualization.MeepMeepVisualizer
 
+/**
+ * This file adds a robot, its path, and its color to the MeepMeepVisualizer and runs the
+ * visualizer. To run this file, right click on it in the project window on the left and click "Run
+ * 'ExampleVisualizerKt'"
+ */
 fun main() {
     MeepMeepVisualizer.addRobot(
         MecanumDrive(

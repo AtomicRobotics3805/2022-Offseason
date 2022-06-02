@@ -34,6 +34,9 @@ abstract class AutonomousOpMode(private val color: Constants.Color,
                                 private vararg val subsystems: Subsystem
 ) : LinearOpMode() {
 
+    /**
+     * Runs the program, performing several initialization tasks and running the routines.
+     */
     override fun runOpMode() {
         try {
             // setting constants

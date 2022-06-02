@@ -40,13 +40,13 @@ object TelemetryController : Subsystem {
 }
 
 /**
- * This Adapter class is essentially just a Kotlin version of the FtcDashboard class with one major
- * difference: currentPacket is public. The purpose of the class is to let you use the FtcDashboard
- * in the same way that you would use phone telemetry: using addData(), update(), etc. The reason
- * why currentPacket has to be public is so that you can also do other stuff with it, such as
- * drawing the robot.
+ * This Adapter class is essentially just a Kotlin version of the FtcDashboard Adapter class with
+ * one major difference: currentPacket is public. The purpose of the class is to let you use the
+ * FtcDashboard in the same way that you would use phone telemetry: using addData(), update(), etc.
+ * The reason why currentPacket has to be public is so that you can also do other stuff with it,
+ * such as drawing the robot.
  * The functions here don't have KDoc comments because they're not necessary and I'm lazy.
- * @param dashboard use FtcDashboard.getInstance()
+ * @param dashboard the computer dashboard, use FtcDashboard.getInstance()
  */
 class Adapter(private val dashboard: FtcDashboard) : Telemetry {
     var currentPacket: TelemetryPacket? = null
