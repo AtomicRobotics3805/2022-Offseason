@@ -12,6 +12,9 @@
 # Java class files
 *.class
 
+# Java PID
+java_pid*
+
 # Generated files
 bin/
 gen/
