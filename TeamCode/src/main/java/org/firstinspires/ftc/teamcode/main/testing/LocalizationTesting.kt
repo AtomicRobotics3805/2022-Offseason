@@ -11,7 +11,6 @@ import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.TwoWhe
 import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.VuforiaLocalizer
 import org.firstinspires.ftc.teamcode.main.subsystems.drive.DriveConstants
 import org.firstinspires.ftc.teamcode.main.subsystems.drive.OdometryConstants
-import org.firstinspires.ftc.teamcode.main.subsystems.drive.VuforiaConstants
 
 @TeleOp
 class LocalizationTesting : LinearOpMode() {
@@ -20,10 +19,7 @@ class LocalizationTesting : LinearOpMode() {
         // setting constants
         Constants.opMode = this
         Constants.color = Constants.Color.BLUE
-        Constants.drive = MecanumDrive(DriveConstants, PoseEstimator(
-            TwoWheelOdometryLocalizer(OdometryConstants),
-            VuforiaLocalizer(VuforiaConstants)
-        ))
+        Constants.drive = MecanumDrive(DriveConstants, TwoWheelOdometryLocalizer(OdometryConstants))
 
         CommandScheduler.registerSubsystems(Constants.drive)
         telemetry.addData("Status", "Initialized")
