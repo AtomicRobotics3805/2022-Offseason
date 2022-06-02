@@ -18,25 +18,13 @@ import org.firstinspires.ftc.teamcode.commandFramework.roadrunner.Encoder
  * need them to be outside of the class to use them in the constructor.
  */
 @Config
-class TwoWheelOdometryLocalizer(constants: TwoWheelOdometryConstants) : TwoTrackingWheelLocalizer(listOf(
-    Pose2d(constants.PARALLEL_X, constants.PARALLEL_Y, 0.0),
-    Pose2d(constants.PERPENDICULAR_X, constants.PERPENDICULAR_Y, Math.toRadians(90.0))
+class TwoWheelOdometryLocalizer(private val constants: TwoWheelOdometryConstants) :
+    TwoTrackingWheelLocalizer(listOf(
+        Pose2d(constants.PARALLEL_X, constants.PARALLEL_Y, 0.0),
+        Pose2d(constants.PERPENDICULAR_X, constants.PERPENDICULAR_Y, Math.toRadians(90.0))
 )), Localizer {
 
-    @JvmField
-    var TICKS_PER_REV = 8192 // REV through bore encoder
-    @JvmField
-    var WHEEL_RADIUS = 0.688975 // rotacaster wheels // in
-    @JvmField
-    var GEAR_RATIO = 1.0 // output (wheel) speed / input (encoder) speed
-    @JvmField
-    var PARALLEL_REVERSED = true
-    @JvmField
-    var PERPENDICULAR_REVERSED = true
-    @JvmField
-    var X_MULTIPLIER = 1.0
-    @JvmField
-    var Y_MULTIPLIER = 1.0
+
 
     lateinit var perpendicularEncoder: Encoder
     lateinit var parallelEncoder: Encoder
@@ -45,11 +33,11 @@ class TwoWheelOdometryLocalizer(constants: TwoWheelOdometryConstants) : TwoTrack
      * Initializes the encoders & sets their direction
      */
     override fun initialize() {
-        perpendicularEncoder = Encoder(Constants.opMode.hardwareMap.get(DcMotorEx::class.java, "RF"))
-        parallelEncoder = Encoder(Constants.opMode.hardwareMap.get(DcMotorEx::class.java, "LF"))
+        perpendicularEncoder = Encoder(Constants.opMode.hardwareMap.get(DcMotorEx::class.java, constants.PERPENDICULAR_NAME))
+        parallelEncoder = Encoder(Constants.opMode.hardwareMap.get(DcMotorEx::class.java, constants.PARALLEL_NAME))
 
-        if (PERPENDICULAR_REVERSED) perpendicularEncoder.direction = Encoder.Direction.REVERSE
-        if (PARALLEL_REVERSED) parallelEncoder.direction = Encoder.Direction.REVERSE
+        if (constants.PERPENDICULAR_REVERSED) perpendicularEncoder.direction = Encoder.Direction.REVERSE
+        if (constants.PARALLEL_REVERSED) parallelEncoder.direction = Encoder.Direction.REVERSE
     }
 
     /**
@@ -74,8 +62,8 @@ class TwoWheelOdometryLocalizer(constants: TwoWheelOdometryConstants) : TwoTrack
      */
     override fun getWheelPositions(): List<Double> {
         return listOf(
-            encoderTicksToInches(parallelEncoder.currentPosition.toDouble()) * X_MULTIPLIER,
-            encoderTicksToInches(perpendicularEncoder.currentPosition.toDouble()) * Y_MULTIPLIER
+            encoderTicksToInches(parallelEncoder.currentPosition.toDouble()) * constants.X_MULTIPLIER,
+            encoderTicksToInches(perpendicularEncoder.currentPosition.toDouble()) * constants.Y_MULTIPLIER
         )
     }
 
@@ -88,8 +76,8 @@ class TwoWheelOdometryLocalizer(constants: TwoWheelOdometryConstants) : TwoTrack
         //  competing magnetic encoders), change Encoder.getRawVelocity() to Encoder.getCorrectedVelocity() to enable a
         //  compensation method
         return listOf(
-            encoderTicksToInches(perpendicularEncoder.rawVelocity) * X_MULTIPLIER,
-            encoderTicksToInches(parallelEncoder.rawVelocity) * Y_MULTIPLIER
+            encoderTicksToInches(perpendicularEncoder.rawVelocity) * constants.X_MULTIPLIER,
+            encoderTicksToInches(parallelEncoder.rawVelocity) * constants.Y_MULTIPLIER
         )
     }
 
@@ -99,7 +87,7 @@ class TwoWheelOdometryLocalizer(constants: TwoWheelOdometryConstants) : TwoTrack
      * @return the number of inches
      */
     private fun encoderTicksToInches(ticks: Double): Double {
-        return WHEEL_RADIUS * 2 * Math.PI * GEAR_RATIO * ticks / TICKS_PER_REV
+        return constants.WHEEL_RADIUS * 2 * Math.PI * constants.GEAR_RATIO * ticks / constants.TICKS_PER_REV
     }
 }
 
@@ -108,4 +96,13 @@ interface TwoWheelOdometryConstants {
     val PARALLEL_Y: Double  // in; left offset of the parallel wheel
     val PERPENDICULAR_X: Double // in; forward offset of the perpendicular wheel
     val PERPENDICULAR_Y: Double // in; left offset of the perpendicular wheel
+    val TICKS_PER_REV: Int
+    val WHEEL_RADIUS: Double // in
+    val GEAR_RATIO: Double // output (wheel) speed / input (encoder) speed
+    val PARALLEL_REVERSED: Boolean
+    val PERPENDICULAR_REVERSED: Boolean
+    val X_MULTIPLIER: Double
+    val Y_MULTIPLIER: Double
+    val PERPENDICULAR_NAME: String
+    val PARALLEL_NAME: String
 }
