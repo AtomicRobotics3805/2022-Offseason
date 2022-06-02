@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode.commandFramework.driving
 
-import com.acmerobotics.roadrunner.control.PIDCoefficients
 import com.qualcomm.robotcore.hardware.DcMotorSimple
-import com.qualcomm.robotcore.hardware.PIDFCoefficients
 
+/**
+ * This interface contains all of the constants specific to tank drives (i.e. constants that are not
+ * used by other drivetrains, such as Mecanum drives)
+ */
 @Suppress("PropertyName")
 interface TankDriveConstants : DriveConstants {
 

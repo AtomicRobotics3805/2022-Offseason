@@ -2,6 +2,10 @@ package org.firstinspires.ftc.teamcode.commandFramework.driving
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 
+/**
+ * This interface contains all of the constants specific to Mecanum drives (i.e. constants that are
+ * not used by other drivetrains, such as tank drives)
+ */
 @Suppress("PropertyName")
 interface MecanumDriveConstants : DriveConstants {
 

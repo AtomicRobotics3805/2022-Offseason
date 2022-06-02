@@ -33,6 +33,10 @@ open class Turn(
     override val interruptible: Boolean = true
 ) : Command() {
 
+    /**
+     * The two types of turns: either turning to an absolute heading, or a heading relative to the
+     * robot's current heading.
+     */
     enum class TurnType {
         ABSOLUTE,
         RELATIVE

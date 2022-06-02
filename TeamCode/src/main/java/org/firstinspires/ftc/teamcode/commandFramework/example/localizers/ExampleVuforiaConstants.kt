@@ -3,6 +3,10 @@ package org.firstinspires.ftc.teamcode.commandFramework.example.localizers
 import org.firstinspires.ftc.teamcode.commandFramework.driving.localizers.VuforiaConstants
 import org.firstinspires.ftc.teamcode.commandFramework.trajectories.inchesToMm
 
+/**
+ * Example constants for a VuforiaLocalizer. Constants include the Vuforia key, the camera position,
+ * and the delay time.
+ */
 @Suppress("PropertyName")
 class ExampleVuforiaConstants : VuforiaConstants {
 
