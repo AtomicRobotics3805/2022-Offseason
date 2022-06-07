@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.commandFramework
 
+import org.firstinspires.ftc.teamcode.commandFramework.hardware.GamepadEx
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.Subsystem
 import org.firstinspires.ftc.teamcode.commandFramework.utilCommands.TelemetryCommand
 

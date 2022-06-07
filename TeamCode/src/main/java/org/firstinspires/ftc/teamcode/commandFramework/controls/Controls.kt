@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.commandFramework.controls
 
 import org.firstinspires.ftc.teamcode.commandFramework.CommandScheduler
 import org.firstinspires.ftc.teamcode.commandFramework.Constants
-import org.firstinspires.ftc.teamcode.commandFramework.GamepadEx
+import org.firstinspires.ftc.teamcode.commandFramework.hardware.GamepadEx
 
 /**
  * This class manages the controls for TeleOp OpModes. In your project, you should create your own

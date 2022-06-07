@@ -1,6 +1,8 @@
-package org.firstinspires.ftc.teamcode.commandFramework
+package org.firstinspires.ftc.teamcode.commandFramework.hardware
 
 import com.qualcomm.robotcore.hardware.Gamepad
+import org.firstinspires.ftc.teamcode.commandFramework.Command
+import org.firstinspires.ftc.teamcode.commandFramework.CommandScheduler
 
 /**
  * By default, the Qualcomm Gamepad class has very little functionality. It tells you whether each

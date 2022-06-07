@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.util.Range
 import org.firstinspires.ftc.teamcode.commandFramework.Command
 import org.firstinspires.ftc.teamcode.commandFramework.CommandScheduler
 import org.firstinspires.ftc.teamcode.commandFramework.Constants.opMode
-import org.firstinspires.ftc.teamcode.commandFramework.GamepadEx
+import org.firstinspires.ftc.teamcode.commandFramework.hardware.GamepadEx
 import org.firstinspires.ftc.teamcode.commandFramework.TelemetryController
 
 /**

@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.commandFramework.*
+import org.firstinspires.ftc.teamcode.commandFramework.hardware.GamepadEx
 import org.firstinspires.ftc.teamcode.commandFramework.subsystems.MotorToPosition
 import org.firstinspires.ftc.teamcode.commandFramework.utilCommands.TelemetryCommand
 
