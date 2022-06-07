@@ -13,6 +13,7 @@ abstract class DistanceSensor(val name: String) {
 
     protected val input: AnalogInput =
         Constants.opMode.hardwareMap.get(AnalogInput::class.java, name)
+    open val voltage: Double = input.voltage
 }
 
 class MROptical(name: String): DistanceSensor(name) {
