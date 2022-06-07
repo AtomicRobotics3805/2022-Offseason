@@ -38,6 +38,7 @@ abstract class AutonomousOpMode(private val color: Constants.Color,
      * Runs the program, performing several initialization tasks and running the routines.
      */
     override fun runOpMode() {
+        // we use a try/catch because an error forces the entire robot controller app to restart
         try {
             // setting constants
             Constants.opMode = this
