@@ -17,7 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.R;
+import android.R;
 import org.firstinspires.ftc.teamcode.commandFramework.detection.tensorflow.utils.ImageUtils;
 
 import java.io.IOException;

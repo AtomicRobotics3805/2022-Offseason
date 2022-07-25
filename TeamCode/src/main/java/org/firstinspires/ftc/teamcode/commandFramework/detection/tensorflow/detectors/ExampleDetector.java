@@ -18,15 +18,13 @@ public class ExampleDetector implements Runnable{
 
     private boolean isRunning = true;
 
-
-    private String modelFileName = "rings_float.tflite";//"croppedRingRec.tflite";
-    private String labelFileName = "labels.txt";//"croppedLabels.txt";
+    private String modelFileName = "model_unquant.tflite";
+    private String labelFileName = "labels.txt";
     private static Classifier.Model MODEl_TYPE = Classifier.Model.FLOAT_EFFICIENTNET;
-    private static final String LABEL_A = "None";
-    private static final String LABEL_B = "Single";
-    private static final String LABEL_C = "Quad";
+    private static final String LABEL_ZAYN = "Zayn";
+    private static final String LABEL_AHMED = "Ahmed";
 
-    private String result = LABEL_B; //just a default value.
+    private String result = LABEL_ZAYN; //just a default value.
 
     private LinearOpMode caller = null;
 
@@ -48,7 +46,7 @@ public class ExampleDetector implements Runnable{
         this.caller = caller;
     }
 
-    public void detectRingThread() {
+    public void facialDetectionThread() {
 
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
@@ -60,15 +58,11 @@ public class ExampleDetector implements Runnable{
                 } else {
                     for (Classifier.Recognition r : results) {
                         if (r.getConfidence() >= 0.8) {
-                            telemetry.addData("PrintZone", r.getTitle());
-                            if (r.getTitle().contains(LABEL_C)) {
-                                this.result = LABEL_C;
+                            if (r.getTitle().contains(LABEL_ZAYN)) {
+                                this.result = LABEL_ZAYN;
                             }
-                            else if(r.getTitle().contains(LABEL_B)){
-                                this.result = LABEL_B;
-                            }
-                            else if(r.getTitle().contains(LABEL_A)){
-                                this.result = LABEL_A;
+                            else if(r.getTitle().contains(LABEL_AHMED)){
+                                this.result = LABEL_AHMED;
                             }
                         }
                     }
@@ -91,7 +85,6 @@ public class ExampleDetector implements Runnable{
         telemetry.addData("Info", "TF Activated");
     }
 
-
     public void stopDetection() {
         stopThread();
         if (tfDetector != null) {
@@ -107,10 +100,9 @@ public class ExampleDetector implements Runnable{
     @Override
     public void run() {
         while(isRunning) {
-            detectRingThread();
+            facialDetectionThread();
         }
     }
-
 
     public String getModelFileName() {
         return modelFileName;

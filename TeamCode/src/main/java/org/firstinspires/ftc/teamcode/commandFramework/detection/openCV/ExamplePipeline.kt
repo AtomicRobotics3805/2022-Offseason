@@ -50,6 +50,4 @@ class ExamplePipeline(t : Telemetry): OpenCvPipeline() {
     fun Search(): TargetObject{
         return targetObject
     }
-
-
 }
