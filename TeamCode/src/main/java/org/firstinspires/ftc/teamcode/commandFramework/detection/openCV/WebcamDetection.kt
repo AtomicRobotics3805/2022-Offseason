@@ -15,15 +15,15 @@ class WebcamDetection {
         hardwareMap.appContext.packageName
     )
 
-    private val VERTICAL_RESOLUTION = 0
-    private val HORIZONTAL_RESOLUTION = 0
+    private val VERTICAL_RESOLUTION = 1080
+    private val HORIZONTAL_RESOLUTION = 1920
 
     val start: Command
         get() = startStream()
     val pause: Command
-        get() = streamControl("pause")
+        get() = pauseStream()
     val resume: Command
-        get() = streamControl("resume")
+        get() = resumeStream()
 
     private lateinit var camera: OpenCvWebcam
 
@@ -33,13 +33,14 @@ class WebcamDetection {
                 WebcamName::class.java, "Webcam 1"
             ), cameraMonitorViewId
         )
-        camera.setPipeline(Pipeline)
+        val examplePipeline = ExamplePipeline(telemetry)
+        camera.setPipeline(examplePipeline)
     }
 
     fun startStream() = CustomCommand(_start ={
         camera.openCameraDeviceAsync(object : AsyncCameraOpenListener {
             override fun onOpened() {
-                camera.startStreaming(VERTICAL_RESOLUTION,HORIZONTAL_RESOLUTION, OpenCvCameraRotation.UPRIGHT)
+                camera.startStreaming(VERTICAL_RESOLUTION, HORIZONTAL_RESOLUTION, OpenCvCameraRotation.UPRIGHT)
             }
 
             override fun onError(errorCode: Int) {
@@ -48,13 +49,11 @@ class WebcamDetection {
         })
     })
 
-    fun streamControl(request:String) = CustomCommand(_start = {
-        if (request.equals("pause")){
-            camera.pauseViewport()
-        }
-        else if (request.equals("resume")){
-            camera.resumeViewport()
-        }
+    fun pauseStream() = CustomCommand(_start ={
+        camera.pauseViewport()
+    })
+    fun resumeStream() = CustomCommand(_start = {
+        camera.resumeViewport()
     })
 
 }
